@@ -18,7 +18,7 @@ export default function TestApi() {
             <h1>Test API</h1>
             <button onClick={listPatients}>Fetch Patients</button>
             {patients.map((patient) => (
-                <p>{patient.birthDate}</p>
+                <p>Altersgruppe: {patient.extension[0].extension[0].valueCode}</p>
             ))}
         </>
     );
