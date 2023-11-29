@@ -1,0 +1,25 @@
+:root{
+    /* Base Colors */
+    --blue: #6F6BF8;
+    --purple: #1E1957;
+    --white: #FFFFFF;
+    --main-background: #F8F9FB;
+    --light-blue: #F2F2FD;
+
+    /* Shadow Colors */
+    --blue-shadow: 111, 107, 248;
+    --light-blue-shadow: 239, 239, 251;
+    --purple-shadow: 30, 25, 87;
+}
+
+.App {
+    margin: 0;
+    height: 100vh;
+    color: var(--purple);
+    background: var(--main-background);
+    display: grid;
+    overflow: hidden;
+    grid-template-columns: 10rem auto 20rem;
+    justify-items: center;
+}
+
