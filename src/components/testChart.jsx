@@ -20,14 +20,40 @@ export const options = {
             display: false,
         },
     },
+    scales: {
+        x: {
+            ticks: {
+                callback: function (value) {
+                    if (value.length > 4) {
+                        return value.substring(0, 4) + '...'; //truncate
+                    } else {
+                        return value
+                    }
+
+                },
+            }
+        },
+        y: {}
+    },
+    tooltips: {
+        enabled: true,
+        mode: 'label',
+        callbacks: {
+            title: function (tooltipItems, data) {
+                let idx = tooltipItems[0].index;
+                return data.labels[idx]; //do something with title
+            },
+            label: function (tooltipItems, data) {
+                return tooltipItems.xLabels;
+            }
+        }
+    },
 };
 
-export default function TestChart(props) {
-
-    const labels = props.labels.map(l => l.slice(0, 3)); // string array []
+export default function TestChart(props) {// string array []
 
     const data = {
-        labels: labels,
+        labels: props.labels,
         datasets: [
             {
                 label: "Male",
@@ -45,9 +71,7 @@ export default function TestChart(props) {
     return (
         <>
             <ChartContainer title={"Test Chart"} active={false}>
-                <div className="diagram">
-                    <Bar options={options} data={data}/>
-                </div>
+                <Bar options={options} data={data}/>
             </ChartContainer>
         </>
     );

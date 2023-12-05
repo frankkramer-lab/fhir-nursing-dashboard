@@ -1,4 +1,6 @@
 import * as Constants from "./constants";
+import {parseAllConditionData, parseAllPatientData} from "./parser";
+
 
 function getPatients() {
     return new Promise((resolve, reject) => {
@@ -6,7 +8,7 @@ function getPatients() {
         if (localPatients && !Constants.ALWAYS_LOAD) {
             resolve(JSON.parse(localPatients));
         } else {
-            fetch(Constants.API_BASE_URL + 'Patient', {
+            fetch(Constants.API_BASE_URL + 'Patient' + Constants.FIRST100PARAM, {
                 headers: {
                     "Authorization": "Basic " + btoa(Constants.USER + ":" + Constants.PASSWORD),
                 }
@@ -17,10 +19,11 @@ function getPatients() {
                         const error = (data && data.message) || response.statusText;
                         return Promise.reject(error);
                     }
-                    const patients = [];
-                    data.entry.map(e =>
+                    const patients = parseAllPatientData(data.entry);
+                    /*data.entry.map(e =>
                         patients.push(e.resource)
-                    )
+                    )*/
+                    console.log(patients);
                     localStorage.setItem('patients', JSON.stringify(patients));
                     resolve(patients);
                 })
@@ -34,7 +37,7 @@ function getConditions() {
         if (localConditions && !Constants.ALWAYS_LOAD) {
             resolve(JSON.parse(localConditions));
         } else {
-            fetch(Constants.API_BASE_URL + 'Condition', {
+            fetch(Constants.API_BASE_URL + 'Condition' + Constants.FIRST100PARAM, {
                 headers: {
                     "Authorization": "Basic " + btoa(Constants.USER + ":" + Constants.PASSWORD),
                 }
@@ -45,15 +48,18 @@ function getConditions() {
                         const error = (data && data.message) || response.statusText;
                         return Promise.reject(error);
                     }
-                    const conditions = [];
-                    data.entry.map(e =>
-                        conditions.push(e.resource)
-                    )
+                    const conditions = parseAllConditionData(data.entry);
+                    //data.entry.map(e => conditions.push(e.resource))
                     localStorage.setItem('conditions', JSON.stringify(conditions));
+                    console.log(conditions);
                     resolve(conditions);
                 })
         }
     })
 }
+
+
+
+
 
 export {getPatients, getConditions}

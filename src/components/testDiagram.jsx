@@ -16,8 +16,8 @@ export default function TestDiagram(props) {
         datasets: [{
             data: [props.male, props.female],
             backgroundColor: [
-                charts01,
                 charts05,
+                charts01,
             ]
         }]
     };

@@ -44,7 +44,7 @@
     cursor: pointer;
 }
 
-.active:before {
+.active-menu-item:before {
     content: "";
     position: absolute;
     left: 0;

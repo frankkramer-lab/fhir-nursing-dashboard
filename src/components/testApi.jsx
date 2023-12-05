@@ -7,7 +7,7 @@ export default function TestApi() {
 
     const [patients, setPatients] = useState([]);
     const [conditions, setConditions] = useState([]);
-    const [illnesses, setIllnesses] = useState([]);
+    const [illnesses, setIllnesses] = useState({});
 
     function listPatients() {
         console.log("listPatients() called");
@@ -30,13 +30,31 @@ export default function TestApi() {
         listConditions();
     }
 
-    function getIllnesses() {
-        const i = new Set();
-        conditions.map((condition) => {
-            i.add(condition.code.coding[0].display);
-        });
-        setIllnesses([...i]);
+    function getPatientById(id) {
+        return patients.find(patient => patient.id === id)
     }
+
+    function getIllnesses() {
+        const i = {};
+        conditions.map(condition => {
+            if(i[condition.display] !== undefined){
+                if(getPatientById(condition.patientID).gender === "male"){
+                    i[condition.display].male++;
+                }else{
+                    i[condition.display].female++;
+                }
+            }else{
+                i[condition.display]={
+                    "male": getPatientById(condition.patientID).gender === "male" ? 1 : 0,
+                    "female": getPatientById(condition.patientID).gender === "female" ? 1 : 0,
+                }
+            }
+        });
+        console.log(i);
+        setIllnesses(i);
+    }
+
+
 
     return (
         <>
@@ -44,7 +62,7 @@ export default function TestApi() {
                 <h1>Test API</h1>
                 <button onClick={fetchEverything}>Fetch Everything</button>
                 {patients.map((patient) => (
-                    <p>Altersgruppe: {patient.extension[0].extension[0].valueCode}</p>
+                    <p key={patient.id}>Altersgruppe: {patient.ageGroup}</p>
                 ))}
             </div>
             <div style={{display: "inline-block"}}>
@@ -54,8 +72,10 @@ export default function TestApi() {
             <div>
                 <button onClick={getIllnesses}>Fetch Labels</button>
                 <TestChart
-                    labels={illnesses}
-                    data={[0,0,0,0,0,0,0,0,0,0]}/>
+                    labels={Object.keys(illnesses)}
+                    male={Object.entries(illnesses).map(([k, v], i) => v.male)}
+                    female={Object.entries(illnesses).map(([k, v], i) => v.female)}
+                />
             </div>
         </>
     );

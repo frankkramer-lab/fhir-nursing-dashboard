@@ -13,7 +13,7 @@ export default function Sidemenu(props) {
                 <div className="menu">
                     {MenuItems.map((item, index) => {
                             return (
-                                <div className={props.activeScreen === index ? "menu-item active" : "menu-item"}
+                                <div className={props.activeScreen === index ? "menu-item active-menu-item" : "menu-item"}
                                      key={index}
                                      onClick={() => props.setActiveScreen(index)}>
                                     <div className="icon">
