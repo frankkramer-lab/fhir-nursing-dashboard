@@ -2,6 +2,7 @@ import "./StatsScreen.css";
 import TestApi from "../testApi";
 
 export default function StatsScreen(props) {
+
     return (
         <>
             <div className="charts">

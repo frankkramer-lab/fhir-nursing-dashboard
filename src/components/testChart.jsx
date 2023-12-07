@@ -70,8 +70,8 @@ export default function TestChart(props) {// string array []
 
     return (
         <>
-            <ChartContainer title={"Test Chart"} active={false}>
-                <Bar options={options} data={data}/>
+            <ChartContainer title={"Test Chart"} active={false} columns={3}>
+                <div style={{maxHeight: "100%", maxWidth: "100%"}}><Bar options={options} data={data}/></div>
             </ChartContainer>
         </>
     );

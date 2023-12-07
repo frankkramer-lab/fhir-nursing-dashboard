@@ -2,8 +2,9 @@ import React, {useState} from "react";
 import {getConditions, getPatients} from "../utils/api";
 import TestDiagram from "./testDiagram";
 import TestChart from "./testChart";
+import ChartContainer from "./ChartContainer";
 
-export default function TestApi() {
+export default function TestApi(props) {
 
     const [patients, setPatients] = useState([]);
     const [conditions, setConditions] = useState([]);
@@ -37,14 +38,14 @@ export default function TestApi() {
     function getIllnesses() {
         const i = {};
         conditions.map(condition => {
-            if(i[condition.display] !== undefined){
-                if(getPatientById(condition.patientID).gender === "male"){
+            if (i[condition.display] !== undefined) {
+                if (getPatientById(condition.patientID).gender === "male") {
                     i[condition.display].male++;
-                }else{
+                } else {
                     i[condition.display].female++;
                 }
-            }else{
-                i[condition.display]={
+            } else {
+                i[condition.display] = {
                     "male": getPatientById(condition.patientID).gender === "male" ? 1 : 0,
                     "female": getPatientById(condition.patientID).gender === "female" ? 1 : 0,
                 }
@@ -55,28 +56,30 @@ export default function TestApi() {
     }
 
 
-
     return (
         <>
-            <div style={{display: "inline-block", margin: "0 20px", verticalAlign: "top"}}>
-                <h1>Test API</h1>
-                <button onClick={fetchEverything}>Fetch Everything</button>
-                {patients.map((patient) => (
-                    <p key={patient.id}>Altersgruppe: {patient.ageGroup}</p>
-                ))}
-            </div>
-            <div style={{display: "inline-block"}}>
-                <TestDiagram male={patients.filter(p => p.gender === "male").length}
-                             female={patients.filter(p => p.gender === "female").length}/>
-            </div>
+            <ChartContainer title={"Test API"} active={false}>
+                <div style={{margin: "0 20px", verticalAlign: "top"}}>
+                    <button onClick={fetchEverything}>Fetch Everything</button>
+                    {patients.map((patient) => (
+                        <p key={patient.id}>Altersgruppe: {patient.ageGroup}</p>
+                    ))}
+                </div>
+            </ChartContainer>
+
+            <TestDiagram male={patients.filter(p => p.gender === "male").length}
+                         female={patients.filter(p => p.gender === "female").length}/>
+
+
             <div>
                 <button onClick={getIllnesses}>Fetch Labels</button>
-                <TestChart
-                    labels={Object.keys(illnesses)}
-                    male={Object.entries(illnesses).map(([k, v], i) => v.male)}
-                    female={Object.entries(illnesses).map(([k, v], i) => v.female)}
-                />
             </div>
+            <TestChart
+                labels={Object.keys(illnesses)}
+                male={Object.entries(illnesses).map(([k, v], i) => v.male)}
+                female={Object.entries(illnesses).map(([k, v], i) => v.female)}
+            />
+
         </>
     );
 }

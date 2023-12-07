@@ -4,6 +4,9 @@
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(var(--light-blue-shadow), 1);
     padding: 20px;
+    width: auto;
+    overflow: hidden;
+    justify-content: center;
 }
 
 .active{
