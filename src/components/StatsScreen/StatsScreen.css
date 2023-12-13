@@ -1,7 +1,6 @@
 .charts{
-    margin-top: 40px;
     display: grid;
-    overflow: hidden;
+    overflow: auto;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-gap: 2rem;
 }

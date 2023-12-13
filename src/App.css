@@ -13,8 +13,8 @@
 }
 
 .App {
-    margin: 0;
-    height: 100vh;
+    padding: 2rem 2rem;
+    height: calc(100vh - 4rem);
     color: var(--purple);
     background: var(--main-background);
     display: grid;
@@ -22,4 +22,3 @@
     grid-template-columns: 10rem auto 20rem;
     justify-items: center;
 }
-

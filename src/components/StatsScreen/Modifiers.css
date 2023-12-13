@@ -1,0 +1,10 @@
+.modifiers-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    background: var(--light-blue);
+    border-radius: 30px;
+}
+
