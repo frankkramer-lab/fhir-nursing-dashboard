@@ -4,9 +4,9 @@ import {Pie} from "react-chartjs-2";
 /**
  * @return {JSX.Element}
  * @constructor
- * @param active boolean - if container should show active state
- * @param title string - title of the chart
- * @param data object - data for the chart
+ * @param {boolean} props.active if container should show active state
+ * @param {string} props.title title of the chart
+ * @param {object} props.data data for the chart
  */
 export default function MyPieChart(props) {
 
