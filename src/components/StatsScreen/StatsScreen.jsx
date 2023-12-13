@@ -57,13 +57,16 @@ export default function StatsScreen(props) {
 
     return (
         <>
-            <div className="charts">
-                {/*<TestApi/>*/}
-                {charts.map((chart, index) => (
-                    <div onClick={() => setActiveChart(index)}>
-                        <MyPieChart key={index} title={chart.title} active={index === activeChart} data={chart.data}/>
-                    </div>
-                ))}
+            <div className="scroll-container">
+                <div className="charts">
+                    {/*<TestApi/>*/}
+                    {charts.map((chart, index) => (
+                        <div onClick={() => setActiveChart(index)}>
+                            <MyPieChart key={index} title={chart.title} active={index === activeChart}
+                                        data={chart.data}/>
+                        </div>
+                    ))}
+                </div>
             </div>
             <Modifiers text={"Modifier für: " + charts[activeChart].title}/>
         </>

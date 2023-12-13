@@ -1,6 +1,15 @@
 .charts{
+    width: min(1000px , 100%);
     display: grid;
-    overflow: auto;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-gap: 2rem;
 }
+
+.scroll-container{
+    display: flex;
+    width: 100%;
+    margin-right: 20px;
+    justify-content: center;
+    overflow: auto;
+}
+
