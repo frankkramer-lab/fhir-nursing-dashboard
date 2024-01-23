@@ -1,7 +1,25 @@
 import './charts.css';
-import React from 'react';
-import {Bar} from 'react-chartjs-2';
 import ChartContainer from "../ChartContainer";
+import React from 'react';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend
+);
 
 export default function MyBarChart(props) {
     // Daten für den Bar-Chart

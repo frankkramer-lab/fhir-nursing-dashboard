@@ -9,7 +9,7 @@ export default function ChartContainer(props) {
     return (
         <div style={{gridColumn: `span ${props.columns ?? 1}`}}>
             <div className={`box ${props.active && "active"}`}
-                 style={{aspectRatio: `${(props.columns * 1.14) ?? 1}/1`}}
+                 style={{aspectRatio: `${(props.columns * 1.19) ?? 1}/1`}}
                  onClick={props.onClick}>
                 {props.children}
                 <div className={"titleOverlay"} style={{visibility: overlayVisible ? "visible" : "hidden"}}>

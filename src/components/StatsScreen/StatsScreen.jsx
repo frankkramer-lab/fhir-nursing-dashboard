@@ -4,6 +4,7 @@ import {charts01, charts05} from "../../utils/constants";
 import {useState} from "react";
 import Modifiers from "./Modifiers";
 import MyBarChart from "../Charts/MyBarChart";
+import GroupHeading from "./GroupHeading";
 
 export default function StatsScreen(props) {
 
@@ -84,6 +85,7 @@ export default function StatsScreen(props) {
                         <MyPieChart key={index} title={chart.title} active={index === activeChart}
                                     data={chart.data} onClick={() => setActiveChart(index)}/>
                     ))}
+                    <GroupHeading title={"Patienten Daten"}/>
                     <MyBarChart key={112} title={'bar'} active={false} onClick={null}/>
                     <MyPieChart key={113} title={charts[0].title} active={113 === activeChart}
                                 data={charts[0].data} onClick={null}/>

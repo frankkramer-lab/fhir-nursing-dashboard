@@ -1,6 +1,9 @@
 import './charts.css';
 import ChartContainer from "../ChartContainer";
-import {Pie} from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Pie } from 'react-chartjs-2';
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 /**
  * @return {JSX.Element}
