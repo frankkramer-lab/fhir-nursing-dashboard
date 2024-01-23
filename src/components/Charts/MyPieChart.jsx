@@ -1,3 +1,4 @@
+import './charts.css';
 import ChartContainer from "../ChartContainer";
 import {Pie} from "react-chartjs-2";
 
@@ -11,12 +12,12 @@ import {Pie} from "react-chartjs-2";
 export default function MyPieChart(props) {
 
     return (
-        <>
-            <ChartContainer title={props.title} active={props.active}>
-                <div className="diagram">
-                    <Pie data={props.data}/>
-                </div>
-            </ChartContainer>
-        </>
+
+        <ChartContainer title={props.title} active={props.active} onClick={props.onClick}>
+            <div className={'pie'}>
+                <Pie data={props.data}/>
+            </div>
+        </ChartContainer>
+
     );
 }

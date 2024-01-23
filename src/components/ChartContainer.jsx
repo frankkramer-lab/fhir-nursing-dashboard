@@ -7,17 +7,20 @@ export default function ChartContainer(props) {
 
     const [overlayVisible, setOverlayVisible] = useState(false);
     return (
-        <div className={`box ${props.active && "active"}`}
-             style={{aspectRatio: `${props.columns ?? 1}/1`, gridColumn: `span ${props.columns ?? 1}`}}>
-            {props.children}
-            <div className={"titleOverlay"} style={{visibility: overlayVisible ? "visible" : "hidden"}}>
-                <p>{props.title}</p>
-            </div>
-            <div className={"titleHover"}
-                 onMouseEnter={() => setOverlayVisible(true)}
-                 onMouseLeave={() => setOverlayVisible(false)}
-            >
-                <p><span><FontAwesomeIcon icon={faEye}/></span> Titel</p>
+        <div style={{gridColumn: `span ${props.columns ?? 1}`}}>
+            <div className={`box ${props.active && "active"}`}
+                 style={{aspectRatio: `${(props.columns * 1.14) ?? 1}/1`}}
+                 onClick={props.onClick}>
+                {props.children}
+                <div className={"titleOverlay"} style={{visibility: overlayVisible ? "visible" : "hidden"}}>
+                    <p>{props.title}</p>
+                </div>
+                <div className={"titleHover"}
+                     onMouseEnter={() => setOverlayVisible(true)}
+                     onMouseLeave={() => setOverlayVisible(false)}
+                >
+                    <p><span><FontAwesomeIcon icon={faEye}/></span> Titel</p>
+                </div>
             </div>
         </div>
     );
