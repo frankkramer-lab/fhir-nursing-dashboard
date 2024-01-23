@@ -1,7 +1,8 @@
 import "./StatsScreen.css";
 import MyPieChart from "../Charts/MyPieChart";
 import {charts01, charts05} from "../../utils/constants";
-import {useState} from "react";
+import {useContext, useState} from "react";
+import {DataContext} from "../../utils/api";
 import Modifiers from "./Modifiers";
 import MyBarChart from "../Charts/MyBarChart";
 import GroupHeading from "./GroupHeading";
@@ -9,6 +10,7 @@ import GroupHeading from "./GroupHeading";
 export default function StatsScreen(props) {
 
     const [activeChart, setActiveChart] = useState(0);
+    const dataContext = useContext(DataContext);
 
     const data = {
         labels: [
@@ -16,7 +18,10 @@ export default function StatsScreen(props) {
             'female',
         ],
         datasets: [{
-            data: [20, 40],
+            data: [
+                dataContext.patients.filter(p => p.gender === 'male').length,
+                dataContext.patients.filter(p => p.gender === 'female').length
+            ],
             backgroundColor: [
                 charts05,
                 charts01,
@@ -81,6 +86,7 @@ export default function StatsScreen(props) {
             <div className="scroll-container">
                 <div className="charts">
                     {/*<TestApi/>*/}
+                    <GroupHeading title={"Pie Charts"}/>
                     {charts.map((chart, index) => (
                         <MyPieChart key={index} title={chart.title} active={index === activeChart}
                                     data={chart.data} onClick={() => setActiveChart(index)}/>
