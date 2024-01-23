@@ -1,5 +1,4 @@
 import "./StatsScreen.css";
-import TestApi from "../testApi";
 import MyPieChart from "../Charts/MyPieChart";
 import {charts01, charts05} from "../../utils/constants";
 import {useState} from "react";
