@@ -1,4 +1,5 @@
 import './charts.css';
+import {charts05} from "../../utils/constants";
 import ChartContainer from "../ChartContainer";
 import React from 'react';
 import {
@@ -29,9 +30,7 @@ export default function MyBarChart(props) {
             {
                 label: 'Series 1',
                 data: [10, 15, 25, 30],
-                backgroundColor: 'rgba(75,192,192,1)',
-                borderColor: 'rgba(0,0,0,1)',
-                borderWidth: 1,
+                backgroundColor: charts05,
             },
         ],
     };

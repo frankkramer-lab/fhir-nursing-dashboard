@@ -12,7 +12,7 @@
 }
 
 .active{
-    border: var(--blue) solid 2px;
+    border: var(--orange) solid 2px;
 }
 
 .titleHover{

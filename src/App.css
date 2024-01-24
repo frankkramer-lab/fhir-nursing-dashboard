@@ -1,15 +1,22 @@
 :root{
     /* Base Colors */
-    --blue: #6F6BF8;
-    --purple: #1E1957;
+    /*--blue: #6F6BF8;*/
+    --orange: #DEAA00;
+    /*--purple: #1E1957;*/
+    --purple: #026789;
     --white: #FFFFFF;
-    --main-background: #F8F9FB;
-    --light-blue: #F2F2FD;
+    /*--main-background: #F8F9FB;*/
+    --main-background: #f5fbff;
+    /*--light-blue: #F2F2FD;*/
+    --light-blue: #dfeff3;
 
     /* Shadow Colors */
-    --blue-shadow: 111, 107, 248;
-    --light-blue-shadow: 239, 239, 251;
-    --purple-shadow: 30, 25, 87;
+    /*--blue-shadow: 111, 107, 248;*/
+    --blue-shadow: 222, 170, 0;
+    /*--light-blue-shadow: 239, 239, 251;*/
+    --light-blue-shadow: 223, 239, 243;
+    /*--purple-shadow: 30, 25, 87;*/
+    --purple-shadow: 2, 103, 137;
 }
 
 .App {
@@ -38,7 +45,7 @@
 
 /* Farbe des Scrollbalken-Griffes */
 ::-webkit-scrollbar-thumb {
-    background: var(--blue);
+    background: var(--orange);
     border-radius: 5px;
 }
 
