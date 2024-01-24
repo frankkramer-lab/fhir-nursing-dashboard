@@ -21,9 +21,6 @@ export default function StatsScreen(props) {
             data: [
                 dataContext.patients.filter(p => p.gender === 'male').length,
                 dataContext.patients.filter(p => p.gender === 'female').length,
-                2,
-                3,
-                4,
             ],
 
         }]

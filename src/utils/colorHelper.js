@@ -2,10 +2,10 @@ import {charts01, charts02, charts03, charts04, charts05} from "./constants";
 
 export const getColorArray=(length)=>{
     const  oneColor=[charts05]
-    const  twoColors=[charts01, charts05]
-    const threeColors=[charts01, charts03, charts05]
-    const fourColors=[charts01, charts02, charts03, charts05]
-    const fiveColors=[charts01, charts02, charts03, charts04, charts05]
+    const  twoColors=[charts05, charts04]
+    const threeColors=[charts05, charts04, charts01]
+    const fourColors=[charts05, charts04, charts03, charts01]
+    const fiveColors=[charts05, charts04, charts03, charts02, charts01]
 
 
     let colorArray=[]
