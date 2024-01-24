@@ -1,6 +1,5 @@
 import "./StatsScreen.css";
 import MyPieChart from "../Charts/MyPieChart";
-import {charts01, charts05} from "../../utils/constants";
 import {useContext, useState} from "react";
 import {DataContext} from "../../utils/api";
 import Modifiers from "./Modifiers";
