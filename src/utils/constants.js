@@ -6,6 +6,27 @@ export const ALWAYS_LOAD = true;
 // Change later -> go through pages
 export const FIRST100PARAM = '?_count=100';
 
+// Charts
+export const PIE = 'pie';
+export const BAR = 'bar';
+
+// Age Groups
+export const AGEGROUP0_9 = '0-9';
+export const AGEGROUP10_19 = '10-19';
+export const AGEGROUP20_29 = '20-29';
+export const AGEGROUP30_39 = '30-39';
+export const AGEGROUP40_49 = '40-49';
+export const AGEGROUP50_59 = '50-59';
+export const AGEGROUP60_69 = '60-69';
+export const AGEGROUP70_79 = '70-79';
+export const AGEGROUP80_89 = '80-89';
+export const AGEGROUP90_99 = '90-99';
+export const AGEGROUP100 = '100+';
+
+// Gender
+export const MALE = 'male';
+export const FEMALE = 'female'
+
 
 // Colors
 export const charts01 = '#aee0ee';

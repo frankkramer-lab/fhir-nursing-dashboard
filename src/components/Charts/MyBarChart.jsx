@@ -12,6 +12,7 @@ import {
     Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import {getColorArray} from "../../utils/colorHelper";
 
 ChartJS.register(
     CategoryScale,
@@ -23,17 +24,12 @@ ChartJS.register(
 );
 
 export default function MyBarChart(props) {
-    // Daten für den Bar-Chart
-    const data = {
-        labels: ['Label 1', 'Label 2', 'Label 3', 'Label 4'],
-        datasets: [
-            {
-                label: 'Series 1',
-                data: [10, 15, 25, 30],
-                backgroundColor: charts05,
-            },
-        ],
-    };
+
+    const colors = getColorArray(props.data.datasets.length);
+
+    for (let i = 0; i < props.data.datasets.length; i++) {
+        props.data.datasets[i].backgroundColor = colors[i];
+    }
 
     // Konfiguration für den Bar-Chart
     const options = {
@@ -51,7 +47,7 @@ export default function MyBarChart(props) {
     return (
         <ChartContainer title={props.title} active={props.active} onClick={props.onClick} columns={2}>
             <div className={'bar'}>
-                <Bar data={data} options={options}/>
+                <Bar data={props.data} />
             </div>
         </ChartContainer>
     );
