@@ -56,12 +56,12 @@ export default function TestChart(props) {// string array []
         labels: props.labels,
         datasets: [
             {
-                label: "Male",
+                label: "Männlich",
                 data: props.male, // number array []
                 backgroundColor: charts05,
             },
             {
-                label: "Female",
+                label: "Weiblich",
                 data: props.female, // number array []
                 backgroundColor: charts01,
             },

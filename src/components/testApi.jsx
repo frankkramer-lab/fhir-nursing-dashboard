@@ -3,6 +3,7 @@ import {getConditions, getPatients} from "../utils/api";
 import TestDiagram from "./testDiagram";
 import TestChart from "./testChart";
 import ChartContainer from "./ChartContainer";
+import {FEMALE, MALE} from "../utils/constants";
 
 export default function TestApi(props) {
 
@@ -39,15 +40,15 @@ export default function TestApi(props) {
         const i = {};
         conditions.map(condition => {
             if (i[condition.display] !== undefined) {
-                if (getPatientById(condition.patientID).gender === "male") {
+                if (getPatientById(condition.patientID).gender === MALE) {
                     i[condition.display].male++;
                 } else {
                     i[condition.display].female++;
                 }
             } else {
                 i[condition.display] = {
-                    "male": getPatientById(condition.patientID).gender === "male" ? 1 : 0,
-                    "female": getPatientById(condition.patientID).gender === "female" ? 1 : 0,
+                    MALE: getPatientById(condition.patientID).gender === MALE ? 1 : 0,
+                    FEMALE: getPatientById(condition.patientID).gender === FEMALE ? 1 : 0,
                 }
             }
         });
@@ -67,8 +68,8 @@ export default function TestApi(props) {
                 </div>
             </ChartContainer>
 
-            <TestDiagram male={patients.filter(p => p.gender === "male").length}
-                         female={patients.filter(p => p.gender === "female").length}/>
+            <TestDiagram male={patients.filter(p => p.gender === MALE).length}
+                         female={patients.filter(p => p.gender === FEMALE).length}/>
 
 
             <div>

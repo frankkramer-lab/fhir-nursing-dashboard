@@ -44,8 +44,8 @@ const getGenderData = (patients) => {
         datasets: [{
             data: [
                 // TODO: Adjust for divers and unknown
-                patients.filter(p => p.gender === 'male').length,
-                patients.filter(p => p.gender === 'female').length,
+                patients.filter(p => p.gender === MALE).length,
+                patients.filter(p => p.gender === FEMALE).length,
             ],
         }]
     }
