@@ -1,5 +1,4 @@
 import './charts.css';
-import {charts05} from "../../utils/constants";
 import ChartContainer from "../ChartContainer";
 import React from 'react';
 import {
@@ -34,10 +33,6 @@ export default function MyBarChart(props) {
     // Konfiguration für den Bar-Chart
     const options = {
         scales: {
-            x: {
-                type: 'category',
-                labels: ['Label 1', 'Label 2', 'Label 3', 'Label 4'],
-            },
             y: {
                 beginAtZero: true,
             },
@@ -47,7 +42,7 @@ export default function MyBarChart(props) {
     return (
         <ChartContainer title={props.title} active={props.active} onClick={props.onClick} columns={2}>
             <div className={'bar'}>
-                <Bar data={props.data} />
+                <Bar data={props.data} options={options}/>
             </div>
         </ChartContainer>
     );

@@ -1,4 +1,3 @@
-import react from 'react';
 import {
     AGEGROUP0_9, AGEGROUP100,
     AGEGROUP10_19,
@@ -7,7 +6,7 @@ import {
     AGEGROUP40_49,
     AGEGROUP50_59, AGEGROUP60_69, AGEGROUP70_79, AGEGROUP80_89, AGEGROUP90_99,
     BAR,
-    charts05, FEMALE, MALE,
+    FEMALE, MALE,
     PIE
 } from "./constants";
 

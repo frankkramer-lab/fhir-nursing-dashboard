@@ -15,7 +15,6 @@ export default function StatsScreen(props) {
 
 
     const charts = initCharts(dataContext);
-    console.log(charts);
 
     return (
         <>
