@@ -1,6 +1,6 @@
 import "./StatsScreen.css";
 import MyPieChart from "../Charts/MyPieChart";
-import {useCallback, useContext, useState} from "react";
+import {useContext, useState} from "react";
 import {DataContext} from "../../utils/api";
 import Modifiers from "../Modifiers/Modifiers";
 import MyBarChart from "../Charts/MyBarChart";

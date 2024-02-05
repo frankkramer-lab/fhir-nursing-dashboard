@@ -3,7 +3,6 @@ import ChartContainer from "../ChartContainer";
 import {Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js';
 import {Pie} from 'react-chartjs-2';
 import {getColorArray} from "../../utils/colorHelper";
-import {useEffect} from "react";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
