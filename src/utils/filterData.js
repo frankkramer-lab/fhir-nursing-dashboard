@@ -1,41 +1,32 @@
-import {
-    AGEGROUP0_9, AGEGROUP100,
-    AGEGROUP10_19,
-    AGEGROUP20_29,
-    AGEGROUP30_39,
-    AGEGROUP40_49,
-    AGEGROUP50_59, AGEGROUP60_69, AGEGROUP70_79, AGEGROUP80_89, AGEGROUP90_99,
-    BAR,
-    FEMALE, MALE,
-    PIE
-} from "./constants";
+import {AGE_GROUPS, BAR, FEMALE, MALE, PIE} from "./constants";
 
+
+let patients;
+let conditions;
 export const initCharts = (data) => {
-    const patients = data.patients;
-    const conditions = data.conditions;
+    patients = data.patients;
+    conditions = data.conditions;
 
-    let genderData = getGenderData(patients);
-    let ageData = getAgeData(patients);
+    let genderData = getGenderData(AGE_GROUPS);
+    let ageData = getAgeData(AGE_GROUPS);
 
-    const charts = [
+    return [
         {
-            title: "Geschlecht",
+            title: "Gender",
             type: PIE,
             data: genderData,
             modifiedData: genderData,
         },
         {
-            title: "Alter",
+            title: "Age",
             type: BAR,
             data: ageData,
             modifiedData: ageData,
         },
     ];
-
-    return charts;
 }
 
-const getGenderData = (patients) => {
+export const getGenderData = (ageGroups) => {
     return {
         labels: [
             'Männlich',
@@ -44,16 +35,14 @@ const getGenderData = (patients) => {
         datasets: [{
             data: [
                 // TODO: Adjust for divers and unknown
-                patients.filter(p => p.gender === MALE).length,
-                patients.filter(p => p.gender === FEMALE).length,
+                patients.filter(p => p.gender === MALE && ageGroups.includes(p.ageGroup)).length,
+                patients.filter(p => p.gender === FEMALE && ageGroups.includes(p.ageGroup)).length,
             ],
         }]
     }
 }
 
-const getAgeData = (patients) => {
-
-    const ageGroups = [AGEGROUP0_9, AGEGROUP10_19, AGEGROUP20_29, AGEGROUP30_39, AGEGROUP40_49, AGEGROUP50_59, AGEGROUP60_69, AGEGROUP70_79, AGEGROUP80_89, AGEGROUP90_99, AGEGROUP100];
+export const getAgeData = (ageGroups) => {
 
     const getPatientCount = function (ageGroup, gender) {
         if (gender) return patients.filter(p => p.ageGroup === ageGroup && p.gender === gender).length;
@@ -69,6 +58,13 @@ const getAgeData = (patients) => {
             {
                 label: 'Gesamt',
                 data: getDataset()
+                /* Bsp:
+                * 0: 3
+                * 1: 0
+                * 2: 1
+                * 3: 4
+                * ...
+                */
             },
             {
                 label: 'Männlich',

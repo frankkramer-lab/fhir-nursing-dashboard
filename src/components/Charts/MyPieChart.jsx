@@ -1,8 +1,9 @@
 import './charts.css';
 import ChartContainer from "../ChartContainer";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Pie } from 'react-chartjs-2';
+import {Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js';
+import {Pie} from 'react-chartjs-2';
 import {getColorArray} from "../../utils/colorHelper";
+import {useEffect} from "react";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -14,6 +15,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
  * @param {object} props.data data for the chart
  */
 export default function MyPieChart(props) {
+
 
     props.data.datasets[0].backgroundColor = getColorArray(props.data.datasets[0].data.length);
 

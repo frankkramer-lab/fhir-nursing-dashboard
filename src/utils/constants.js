@@ -23,6 +23,20 @@ export const AGEGROUP80_89 = '80-89';
 export const AGEGROUP90_99 = '90-99';
 export const AGEGROUP100 = '100+';
 
+export const AGE_GROUPS = [
+    AGEGROUP0_9,
+    AGEGROUP10_19,
+    AGEGROUP20_29,
+    AGEGROUP30_39,
+    AGEGROUP40_49,
+    AGEGROUP50_59,
+    AGEGROUP60_69,
+    AGEGROUP70_79,
+    AGEGROUP80_89,
+    AGEGROUP90_99,
+    AGEGROUP100
+];
+
 // Gender
 export const MALE = 'male';
 export const FEMALE = 'female'

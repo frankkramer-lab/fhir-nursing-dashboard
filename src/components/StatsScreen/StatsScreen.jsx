@@ -1,8 +1,8 @@
 import "./StatsScreen.css";
 import MyPieChart from "../Charts/MyPieChart";
-import {useContext, useState} from "react";
+import {useCallback, useContext, useState} from "react";
 import {DataContext} from "../../utils/api";
-import Modifiers from "./Modifiers";
+import Modifiers from "../Modifiers/Modifiers";
 import MyBarChart from "../Charts/MyBarChart";
 import GroupHeading from "./GroupHeading";
 import {initCharts} from "../../utils/filterData";
@@ -12,9 +12,23 @@ export default function StatsScreen(props) {
 
     const [activeChart, setActiveChart] = useState(0);
     const dataContext = useContext(DataContext);
+    const [charts, setCharts] = useState(initCharts(dataContext));
+
+    // Track modifier states
+    const [ageModifiers, setAgeModifiers] = useState({});
+    for (let i = 0; i < charts.length; i++) {
+        ageModifiers[i] = new Array(11).fill(true);
+    }
 
 
-    const charts = initCharts(dataContext);
+
+    function setChartData(changedData) {
+        console.log(changedData);
+        console.log(charts[activeChart]);
+        charts[activeChart].modifiedData = changedData;
+        setCharts(charts);
+    }
+
 
     return (
         <>
@@ -38,7 +52,7 @@ export default function StatsScreen(props) {
                     })}
                 </div>
             </div>
-            <Modifiers text={"Modifier für: " + charts[activeChart].title}/>
+            <Modifiers setChartData={setChartData} chartData={charts[activeChart]}/>
         </>
     );
 }

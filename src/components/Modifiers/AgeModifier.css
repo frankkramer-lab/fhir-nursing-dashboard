@@ -1,0 +1,24 @@
+
+#age-checkboxes{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#age-checkboxes li {
+    margin-top: 2px;
+}
+
+#age-checkboxes label {
+    margin-left: 20px;
+}
+#age-checkboxes ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    float: left;
+}
