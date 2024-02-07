@@ -1,6 +1,6 @@
 import "./StatsScreen.css";
 import MyPieChart from "../Charts/MyPieChart";
-import {useContext, useState} from "react";
+import {useContext, useReducer, useState} from "react";
 import {DataContext} from "../../utils/api";
 import Modifiers from "../Modifiers/Modifiers";
 import MyBarChart from "../Charts/MyBarChart";
@@ -10,9 +10,12 @@ import {BAR, PIE} from "../../utils/constants";
 
 export default function StatsScreen(props) {
 
+    // force update function
+    const [, forceUpdate] = useReducer(x => x + 1, {x:0});
     const [activeChart, setActiveChart] = useState(0);
     const dataContext = useContext(DataContext);
     const [charts, setCharts] = useState(initCharts(dataContext));
+
 
     // Track modifier states
     const [ageModifiers, setAgeModifiers] = useState({});
@@ -22,11 +25,8 @@ export default function StatsScreen(props) {
 
 
 
-    function setChartData(changedData) {
-        console.log(changedData);
-        console.log(charts[activeChart]);
-        charts[activeChart].modifiedData = changedData;
-        setCharts(charts);
+    function UpdateComponent() {
+        forceUpdate();
     }
 
 
@@ -52,7 +52,7 @@ export default function StatsScreen(props) {
                     })}
                 </div>
             </div>
-            <Modifiers setChartData={setChartData} chartData={charts[activeChart]}/>
+            <Modifiers updateComponent={UpdateComponent} chartData={charts[activeChart]}/>
         </>
     );
 }

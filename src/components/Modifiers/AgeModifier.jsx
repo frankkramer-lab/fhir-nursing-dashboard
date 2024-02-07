@@ -3,7 +3,7 @@ import "./AgeModifier.css"
 import {
     AGE_GROUPS,
 } from "../../utils/constants";
-import {getGenderData} from "../../utils/filterData";
+import {getAgeData, getGenderData} from "../../utils/filterData";
 
 export default function AgeModifier(props) {
 
@@ -44,7 +44,12 @@ export default function AgeModifier(props) {
 
         let filteredAges = AGE_GROUPS.filter((ageGroup, index) => data[index] === 1);
         if (props.chartData.title === "Gender") {
-            props.setChartData(getGenderData(filteredAges));
+            props.chartData.modifiedData = getGenderData(filteredAges);
+            props.updateComponent();
+        }
+        if (props.chartData.title === "Age") {
+            props.chartData.modifiedData = getAgeData(filteredAges);
+            props.updateComponent();
         }
     }
 
