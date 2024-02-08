@@ -17,12 +17,6 @@ export default function StatsScreen(props) {
     const [charts, setCharts] = useState(initCharts(dataContext));
 
 
-    // Track modifier states
-    const [ageModifiers, setAgeModifiers] = useState({});
-    for (let i = 0; i < charts.length; i++) {
-        ageModifiers[i] = new Array(11).fill(true);
-    }
-
 
 
     function UpdateComponent() {
@@ -52,7 +46,7 @@ export default function StatsScreen(props) {
                     })}
                 </div>
             </div>
-            <Modifiers updateComponent={UpdateComponent} chartData={charts[activeChart]}/>
+            <Modifiers updateComponent={UpdateComponent} charts={charts} activeIndex={activeChart}/>
         </>
     );
 }

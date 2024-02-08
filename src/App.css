@@ -62,5 +62,5 @@
 
 /* Farbe des Scrollbalkens in Firefox */
 * {
-    scrollbar-color: #888 #f1f1f1; /* Scrollbalkenfarbe und Hintergrundfarbe */
+    scrollbar-color: var(--purple) var(--white); /* Scrollbalkenfarbe und Hintergrundfarbe */
 }
