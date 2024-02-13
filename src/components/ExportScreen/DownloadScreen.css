@@ -1,0 +1,9 @@
+.export-screen{
+    width: 100%;
+    grid-column-start: 2;
+    grid-column-end: 4;
+}
+
+h1{
+    text-align: center;
+}
