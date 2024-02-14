@@ -3,11 +3,10 @@ import moment from "moment";
 
 export function parseAllPatientData(patients) {
     const tableData = [];
-    patients.forEach(elementRaw => {
-        if (!elementRaw) {
+    patients.forEach(element => {
+        if (!element) {
             return null;
         }
-        let element = elementRaw.resource;
         let patient = {};
         patient.name = element.name?.[0]?.family + " " + element.name?.[0]?.given?.[0];
         patient.id = element.id; // ID
@@ -21,7 +20,6 @@ export function parseAllPatientData(patients) {
         patient.gender = element.gender; // Gender
         patient.birthMonth = moment(element.birthDate).format("MMMM");
         patient.age = moment().diff(element.birthDate, "years");
-        patient.raw = elementRaw;
         tableData.push(patient);
         // Altersgruppe
         patient.ageGroup = element.extension?.[0]?.extension?.find(e => e.url === "Altersgruppe")?.valueCode;
@@ -36,11 +34,10 @@ export function parseAllPatientData(patients) {
 
 export function parseAllConditionData(conditions) {
     const tableData = [];
-    conditions.forEach(elementRaw => {
-        if (!elementRaw) {
+    conditions.forEach(element => {
+        if (!element) {
             return null;
         }
-        let element = elementRaw.resource;
         let condition = {};
         condition.id = element.id; // ID
         condition.patientID = element.subject?.reference.split("/")[1]; // Patient ID
@@ -50,7 +47,6 @@ export function parseAllConditionData(conditions) {
         condition.code = element.code?.coding?.[0]?.code; // Condition Code
         condition.display = element.code?.coding?.[0]?.display; // Condition Klartext
         condition.codeExtension = element.code?.coding?.[0]?.extension; // Condition Code Extension
-        condition.raw = elementRaw;
         tableData.push(condition);
     });
 
