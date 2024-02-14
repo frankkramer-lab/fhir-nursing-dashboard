@@ -29,7 +29,7 @@ export default function StatsScreen(props) {
             <div className="scroll-container">
                 <div className="charts">
                     {/*<TestApi/>*/}
-                    <GroupHeading title={"Pie Charts"}/>
+                    <GroupHeading title={"Charts"}/>
                     {charts.map((chart, index) => {
                         if (chart.type === PIE) {
                             return (

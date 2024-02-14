@@ -57,7 +57,6 @@ function fetchAll(url, allResults = []) {
             if (data.link) {
                 const next = data.link.find(e => e.relation === 'next');
                 if (next) {
-                    console.log('next: ' + next.url);
                     return fetchAll(next.url, allResults);
                 }
             }
@@ -67,13 +66,34 @@ function fetchAll(url, allResults = []) {
 }
 
 async function getPatients() {
+    // check local storage
+    const local = getLocalStorage('patients')
+    if (local) return parseAllPatientData(local);
+
+    // request data from server
     let patients = await fetchAll(Constants.API_BASE_URL + 'Patient');
+    localStorage.setItem('patients', JSON.stringify(patients));
     return parseAllPatientData(patients);
 }
 
 async function getConditions() {
+    // check local storage
+    const local = getLocalStorage('conditions')
+    if (local) return parseAllPatientData(local);
+
+    // request data from server
     let conditions = await fetchAll(Constants.API_BASE_URL + 'Condition');
+    localStorage.setItem('conditions', JSON.stringify(conditions));
     return parseAllConditionData(conditions);
+}
+
+function getLocalStorage(key) {
+    let localData = localStorage.getItem(key);
+    if (localData && !Constants.ALWAYS_LOAD) {
+        return (JSON.parse(localData));
+    } else {
+        return null;
+    }
 }
 
 

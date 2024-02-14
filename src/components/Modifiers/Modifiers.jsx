@@ -9,13 +9,10 @@ export default function Modifiers(props) {
 
     // Track modifier states
     const [ageModifiers, setAgeModifiers] = useState(Array.from({length: props.charts.length}, () => new Array(12).fill(true)));
-    console.log("Rerender modifiers")
-    console.log(ageModifiers)
 
 
 
     function updateAgeModifiers(data) {
-        console.log(data)
         ageModifiers[props.activeIndex] = data;
         setAgeModifiers(ageModifiers);
     }
