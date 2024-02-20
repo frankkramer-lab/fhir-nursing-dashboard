@@ -1,4 +1,5 @@
-import {AGE_GROUPS, BAR, FEMALE, MALE, PIE} from "./constants";
+import {AGE_GROUPS, BAR, FEMALE, LINE, MALE, PIE} from "./constants";
+import moment from "moment";
 
 
 let patients;
@@ -9,6 +10,7 @@ export const initCharts = (data) => {
 
     let genderData = getGenderData(AGE_GROUPS);
     let ageData = getAgeData(AGE_GROUPS);
+    let assertedDates = getAssertedDates(AGE_GROUPS);
 
     return [
         {
@@ -23,6 +25,12 @@ export const initCharts = (data) => {
             data: ageData,
             modifiedData: ageData,
         },
+        {
+            title: "Asserted Dates",
+            type: LINE,
+            data: assertedDates,
+            modifiedData: assertedDates,
+        }
     ];
 }
 
@@ -77,4 +85,46 @@ export const getAgeData = (ageGroups) => {
         ]
     }
 }
+
+const getAssertedDates = () => {
+
+
+
+    const getDataset = () => {
+
+        let sortedConditions = conditions.sort((a, b) =>  a.assertedDate - b.assertedDate );
+
+        const dates = {};
+
+        sortedConditions.forEach(condition => {
+            const assertedDate = moment(condition.assertedDate).format('DD.MM.YY');
+
+            if (dates[assertedDate]) {
+                dates[assertedDate]++;
+            } else {
+                dates[assertedDate] = 1;
+            }
+        });
+
+        return dates;
+    }
+
+
+    return {
+        datasets: [
+            {
+                label: 'Assertions',
+                data: getDataset()
+                /* Bsp:
+                * 0: 3
+                * 1: 0
+                * 2: 1
+                * 3: 4
+                * ...
+                */
+            }
+        ]
+    }
+}
+
 

@@ -6,7 +6,8 @@ import Modifiers from "../Modifiers/Modifiers";
 import MyBarChart from "../Charts/MyBarChart";
 import GroupHeading from "./GroupHeading";
 import {initCharts} from "../../utils/filterData";
-import {BAR, PIE} from "../../utils/constants";
+import {BAR, LINE, PIE} from "../../utils/constants";
+import MyLineChart from "../Charts/MyLineChart";
 
 export default function StatsScreen(props) {
 
@@ -40,6 +41,12 @@ export default function StatsScreen(props) {
                         if (chart.type === BAR) {
                             return (
                                 <MyBarChart key={index} title={chart.title} active={index === activeChart}
+                                            data={chart.modifiedData} onClick={() => setActiveChart(index)}/>
+                            );
+                        }
+                        if (chart.type === LINE) {
+                            return (
+                                <MyLineChart key={index} title={chart.title} active={index === activeChart}
                                             data={chart.modifiedData} onClick={() => setActiveChart(index)}/>
                             );
                         }

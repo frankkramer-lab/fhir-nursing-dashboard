@@ -10,6 +10,8 @@ export const FIRST100PARAM = '?_count=100';
 export const PIE = 'pie';
 export const BAR = 'bar';
 
+export const LINE = 'line';
+
 // Age Groups
 export const AGEGROUP0_9 = '0-9';
 export const AGEGROUP10_19 = '10-19';
