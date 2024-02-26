@@ -15,7 +15,6 @@ ChartJS.register(ArcElement, Tooltip, Legend);
  */
 export default function MyPieChart(props) {
 
-
     props.data.datasets[0].backgroundColor = getColorArray(props.data.datasets[0].data.length);
 
     return (

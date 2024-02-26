@@ -1,8 +1,13 @@
 // API
-export const API_BASE_URL = 'https://localhost:9443/fhir-server/api/v4/';
+
+// Local Docker Container
+// export const API_BASE_URL = 'https://localhost:9443/fhir-server/api/v4/';
+
+// SSH Connection
+export const API_BASE_URL = 'http://localhost:8080/fhir-server/api/v4/';
 export const USER = 'fhiruser';
 export const PASSWORD = 'change-password';
-export const ALWAYS_LOAD = true; // TODO: Change to false in production
+export const ALWAYS_LOAD = false; // TODO: Change to false in production
 // Change later -> go through pages
 export const FIRST100PARAM = '?_count=100';
 

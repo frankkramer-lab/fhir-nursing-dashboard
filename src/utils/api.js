@@ -1,44 +1,52 @@
 import * as Constants from "./constants";
 import {parseAllConditionData, parseAllPatientData} from "./parser";
+import {checkIndexedDBExistence, initDB, insertConditionsIntoDB, insertPatientsIntoDB} from "./db";
 
 import React, {createContext, useState, useEffect} from 'react';
+import {resolve} from "chart.js/helpers";
+import {initCharts} from "./filterData";
 
 export const DataContext = createContext(null);
 
-export const DataProvider = ({children}) => {
+export const APIWraper = ({children}) => {
     const [loading, setLoading] = useState(true);
-    const [patients, setPatients] = useState(null);
-    const [conditions, setConditions] = useState(null);
+    const [charts, setCharts] = useState(null);
 
     useEffect(() => {
         setLoading(true);
-
-        Promise.all([getPatients(), getConditions()]) // Promise.all, um mehrere Promises gleichzeitig auszuführen
-            .then(([patientsData, conditionsData]) => {
-                setPatients(patientsData);
-                setConditions(conditionsData);
-            })
-            .catch(error => console.error('Fehler:', error))
-            .finally(() => setLoading(false)); // loading false, nachdem alle Fetch-Aufrufe abgeschlossen
+        initDB().then(() => {
+            Promise.all([getPatients(), getConditions()]) // Promise.all, um mehrere Promises gleichzeitig auszuführen
+                .then(async () => {
+                        setCharts(await initCharts());
+                    }
+                )
+                .catch(error => console.error('Fehler:', error))
+                .finally(() => setLoading(false)); // loading false, nachdem alle Fetch-Aufrufe abgeschlossen
+        });
     }, []);
 
-    if (loading) return <div style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        textAlign: "center",
-        minHeight: "100vh"
-    }}><p>Loading...</p></div>;
+    if (loading)
+        return (
+            <div style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+                minHeight: "100vh"
+            }}>
+                <p>Loading...</p>
+            </div>
+        );
 
     return (
-        <DataContext.Provider value={{patients, conditions}}>
+        <DataContext.Provider value={{charts}}>
             {children}
         </DataContext.Provider>
     );
 };
 
 
-function fetchAll(url, allResults = []) {
+function fetchAll(url, allResults = [], i = 0) {
     return fetch(url, {
         headers: {
             "Authorization": "Basic " + btoa(Constants.USER + ':' + Constants.PASSWORD),
@@ -46,6 +54,8 @@ function fetchAll(url, allResults = []) {
     })
         .then(async response => {
             const data = await response.json();
+            console.log(allResults.length / data.total * 100);
+
             if (!response.ok) {
                 const error = (data && data.message) || response.statusText;
                 return Promise.reject(error);
@@ -54,10 +64,10 @@ function fetchAll(url, allResults = []) {
             allResults.push(...resources);
 
             // Reccursion to get all pages
-            if (data.link) {
+            if (data.link && i <= 99) {
                 const next = data.link.find(e => e.relation === 'next');
                 if (next) {
-                    return fetchAll(next.url, allResults);
+                    return fetchAll(next.url, allResults, i+1);
                 }
             }
 
@@ -66,33 +76,38 @@ function fetchAll(url, allResults = []) {
 }
 
 async function getPatients() {
-    // check local storage
-    const local = getLocalStorage('patients')
-    if (local) return parseAllPatientData(local);
+    // check local DB
+    const local = await localDBExists('patients')
+    if (local) return;
 
     // request data from server
-    let patients = await fetchAll(Constants.API_BASE_URL + 'Patient');
-    localStorage.setItem('patients', JSON.stringify(patients));
-    return parseAllPatientData(patients);
+    let patients = await fetchAll(Constants.API_BASE_URL + 'Patient' + '?_count=500');
+
+    // save in local DB
+    let parsedData = parseAllPatientData(patients)
+    await insertPatientsIntoDB(parsedData);
 }
 
 async function getConditions() {
-    // check local storage
-    const local = getLocalStorage('conditions')
-    if (local) return parseAllPatientData(local);
+    // check local DB
+    const local = await localDBExists('conditions')
+    if (local) return;
 
     // request data from server
-    let conditions = await fetchAll(Constants.API_BASE_URL + 'Condition');
-    localStorage.setItem('conditions', JSON.stringify(conditions));
-    return parseAllConditionData(conditions);
+    let conditions = await fetchAll(Constants.API_BASE_URL + 'Condition' + '?_count=500');
+    // save in local DB
+    let parsedData = parseAllConditionData(conditions);
+    await insertConditionsIntoDB(parsedData);
+
 }
 
-function getLocalStorage(key) {
-    let localData = localStorage.getItem(key);
+async function localDBExists(key) {
+    let localData = await checkIndexedDBExistence(key);
+    console.log(localData)
     if (localData && !Constants.ALWAYS_LOAD) {
-        return (JSON.parse(localData));
+        return true
     } else {
-        return null;
+        return false;
     }
 }
 

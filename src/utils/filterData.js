@@ -1,16 +1,24 @@
 import {AGE_GROUPS, BAR, FEMALE, LINE, MALE, PIE} from "./constants";
 import moment from "moment";
+import {queryDataFromConditionsDB, queryDataFromPatientsDB} from "./db";
 
 
 let patients;
 let conditions;
-export const initCharts = (data) => {
-    patients = data.patients;
-    conditions = data.conditions;
+
+export async function initCharts() {
+
+    patients = await queryDataFromPatientsDB({});
+    conditions = await queryDataFromConditionsDB({});
+
+
+    // patients = data.patients;
+    // conditions = data.conditions;
 
     let genderData = getGenderData(AGE_GROUPS);
     let ageData = getAgeData(AGE_GROUPS);
     let assertedDates = getAssertedDates(AGE_GROUPS);
+
 
     return [
         {
@@ -34,7 +42,11 @@ export const initCharts = (data) => {
     ];
 }
 
-export const getGenderData = (ageGroups) => {
+export function getGenderData(ageGroups) {
+
+    /*let female = (await queryDataFromPatientsDB({gender: FEMALE, ageGroups: ageGroups})).length;
+    let male = (await queryDataFromPatientsDB({gender: MALE, ageGroups: ageGroups})).length;*/
+
     return {
         labels: [
             'Männlich',
@@ -42,15 +54,16 @@ export const getGenderData = (ageGroups) => {
         ],
         datasets: [{
             data: [
-                // TODO: Adjust for divers and unknown
                 patients.filter(p => p.gender === MALE && ageGroups.includes(p.ageGroup)).length,
                 patients.filter(p => p.gender === FEMALE && ageGroups.includes(p.ageGroup)).length,
-            ],
-        }]
+            ]
+        }],
+        // TODO: Adjust for divers and unknown
+
     }
 }
 
-export const getAgeData = (ageGroups) => {
+export function getAgeData(ageGroups) {
 
     const getPatientCount = function (ageGroup, gender) {
         if (gender) return patients.filter(p => p.ageGroup === ageGroup && p.gender === gender).length;
@@ -88,11 +101,9 @@ export const getAgeData = (ageGroups) => {
 
 const getAssertedDates = () => {
 
-
-
     const getDataset = () => {
 
-        let sortedConditions = conditions.sort((a, b) =>  a.assertedDate - b.assertedDate );
+        let sortedConditions = conditions.sort((a, b) => a.assertedDate - b.assertedDate);
 
         const dates = {};
 

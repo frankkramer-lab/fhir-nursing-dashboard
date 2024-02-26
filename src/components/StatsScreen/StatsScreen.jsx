@@ -1,6 +1,6 @@
 import "./StatsScreen.css";
 import MyPieChart from "../Charts/MyPieChart";
-import {useContext, useReducer, useState} from "react";
+import {useContext, useEffect, useReducer, useState} from "react";
 import {DataContext} from "../../utils/api";
 import Modifiers from "../Modifiers/Modifiers";
 import MyBarChart from "../Charts/MyBarChart";
@@ -12,12 +12,10 @@ import MyLineChart from "../Charts/MyLineChart";
 export default function StatsScreen(props) {
 
     // force update function
-    const [, forceUpdate] = useReducer(x => x + 1, {x:0});
+    const [, forceUpdate] = useReducer(x => x + 1, {x: 0});
     const [activeChart, setActiveChart] = useState(0);
     const dataContext = useContext(DataContext);
-    const [charts, setCharts] = useState(initCharts(dataContext));
-
-
+    const [charts, setCharts] = useState(dataContext.charts);
 
 
     function UpdateComponent() {
@@ -47,7 +45,7 @@ export default function StatsScreen(props) {
                         if (chart.type === LINE) {
                             return (
                                 <MyLineChart key={index} title={chart.title} active={index === activeChart}
-                                            data={chart.modifiedData} onClick={() => setActiveChart(index)}/>
+                                             data={chart.modifiedData} onClick={() => setActiveChart(index)}/>
                             );
                         }
                     })}

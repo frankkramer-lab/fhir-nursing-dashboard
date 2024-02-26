@@ -20,12 +20,13 @@ export function parseAllPatientData(patients) {
         patient.gender = element.gender; // Gender
         patient.birthMonth = moment(element.birthDate).format("MMMM");
         patient.age = moment().diff(element.birthDate, "years");
-        tableData.push(patient);
         // Altersgruppe
         patient.ageGroup = element.extension?.[0]?.extension?.find(e => e.url === "Altersgruppe")?.valueCode;
         // Feststelldatum Altersgruppe
-        patient.determinsDateAgeGroup =
+        patient.determinedDateAgeGroup =
             moment(element.extension?.[0]?.extension?.find(e => e.url === "FeststelldatumAltersgruppe")?.valueDate);
+        // Zu Ergebnis hinzufügen
+        tableData.push(patient);
     });
 
     return tableData;
