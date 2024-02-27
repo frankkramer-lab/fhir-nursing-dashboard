@@ -1,9 +1,14 @@
 import * as Constants from "./constants";
 import {parseAllConditionData, parseAllPatientData} from "./parser";
-import {checkIndexedDBExistence, initDB, insertConditionsIntoDB, insertPatientsIntoDB} from "./db";
+import {
+    checkIndexedDBExistence,
+    checkIndexedDBFilled,
+    initDB,
+    insertConditionsIntoDB,
+    insertPatientsIntoDB
+} from "./db";
 
 import React, {createContext, useState, useEffect} from 'react';
-import {resolve} from "chart.js/helpers";
 import {initCharts} from "./filterData";
 
 export const DataContext = createContext(null);
@@ -75,9 +80,23 @@ function fetchAll(url, allResults = [], i = 0) {
         })
 }
 
+function fetchDataAmmount(key) {
+    return fetch(Constants.API_BASE_URL + key + '?_count=1', {
+        headers: {
+            "Authorization": "Basic " + btoa(Constants.USER + ':' + Constants.PASSWORD),
+        }
+    })
+        .then(async response => {
+            const data = await response.json();
+            return data.total;
+        })
+
+}
+
 async function getPatients() {
     // check local DB
-    const local = await localDBExists('patients')
+    let dataCount = await fetchDataAmmount('Patient');
+    const local = await localDBFilled('patients', dataCount);
     if (local) return;
 
     // request data from server
@@ -90,7 +109,9 @@ async function getPatients() {
 
 async function getConditions() {
     // check local DB
-    const local = await localDBExists('conditions')
+    // TODO: Adjust
+    let dataCount = await fetchDataAmmount('Condition');
+    const local = await localDBFilled('conditions', 50500)
     if (local) return;
 
     // request data from server
@@ -101,9 +122,8 @@ async function getConditions() {
 
 }
 
-async function localDBExists(key) {
-    let localData = await checkIndexedDBExistence(key);
-    console.log(localData)
+async function localDBFilled(key, count) {
+    let localData = await checkIndexedDBFilled(key, count);
     if (localData && !Constants.ALWAYS_LOAD) {
         return true
     } else {

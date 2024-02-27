@@ -4,44 +4,43 @@ const patientsStore = 'patients';
 const conditionsStore = 'conditions';
 
 
-export async function checkIndexedDBExistence(key) {
-    const databases = await indexedDB.databases();
+// Check if object store (key) has {count} entries
+export async function checkIndexedDBFilled(key, count) {
+    return new Promise((resolve, reject) => {
+        const openRequest = indexedDB.open(dbName, dbVersion);
 
-    // Überprüfe, ob die Datenbank vorhanden ist
-    let databaseExists = databases.some(db => db.name === dbName && db.version === dbVersion);
-    console.log('Database exists: ' + databaseExists);
+        openRequest.onsuccess = function (event) {
+            const db = event.target.result;
+            if (!db.objectStoreNames.contains(key)) {
+                console.log('Object store does not exist:', key);
+                db.close();
+                resolve(false);
+                return;
+            }
 
-    if (databaseExists) {
-        // Überprüfe ob Oject Store vorhanden ist
-        let exists = false;
-        console.log("checking for: " + key);
-        if (!key) {
-            exists = true
-        } else {
-            await new Promise((resolve, reject) => {
+            const transaction = db.transaction(key, 'readonly');
+            const objectStore = transaction.objectStore(key);
+            const countRequest = objectStore.count();
 
-                const openRequest = indexedDB.open(dbName, dbVersion);
+            countRequest.onsuccess = function () {
+                const doesMatch = countRequest.result === count;
+                console.log(key + ' count matches:', doesMatch);
+                db.close();
+                resolve(doesMatch);
+            };
 
+            countRequest.onerror = function () {
+                console.error('Error counting entries:', countRequest.error);
+                db.close();
+                reject(countRequest.error);
+            };
+        };
 
-                openRequest.onsuccess = function (event) {
-                    console.log("openRequest.onsuccess");
-                    const db = event.target.result;
-                    // Check if the object store already exists
-                    if (!db.objectStoreNames.contains(key)) {
-                        exists = true;
-                    }
-                    db.close();
-                    resolve();
-                };
-            });
-        }
-        console.log(exists)
-        return exists;
-    } else {
-        return false;
-    }
-
-
+        openRequest.onerror = function (event) {
+            console.error('Error opening database:', event.target.error);
+            reject(event.target.error);
+        };
+    });
 }
 
 
@@ -60,6 +59,7 @@ export function initDB() {
                 const objectStore = db.createObjectStore(conditionsStore, {keyPath: 'id'});
             }
 
+            console.log('Database upgraded');
             db.close();
             return resolve();
         };
