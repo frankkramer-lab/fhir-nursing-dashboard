@@ -53,3 +53,19 @@ export function parseAllConditionData(conditions) {
 
     return tableData;
 }
+
+export function parseAllEncounterData(encounter) {
+    const tableData = [];
+    encounter.forEach(element => {
+        if (!element) {
+            return null;
+        }
+        let encounter = {};
+        encounter.id = element.id; // ID
+        encounter.patientID = element.subject?.reference.split("/")[1]; // Patient ID
+        // TODO: complete
+        tableData.push(encounter);
+    });
+
+    return tableData;
+}

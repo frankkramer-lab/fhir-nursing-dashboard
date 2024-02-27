@@ -1,10 +1,9 @@
 import * as Constants from "./constants";
-import {parseAllConditionData, parseAllPatientData} from "./parser";
+import {parseAllConditionData, parseAllEncounterData, parseAllPatientData} from "./parser";
 import {
-    checkIndexedDBExistence,
     checkIndexedDBFilled,
     initDB,
-    insertConditionsIntoDB,
+    insertConditionsIntoDB, insertEncountersIntoDB,
     insertPatientsIntoDB
 } from "./db";
 
@@ -20,7 +19,7 @@ export const APIWraper = ({children}) => {
     useEffect(() => {
         setLoading(true);
         initDB().then(() => {
-            Promise.all([getPatients(), getConditions()]) // Promise.all, um mehrere Promises gleichzeitig auszuführen
+            Promise.all([getPatients(), getConditions(), getEncounters()]) // Promise.all, um mehrere Promises gleichzeitig auszuführen
                 .then(async () => {
                         setCharts(await initCharts());
                     }
@@ -72,7 +71,7 @@ function fetchAll(url, allResults = [], i = 0) {
             if (data.link && i <= 99) {
                 const next = data.link.find(e => e.relation === 'next');
                 if (next) {
-                    return fetchAll(next.url, allResults, i+1);
+                    return fetchAll(next.url, allResults, i + 1);
                 }
             }
 
@@ -116,10 +115,24 @@ async function getConditions() {
 
     // request data from server
     let conditions = await fetchAll(Constants.API_BASE_URL + 'Condition' + '?_count=500');
+
     // save in local DB
     let parsedData = parseAllConditionData(conditions);
     await insertConditionsIntoDB(parsedData);
+}
 
+async function getEncounters() {
+    // check local DB
+    let dataCount = await fetchDataAmmount('Encounter');
+    const local = await localDBFilled('encounters', dataCount);
+    if (local) return;
+
+    // request data from server
+    let encounters = await fetchAll(Constants.API_BASE_URL + 'Encounter' + '?_count=500');
+
+    // save in local DB
+    let parsedData = parseAllEncounterData(encounters);
+    await insertEncountersIntoDB(parsedData);
 }
 
 async function localDBFilled(key, count) {

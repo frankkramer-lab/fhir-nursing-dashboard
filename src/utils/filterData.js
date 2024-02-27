@@ -1,15 +1,17 @@
 import {AGE_GROUPS, BAR, FEMALE, LINE, MALE, PIE} from "./constants";
 import moment from "moment";
-import {queryDataFromConditionsDB, queryDataFromPatientsDB} from "./db";
+import {getAllDataFromDB, queryDataFromConditionsDB, queryDataFromPatientsDB} from "./db";
 
 
 let patients;
 let conditions;
+let encounters;
 
 export async function initCharts() {
 
-    patients = await queryDataFromPatientsDB({});
-    conditions = await queryDataFromConditionsDB({});
+    patients = await getAllDataFromDB('patients');
+    conditions = await getAllDataFromDB('conditions');
+    encounters = await getAllDataFromDB('encounters');
 
 
     // patients = data.patients;

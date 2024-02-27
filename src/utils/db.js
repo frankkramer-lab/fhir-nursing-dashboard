@@ -1,7 +1,8 @@
 const dbName = 'MedicalDatabase';
-const dbVersion = 1;
+const dbVersion = 2;
 const patientsStore = 'patients';
 const conditionsStore = 'conditions';
+const encountersStore = 'encounters';
 
 
 // Check if object store (key) has {count} entries
@@ -57,6 +58,9 @@ export function initDB() {
             }
             if (!db.objectStoreNames.contains(conditionsStore)) {
                 const objectStore = db.createObjectStore(conditionsStore, {keyPath: 'id'});
+            }
+            if (!db.objectStoreNames.contains(encountersStore)) {
+                const objectStore = db.createObjectStore(encountersStore, {keyPath: 'id'});
             }
 
             console.log('Database upgraded');
@@ -150,9 +154,40 @@ export function insertConditionsIntoDB(conditions) {
     });
 }
 
+export function insertEncountersIntoDB(encounters) {
+    return new Promise((resolve, reject) => {
+        const openRequest = indexedDB.open(dbName, dbVersion);
+
+
+        openRequest.onsuccess = function (event) {
+            const db = event.target.result;
+            const transaction = db.transaction(encountersStore, 'readwrite');
+            const objectStore = transaction.objectStore(encountersStore);
+
+            encounters.forEach(encounter => {
+                objectStore.add({
+                    id: encounter.id,
+                    patientID: encounter.patientID
+                    // TODO: complete
+                });
+            });
+
+            transaction.oncomplete = function () {
+                db.close();
+            };
+            return resolve();
+        };
+
+        openRequest.onerror = function (event) {
+            console.error('Error opening database:', event.target.error);
+            return resolve();
+        }
+    });
+}
+
 export function queryDataFromPatientsDB(query) {
     return new Promise((resolve, reject) => {
-        const openRequest = indexedDB.open(dbName, 1);
+        const openRequest = indexedDB.open(dbName, dbVersion);
 
         openRequest.onerror = function (event) {
             reject(`Error opening database: ${event.target.error}`);
@@ -194,9 +229,9 @@ export function queryDataFromPatientsDB(query) {
     });
 }
 
-export function queryDataFromConditionsDB() {
+export function getAllDataFromDB(storeName) {
     return new Promise((resolve, reject) => {
-        const openRequest = indexedDB.open(dbName, 1);
+        const openRequest = indexedDB.open(dbName, dbVersion);
 
         openRequest.onerror = function (event) {
             reject(`Error opening database: ${event.target.error}`);
@@ -204,25 +239,13 @@ export function queryDataFromConditionsDB() {
 
         openRequest.onsuccess = function (event) {
             const db = event.target.result;
-            const transaction = db.transaction(conditionsStore, 'readonly');
-            const objectStore = transaction.objectStore(conditionsStore);
-            const request = objectStore.openCursor();
-
-            const result = [];
+            const transaction = db.transaction(storeName, 'readonly');
+            const objectStore = transaction.objectStore(storeName);
+            const request = objectStore.getAll();
 
             request.onsuccess = function (event) {
-                const cursor = event.target.result;
-                if (cursor) {
-                    // Hier werden alle Datensätze standardmäßig zurückgegeben
-                    result.push(cursor.value);
-
-                    // Zum nächsten Datensatz im Object Store gehen
-                    cursor.continue();
-                } else {
-                    // Keine weiteren Datensätze vorhanden
-                    db.close();
-                    resolve(result);
-                }
+                db.close();
+                resolve(request.result);
             };
 
             transaction.onerror = function (event) {
@@ -230,4 +253,5 @@ export function queryDataFromConditionsDB() {
             };
         };
     });
+
 }
