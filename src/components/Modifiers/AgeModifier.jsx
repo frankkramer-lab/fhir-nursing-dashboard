@@ -3,7 +3,7 @@ import "./AgeModifier.css"
 import {
     AGE_GROUPS,
 } from "../../utils/constants";
-import {getAgeData, getGenderData} from "../../utils/filterData";
+import {getAgeData, getEncountersData, getGenderData} from "../../utils/filterData";
 
 export default function AgeModifier(props) {
 
@@ -41,20 +41,16 @@ export default function AgeModifier(props) {
                 data[i] = 1;
             }
         }
+        console.log(data);
         props.updateAgeModifiers(data.map(d => Boolean(d)));
 
         // Remove the 'All' checkbox from the data array
         data.shift();
 
         let filteredAges = AGE_GROUPS.filter((ageGroup, index) => data[index] === 1);
-        if (props.chartData.title === "Gender") {
-            props.chartData.modifiedData = getGenderData(filteredAges);
-            props.updateComponent();
-        }
-        if (props.chartData.title === "Age") {
-            props.chartData.modifiedData = getAgeData(filteredAges);
-            props.updateComponent();
-        }
+        props.chartData.modifiedData = props.chartData.getData(filteredAges);
+        props.updateComponent();
+
     }
 
 
@@ -69,7 +65,7 @@ export default function AgeModifier(props) {
                     return (
                         <li key={index}>
                             <input name={"age-checkbox"} type="checkbox" value={ageGroup} onClick={handleCheckboxChange}
-                                   defaultChecked={props.initialStates[index+1]}/>
+                                   defaultChecked={props.initialStates[index + 1]}/>
                             <label>{ageGroup}</label>
                         </li>
                     );

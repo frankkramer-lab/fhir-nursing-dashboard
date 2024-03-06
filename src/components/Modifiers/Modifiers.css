@@ -1,4 +1,5 @@
 .modifiers-box {
+    position: relative;
     display: flex;
     width: 90%;
     flex-direction: column;
@@ -12,9 +13,9 @@
     scrollbar-width: thin; /* For Firefox */
     scrollbar-color: var(--purple) var(--white);
     scrollbar-gutter: stable;
-
-
 }
+
+
 
 .modifiers-box::-webkit-scrollbar {
     width: 7px; /* Adjust the width of the scrollbar */

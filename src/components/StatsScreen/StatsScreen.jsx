@@ -5,7 +5,6 @@ import {DataContext} from "../../utils/api";
 import Modifiers from "../Modifiers/Modifiers";
 import MyBarChart from "../Charts/MyBarChart";
 import GroupHeading from "./GroupHeading";
-import {initCharts} from "../../utils/filterData";
 import {BAR, LINE, PIE} from "../../utils/constants";
 import MyLineChart from "../Charts/MyLineChart";
 

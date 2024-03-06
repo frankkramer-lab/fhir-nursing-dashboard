@@ -14,8 +14,7 @@ export async function initCharts() {
     encounters = await getAllDataFromDB('encounters');
 
 
-    // patients = data.patients;
-    // conditions = data.conditions;
+    // All functions need to take the arguments: ageGroups,
 
     let genderData = getGenderData(AGE_GROUPS);
     let ageData = getAgeData(AGE_GROUPS);
@@ -23,25 +22,43 @@ export async function initCharts() {
     let encountersData = getEncountersData(AGE_GROUPS);
 
 
+
+    console.log({
+        title: "Encounters",
+        type: LINE,
+        data: encountersData,
+        modifiedData: encountersData,
+    })
+
     return [
         {
             title: "Gender",
             type: PIE,
             data: genderData,
             modifiedData: genderData,
+            getData: getGenderData,
         },
         {
             title: "Age",
             type: BAR,
             data: ageData,
             modifiedData: ageData,
+            getData: getAgeData,
         },
         {
             title: "Asserted Dates",
             type: LINE,
             data: assertedDates,
             modifiedData: assertedDates,
-        }
+            getData: getAssertedDates,
+        },
+        {
+            title: "Encounters",
+            type: LINE,
+            data: encountersData,
+            modifiedData: encountersData,
+            getData: getEncountersData,
+        },
     ];
 }
 
@@ -106,15 +123,14 @@ export function getAgeData(ageGroups) {
     }
 }
 
-const getAssertedDates = () => {
+const getAssertedDates = (ageGroups) => {
 
     const getDataset = () => {
 
-        let sortedConditions = conditions.sort((a, b) => a.assertedDate - b.assertedDate);
 
         const dates = {};
 
-        sortedConditions.forEach(condition => {
+        conditions.forEach(condition => {
             const assertedDate = moment(condition.assertedDate).format('DD.MM.YY');
 
             if (dates[assertedDate]) {
@@ -145,17 +161,34 @@ const getAssertedDates = () => {
     }
 }
 
-function getEncountersData(ageData) {
+export function getEncountersData(ageGroups) {
 
-    const getDataset = (ageGroup) => {
-        return encounters.filter(encounter => ageData.includes(getPatientById(encounter.patientID).ageGroup)).length;
+    const getDataset = () => {
+        // filter by Age Groups
+        let filteredEncounters = encounters.filter(encounter => ageGroups.includes(getPatientById(encounter.patientID).ageGroup));
+
+        // sort by Date
+        const dates = {};
+
+        filteredEncounters.forEach(e => {
+            const startDate = moment(e.periodStart).format('DD.MM.YY');
+
+            if (dates[startDate]) {
+                dates[startDate]++;
+            } else {
+                dates[startDate] = 1;
+            }
+        });
+
+        return dates;
+
     }
 
     return {
-        labels: ageData,
         datasets: [
             {
-
+                label: 'Encounters',
+                data: getDataset()
             }
         ]
     }
