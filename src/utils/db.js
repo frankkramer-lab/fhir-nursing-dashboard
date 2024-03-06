@@ -167,8 +167,15 @@ export function insertEncountersIntoDB(encounters) {
             encounters.forEach(encounter => {
                 objectStore.add({
                     id: encounter.id,
-                    patientID: encounter.patientID
-                    // TODO: complete
+                    caseNumber: encounter.caseNumber,
+                    actCode: encounter.actCode,
+                    actCodeDisplay: encounter.actCodeDisplay,
+                    levelOfContact: encounter.levelOfContact,
+                    typeOfCare: encounter.typeOfCare,
+                    patientID: encounter.patientID,
+                    periodStart: encounter.periodStart.calendar(),
+                    periodEnd: encounter.periodEnd.calendar(),
+                    serviceProvider: encounter.serviceProvider,
                 });
             });
 

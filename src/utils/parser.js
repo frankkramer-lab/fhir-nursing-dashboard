@@ -60,11 +60,19 @@ export function parseAllEncounterData(encounter) {
         if (!element) {
             return null;
         }
-        let encounter = {};
-        encounter.id = element.id; // ID
-        encounter.patientID = element.subject?.reference.split("/")[1]; // Patient ID
+        let e = {};
+        e.id = element.id; // ID
+        e.caseNumber = element.identifier?.[0]?.value; // Fallnummer
+        e.actCode = element.class?.code; // Typ
+        e.actCodeDisplay = element.class?.display; // Typ Ausgeschrieben
+        e.levelOfContact = element.type?.[0]?.coding?.[0]?.code; // Kontaktart
+        e.typeOfCare = element.type?.[0]?.coding?.[1]?.code; // Pflegeart
+        e.patientID = element.subject?.reference.split("/")[1]; // Patient ID
+        e.periodStart = moment(element.period?.start); // Startzeit
+        e.periodEnd = moment(element.period?.end); // Endzeit
+        e.serviceProvider = element.serviceProvider?.reference.split("/")[1]; // Anbieter
         // TODO: complete
-        tableData.push(encounter);
+        tableData.push(e);
     });
 
     return tableData;

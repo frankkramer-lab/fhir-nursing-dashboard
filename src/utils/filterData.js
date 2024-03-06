@@ -20,6 +20,7 @@ export async function initCharts() {
     let genderData = getGenderData(AGE_GROUPS);
     let ageData = getAgeData(AGE_GROUPS);
     let assertedDates = getAssertedDates(AGE_GROUPS);
+    let encountersData = getEncountersData(AGE_GROUPS);
 
 
     return [
@@ -42,6 +43,10 @@ export async function initCharts() {
             modifiedData: assertedDates,
         }
     ];
+}
+
+const getPatientById = (id) => {
+    return patients.find(patient => patient.id === id)
 }
 
 export function getGenderData(ageGroups) {
@@ -140,4 +145,18 @@ const getAssertedDates = () => {
     }
 }
 
+function getEncountersData(ageData) {
 
+    const getDataset = (ageGroup) => {
+        return encounters.filter(encounter => ageData.includes(getPatientById(encounter.patientID).ageGroup)).length;
+    }
+
+    return {
+        labels: ageData,
+        datasets: [
+            {
+
+            }
+        ]
+    }
+}

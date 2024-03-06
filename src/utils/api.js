@@ -15,17 +15,27 @@ export const DataContext = createContext(null);
 export const APIWraper = ({children}) => {
     const [loading, setLoading] = useState(true);
     const [charts, setCharts] = useState(null);
+    const [progress, setProgress] = useState(0);
+
+    function updateProgress(p){
+        if(p > progress){
+            setProgress(p);
+        }
+    }
 
     useEffect(() => {
         setLoading(true);
         initDB().then(() => {
-            Promise.all([getPatients(), getConditions(), getEncounters()]) // Promise.all, um mehrere Promises gleichzeitig auszuführen
+            Promise.all([getPatients(updateProgress), getConditions(updateProgress), getEncounters(updateProgress)]) // Promise.all, um mehrere Promises gleichzeitig auszuführen
                 .then(async () => {
                         setCharts(await initCharts());
                     }
                 )
                 .catch(error => console.error('Fehler:', error))
-                .finally(() => setLoading(false)); // loading false, nachdem alle Fetch-Aufrufe abgeschlossen
+                .finally(() => {
+                    setLoading(false);
+                    setProgress(0);
+                }); // loading false, nachdem alle Fetch-Aufrufe abgeschlossen
         });
     }, []);
 
@@ -38,7 +48,7 @@ export const APIWraper = ({children}) => {
                 textAlign: "center",
                 minHeight: "100vh"
             }}>
-                <p>Loading...</p>
+                <p>Loading... {progress.toFixed(0)}%</p>
             </div>
         );
 
@@ -50,7 +60,7 @@ export const APIWraper = ({children}) => {
 };
 
 
-function fetchAll(url, allResults = [], i = 0) {
+function fetchAll(url, allResults = [], updateProgress) {
     return fetch(url, {
         headers: {
             "Authorization": "Basic " + btoa(Constants.USER + ':' + Constants.PASSWORD),
@@ -58,7 +68,8 @@ function fetchAll(url, allResults = [], i = 0) {
     })
         .then(async response => {
             const data = await response.json();
-            console.log(allResults.length / data.total * 100);
+            let progress = (allResults.length / data.total * 100);
+            console.log(progress);
 
             if (!response.ok) {
                 const error = (data && data.message) || response.statusText;
@@ -66,12 +77,13 @@ function fetchAll(url, allResults = [], i = 0) {
             }
             const resources = data.entry.map(e => e.resource);
             allResults.push(...resources);
+            updateProgress(progress);
 
-            // Reccursion to get all pages
-            if (data.link && i <= 99) {
+            // Reccursion to get all pagesvs yio
+            if (data.link) {
                 const next = data.link.find(e => e.relation === 'next');
                 if (next) {
-                    return fetchAll(next.url, allResults, i + 1);
+                    return fetchAll(next.url, allResults, updateProgress);
                 }
             }
 
@@ -92,43 +104,43 @@ function fetchDataAmmount(key) {
 
 }
 
-async function getPatients() {
+async function getPatients(updateProgress) {
     // check local DB
     let dataCount = await fetchDataAmmount('Patient');
     const local = await localDBFilled('patients', dataCount);
     if (local) return;
 
     // request data from server
-    let patients = await fetchAll(Constants.API_BASE_URL + 'Patient' + '?_count=500');
+    let patients = await fetchAll(Constants.API_BASE_URL + 'Patient' + '?_count=500', [], updateProgress);
 
     // save in local DB
     let parsedData = parseAllPatientData(patients)
     await insertPatientsIntoDB(parsedData);
 }
 
-async function getConditions() {
+async function getConditions(updateProgress) {
     // check local DB
     // TODO: Adjust
     let dataCount = await fetchDataAmmount('Condition');
-    const local = await localDBFilled('conditions', 50500)
+    const local = await localDBFilled('conditions', dataCount)
     if (local) return;
 
     // request data from server
-    let conditions = await fetchAll(Constants.API_BASE_URL + 'Condition' + '?_count=500');
+    let conditions = await fetchAll(Constants.API_BASE_URL + 'Condition' + '?_count=2500', [], updateProgress);
 
     // save in local DB
     let parsedData = parseAllConditionData(conditions);
     await insertConditionsIntoDB(parsedData);
 }
 
-async function getEncounters() {
+async function getEncounters(updateProgress) {
     // check local DB
     let dataCount = await fetchDataAmmount('Encounter');
     const local = await localDBFilled('encounters', dataCount);
     if (local) return;
 
     // request data from server
-    let encounters = await fetchAll(Constants.API_BASE_URL + 'Encounter' + '?_count=500');
+    let encounters = await fetchAll(Constants.API_BASE_URL + 'Encounter' + '?_count=500', [], updateProgress);
 
     // save in local DB
     let parsedData = parseAllEncounterData(encounters);
