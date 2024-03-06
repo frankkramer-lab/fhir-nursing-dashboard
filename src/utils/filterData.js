@@ -1,6 +1,6 @@
 import {AGE_GROUPS, BAR, FEMALE, LINE, MALE, PIE} from "./constants";
 import moment from "moment";
-import {getAllDataFromDB, queryDataFromConditionsDB, queryDataFromPatientsDB} from "./db";
+import {getAllDataFromDB} from "./db";
 
 
 let patients;

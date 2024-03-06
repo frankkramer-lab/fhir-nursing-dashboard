@@ -5,11 +5,6 @@ import TimeSpanModifier from "./TimeSpanModifier";
 
 export default function Modifiers(props) {
 
-    let modifiers = {
-        AgeModifier,
-        TimeSpanModifier,
-    }
-
     // Current Active Chart Data
     let chartData = props.charts[props.activeIndex];
 

@@ -54,13 +54,13 @@ export function initDB() {
 
             // Erstellen oder Aktualisieren des Object Stores
             if (!db.objectStoreNames.contains(patientsStore)) {
-                const objectStore = db.createObjectStore(patientsStore, {keyPath: 'id'});
+                db.createObjectStore(patientsStore, {keyPath: 'id'});
             }
             if (!db.objectStoreNames.contains(conditionsStore)) {
-                const objectStore = db.createObjectStore(conditionsStore, {keyPath: 'id'});
+                db.createObjectStore(conditionsStore, {keyPath: 'id'});
             }
             if (!db.objectStoreNames.contains(encountersStore)) {
-                const objectStore = db.createObjectStore(encountersStore, {keyPath: 'id'});
+                db.createObjectStore(encountersStore, {keyPath: 'id'});
             }
 
             console.log('Database upgraded');

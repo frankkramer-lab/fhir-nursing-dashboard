@@ -3,7 +3,6 @@ import "./AgeModifier.css"
 import {
     AGE_GROUPS,
 } from "../../utils/constants";
-import {getAgeData, getEncountersData, getGenderData} from "../../utils/filterData";
 
 export default function AgeModifier(props) {
 

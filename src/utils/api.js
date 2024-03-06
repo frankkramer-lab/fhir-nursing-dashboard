@@ -149,11 +149,7 @@ async function getEncounters(updateProgress) {
 
 async function localDBFilled(key, count) {
     let localData = await checkIndexedDBFilled(key, count);
-    if (localData && !Constants.ALWAYS_LOAD) {
-        return true
-    } else {
-        return false;
-    }
+    return !!(localData && !Constants.ALWAYS_LOAD);
 }
 
 
