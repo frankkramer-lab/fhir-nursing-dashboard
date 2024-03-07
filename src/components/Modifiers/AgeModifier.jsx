@@ -42,14 +42,6 @@ export default function AgeModifier(props) {
         }
         console.log(data);
         props.updateAgeModifiers(data.map(d => Boolean(d)));
-
-        // Remove the 'All' checkbox from the data array
-        data.shift();
-
-        let filteredAges = AGE_GROUPS.filter((ageGroup, index) => data[index] === 1);
-        props.chartData.modifiedData = props.chartData.getData(filteredAges);
-        props.updateComponent();
-
     }
 
 
