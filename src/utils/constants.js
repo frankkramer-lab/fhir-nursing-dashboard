@@ -17,6 +17,11 @@ export const BAR = 'bar';
 
 export const LINE = 'line';
 
+// Time Span
+export const STARTDATE = new Date(2021, 0, 1);
+export const ENDDATE = new Date(2022, 11, 31);
+
+
 // Age Groups
 export const AGEGROUP0_9 = '0-9';
 export const AGEGROUP10_19 = '10-19';

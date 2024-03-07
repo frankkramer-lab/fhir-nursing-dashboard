@@ -1,4 +1,4 @@
-import {AGE_GROUPS, BAR, FEMALE, LINE, MALE, PIE} from "./constants";
+import {AGE_GROUPS, BAR, ENDDATE, FEMALE, LINE, MALE, PIE, STARTDATE} from "./constants";
 import moment from "moment";
 import {getAllDataFromDB} from "./db";
 
@@ -129,8 +129,7 @@ const getAssertedDates = (ageGroups) => {
 
         let sortedConditions = conditions.sort((a, b) => a.assertedDate - b.assertedDate);
 
-        const dates = {};
-
+        const dates = initDates();
 
         sortedConditions.forEach(condition => {
             const assertedDate = moment(condition.assertedDate).format('DD.MM.YY');
@@ -172,7 +171,7 @@ export function getEncountersData(ageGroups) {
         // sort by Date
         let sortedEncounters = filteredEncounters.sort((a, b) => a.periodStart - b.periodStart);
 
-        const dates = {};
+        const dates = initDates();
 
         sortedEncounters.forEach(e => {
             const startDate = moment(e.periodStart).format('DD.MM.YY');
@@ -196,4 +195,19 @@ export function getEncountersData(ageGroups) {
             }
         ]
     }
+}
+
+
+function initDates(){
+    const dates = {};
+    let days = Math.round((ENDDATE - STARTDATE) / (1000 * 60 * 60 * 24));
+
+
+    for(let i = 0; i < days; i++) {
+        let date = new Date(STARTDATE);
+        date.setDate(date.getDate() + i);
+        let dateString = moment(date).format('DD.MM.YY');
+        dates[dateString] = 0;
+    }
+    return dates;
 }
