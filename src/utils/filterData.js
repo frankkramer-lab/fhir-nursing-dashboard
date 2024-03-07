@@ -127,10 +127,12 @@ const getAssertedDates = (ageGroups) => {
 
     const getDataset = () => {
 
+        let sortedConditions = conditions.sort((a, b) => a.assertedDate - b.assertedDate);
 
         const dates = {};
 
-        conditions.forEach(condition => {
+
+        sortedConditions.forEach(condition => {
             const assertedDate = moment(condition.assertedDate).format('DD.MM.YY');
 
             if (dates[assertedDate]) {
@@ -168,9 +170,11 @@ export function getEncountersData(ageGroups) {
         let filteredEncounters = encounters.filter(encounter => ageGroups.includes(getPatientById(encounter.patientID).ageGroup));
 
         // sort by Date
+        let sortedEncounters = filteredEncounters.sort((a, b) => a.periodStart - b.periodStart);
+
         const dates = {};
 
-        filteredEncounters.forEach(e => {
+        sortedEncounters.forEach(e => {
             const startDate = moment(e.periodStart).format('DD.MM.YY');
 
             if (dates[startDate]) {

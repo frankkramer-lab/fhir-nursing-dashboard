@@ -101,7 +101,7 @@ export function insertPatientsIntoDB(patients) {
                     birthMonth: patient.birthMonth,
                     age: patient.age,
                     ageGroup: patient.ageGroup,
-                    determinedDateAgeGroup: patient.determinedDateAgeGroup.calendar(),
+                    determinedDateAgeGroup: patient.determinedDateAgeGroup.toDate(),
                 });
             });
 
@@ -132,7 +132,7 @@ export function insertConditionsIntoDB(conditions) {
                 objectStore.add({
                     id: condition.id,
                     patientID: condition.patientID,
-                    assertedDate: condition.assertedDate.calendar(),
+                    assertedDate: condition.assertedDate.toDate(),
                     extension: condition.extension,
                     clinicalStatus: condition.clinicalStatus,
                     code: condition.code,
@@ -173,8 +173,8 @@ export function insertEncountersIntoDB(encounters) {
                     levelOfContact: encounter.levelOfContact,
                     typeOfCare: encounter.typeOfCare,
                     patientID: encounter.patientID,
-                    periodStart: encounter.periodStart.calendar(),
-                    periodEnd: encounter.periodEnd.calendar(),
+                    periodStart: encounter.periodStart.toDate(),
+                    periodEnd: encounter.periodEnd.toDate(),
                     serviceProvider: encounter.serviceProvider,
                 });
             });
