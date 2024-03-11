@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import "./Modifiers.css"
 import AgeModifier from "./AgeModifier";
 import TimeSpanModifier from "./TimeSpanModifier";
-import {AGE_GROUPS} from "../../utils/constants";
+import {AGE_GROUPS, ENDDATE, STARTDATE} from "../../utils/constants";
 import StatsScreen from "../StatsScreen/StatsScreen";
 
 export default function Modifiers(props) {
@@ -19,8 +19,14 @@ export default function Modifiers(props) {
     // Age Modifiers temporal storage
     const [ageModifierStates, setAgeModifierStates] = useState(ageModifiers[props.activeIndex]);
 
+    // All Time Span Modifiers
+    const [timeSpanModifiers, setTimeSpanModifiers] = useState(Array.from({length: props.charts.length}, () => [STARTDATE, ENDDATE]));
+    // Time Span Modifiers temporal storage
+    const [timeSpanModifierState, setTimeSpanModifierState] = useState(timeSpanModifiers[props.activeIndex]);
+
     // Track 'getData' function variables
     const [ageGroups, setAgeGroups] = useState(Array.from(AGE_GROUPS));
+    const [timeSpan, setTimeSpan] = useState([STARTDATE, ENDDATE]);
 
 
     useEffect(() => {}, [computing]);
@@ -30,9 +36,9 @@ export default function Modifiers(props) {
         // Use setTimeout to simulate a time-consuming operation (replace this with your actual heavy function)
         setTimeout(() => {
             // Update chart data
-            chartData.modifiedData = chartData.getData(ageGroups);
+            chartData.modifiedData = chartData.getData(ageGroups, timeSpan);
             // Update Modifiers State
-            setAgeModifiersData();
+            setModifiersData();
             // Rerender Chart
             props.updateComponent();
             // Set computing to false after the heavy operation is completed
@@ -40,20 +46,29 @@ export default function Modifiers(props) {
         }, 0);
     }
 
-    function setAgeModifiersData() {
+    function setModifiersData() {
+        // Age Modifiers
         ageModifiers[props.activeIndex] = ageModifierStates;
         setAgeModifiers(ageModifiers);
+        // Time Span Modifiers
+        timeSpanModifiers[props.activeIndex] = timeSpanModifierState;
+        setTimeSpanModifiers(timeSpanModifiers);
     }
 
 
     function updateAgeModifiers(data) {
-        // Todo: Handle not applied modifiers
         // Save Checkbox states
         setAgeModifierStates(Array.from(data));
         // Remove the 'All' checkbox from the data array
         data.shift();
         let ag = AGE_GROUPS.filter((ageGroup, index) => data[index] === true);
         setAgeGroups(ag);
+    }
+
+    function updateTimeSpan(startDate, endDate) {
+        // Save Time Span State
+        setTimeSpanModifierState([startDate, endDate]);
+        setTimeSpan([startDate, endDate]);
     }
 
     function renderAgeModifier() {
@@ -65,8 +80,10 @@ export default function Modifiers(props) {
     }
 
     function renderTimeSpanModifier() {
-        if (chartData.title === "Encounters")
-            return <TimeSpanModifier key={props.activeIndex + "timeSpan"}/>
+        if (chartData.title === "Encounters" || chartData.title === "Asserted Dates")
+            return <TimeSpanModifier key={props.activeIndex + "timeSpan"}
+                                     initialStates={timeSpanModifiers[props.activeIndex]}
+                                     updateTimeSpan={updateTimeSpan}/>
     }
 
     return (

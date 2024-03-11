@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './TimeSpanModifier.css';
 import {ENDDATE, STARTDATE} from "../../utils/constants";
 
 
 export default function TimeSpanModifier(props) {
+
+    const [startDate, setStartDate] = useState(props.initialStates[0]);
+    const [endDate, setEndDate] = useState(props.initialStates[1]);
 
     function formatDateToYYYYMMDD(date) {
         const year = date.getFullYear();
@@ -12,23 +15,61 @@ export default function TimeSpanModifier(props) {
 
         return `${year}-${month}-${day}`;
     }
+
+    const changeStart = (date) => {
+        const newDate = new Date(date.target.value);
+        newDate.setHours(0, 0, 0, 0);
+        if (newDate > endDate) {
+            console.log('newDate', newDate);
+            const newEndDate = new Date(date.target.value);
+            console.log('newEndDate', newEndDate);
+            newEndDate.setHours(23, 59, 59, 0);
+            props.updateTimeSpan(newDate, newEndDate);
+            setEndDate(newEndDate);
+        } else {
+            props.updateTimeSpan(newDate, endDate);
+        }
+        setStartDate(newDate);
+    }
+    const changeEnd = (date) => {
+        const newDate = new Date(date.target.value);
+        newDate.setHours(23, 59, 59, 0);
+        if (newDate < startDate) {
+            console.log('newDate', newDate);
+            const newStartDate = new Date(date.target.value);
+            console.log('newStartDate', newStartDate);
+            newStartDate.setHours(0, 0, 0, 0);
+            props.updateTimeSpan(newStartDate, newDate);
+            setStartDate(newStartDate);
+        } else {
+            props.updateTimeSpan(startDate, newDate);
+        }
+        setEndDate(newDate);
+    }
+
+
     return (
         <div id={"time-span-modifier"}>
             <h2>Time Span</h2>
             <div className={"date-input-wrapper"}>
                 <div className={"date-input-group"}>
                     <label htmlFor="start-date">Start</label>
-                    <input className={"date-input"} type="date" id="start" name="start-date" defaultValue={formatDateToYYYYMMDD(STARTDATE)}
+                    <input className={"date-input"} type="date" id="start" name="start-date"
+                           value={formatDateToYYYYMMDD(startDate)}
                            min={formatDateToYYYYMMDD(STARTDATE)}
                            max={formatDateToYYYYMMDD(ENDDATE)}
+                           onChange={changeStart}
                     />
 
                 </div>
                 <div className={"date-input-group"}>
                     <label htmlFor="end-date">End</label>
-                    <input className={"date-input"} type="date" id="end" name="end-date" defaultValue={formatDateToYYYYMMDD(ENDDATE)}
+                    <input className={"date-input"} type="date" id="end" name="end-date"
+                           value={formatDateToYYYYMMDD(endDate)}
                            min={formatDateToYYYYMMDD(STARTDATE)}
-                           max={formatDateToYYYYMMDD(ENDDATE)}/>
+                           max={formatDateToYYYYMMDD(ENDDATE)}
+                           onChange={changeEnd}
+                    />
                 </div>
             </div>
         </div>

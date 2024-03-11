@@ -14,21 +14,13 @@ export async function initCharts() {
     encounters = await getAllDataFromDB('encounters');
 
 
-    // All functions need to take the arguments: ageGroups,
+    // All functions need to take the arguments: ageGroups, timeSpan
 
-    let genderData = getGenderData(AGE_GROUPS);
-    let ageData = getAgeData(AGE_GROUPS);
-    let assertedDates = getAssertedDates(AGE_GROUPS);
-    let encountersData = getEncountersData(AGE_GROUPS);
+    let genderData = getGenderData(AGE_GROUPS, [STARTDATE, ENDDATE]);
+    let ageData = getAgeData(AGE_GROUPS, [STARTDATE, ENDDATE]);
+    let assertedDates = getAssertedDates(AGE_GROUPS, [STARTDATE, ENDDATE]);
+    let encountersData = getEncountersData(AGE_GROUPS, [STARTDATE, ENDDATE]);
 
-
-
-    console.log({
-        title: "Encounters",
-        type: LINE,
-        data: encountersData,
-        modifiedData: encountersData,
-    })
 
     return [
         {
@@ -66,7 +58,7 @@ const getPatientById = (id) => {
     return patients.find(patient => patient.id === id)
 }
 
-export function getGenderData(ageGroups) {
+export function getGenderData(ageGroups, timeSpan) {
 
     /*let female = (await queryDataFromPatientsDB({gender: FEMALE, ageGroups: ageGroups})).length;
     let male = (await queryDataFromPatientsDB({gender: MALE, ageGroups: ageGroups})).length;*/
@@ -87,7 +79,7 @@ export function getGenderData(ageGroups) {
     }
 }
 
-export function getAgeData(ageGroups) {
+export function getAgeData(ageGroups, timeSpan) {
 
     const getPatientCount = function (ageGroup, gender) {
         if (gender) return patients.filter(p => p.ageGroup === ageGroup && p.gender === gender).length;
@@ -123,13 +115,17 @@ export function getAgeData(ageGroups) {
     }
 }
 
-const getAssertedDates = (ageGroups) => {
+const getAssertedDates = (ageGroups, timeSpan) => {
 
     const getDataset = () => {
 
-        let sortedConditions = conditions.sort((a, b) => a.assertedDate - b.assertedDate);
+        // filter
+        let  filteredConditions = conditions.filter(c => c.assertedDate >= timeSpan[0] && c.assertedDate <= timeSpan[1]);
 
-        const dates = initDates();
+        // sort by Date
+        let sortedConditions = filteredConditions.sort((a, b) => a.assertedDate - b.assertedDate);
+
+        const dates = initDates(timeSpan);
 
         sortedConditions.forEach(condition => {
             const assertedDate = moment(condition.assertedDate).format('DD.MM.YY');
@@ -162,16 +158,20 @@ const getAssertedDates = (ageGroups) => {
     }
 }
 
-export function getEncountersData(ageGroups) {
+export function getEncountersData(ageGroups, timeSpan) {
+
+    console.log('getEncountersData', ageGroups, timeSpan);
 
     const getDataset = () => {
-        // filter by Age Groups
+        // filter
         let filteredEncounters = encounters.filter(encounter => ageGroups.includes(getPatientById(encounter.patientID).ageGroup));
+        filteredEncounters = filteredEncounters.filter(encounter => encounter.periodStart >= timeSpan[0] && encounter.periodStart <= timeSpan[1]);
 
         // sort by Date
         let sortedEncounters = filteredEncounters.sort((a, b) => a.periodStart - b.periodStart);
 
-        const dates = initDates();
+        const dates = initDates(timeSpan);
+        console.log('dates', dates);
 
         sortedEncounters.forEach(e => {
             const startDate = moment(e.periodStart).format('DD.MM.YY');
@@ -198,16 +198,18 @@ export function getEncountersData(ageGroups) {
 }
 
 
-function initDates(){
-    const dates = {};
-    let days = Math.round((ENDDATE - STARTDATE) / (1000 * 60 * 60 * 24));
+function initDates(timeSpan){
+    const d = {};
+    let days = Math.round((timeSpan[1] - timeSpan[0]) / (1000 * 60 * 60 * 24));
+    console.log('days', days);
 
 
     for(let i = 0; i < days; i++) {
-        let date = new Date(STARTDATE);
+        let date = new Date(timeSpan[0]);
         date.setDate(date.getDate() + i);
         let dateString = moment(date).format('DD.MM.YY');
-        dates[dateString] = 0;
+        d[dateString] = 0;
     }
-    return dates;
+    console.log('d', d)
+    return d;
 }

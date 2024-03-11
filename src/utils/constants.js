@@ -18,8 +18,8 @@ export const BAR = 'bar';
 export const LINE = 'line';
 
 // Time Span
-export const STARTDATE = new Date(2021, 0, 1);
-export const ENDDATE = new Date(2022, 11, 31);
+export const STARTDATE = new Date(2021, 0, 1, 0, 0, 0, 0);
+export const ENDDATE = new Date(2022, 11, 31, 23, 59, 59, 0);
 
 
 // Age Groups
