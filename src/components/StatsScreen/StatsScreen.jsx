@@ -48,7 +48,9 @@ export default function StatsScreen(props) {
                             );
                         }
                     })}
+                    <div className="buffer"></div>
                 </div>
+
             </div>
             <Modifiers updateComponent={UpdateComponent} charts={charts} activeIndex={activeChart}/>
         </>

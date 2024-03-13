@@ -19,6 +19,11 @@
     --purple-shadow: 2, 103, 137;
 }
 
+.body{
+    margin: 0;
+    padding: 0;
+}
+
 .App {
     padding: 2rem 2rem;
     height: calc(100vh - 4rem);
@@ -28,6 +33,7 @@
     overflow: hidden;
     grid-template-columns: 10rem auto 20rem;
     justify-items: center;
+    grid-template-rows: 100vh;
 }
 
 

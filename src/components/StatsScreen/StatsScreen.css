@@ -1,15 +1,21 @@
-.charts{
-    width: min(1000px , 100%);
+.charts {
+    width: min(1000px, 100%);
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-gap: 2rem;
 }
 
-.scroll-container{
+.scroll-container {
     display: flex;
     width: 100%;
     margin-right: 20px;
+    margin-bottom: 70px;
     justify-content: center;
     overflow: auto;
 }
+
+.buffer{
+    height: 50px;
+}
+
 

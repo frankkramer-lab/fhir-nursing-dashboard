@@ -4,6 +4,7 @@ import AgeModifier from "./AgeModifier";
 import TimeSpanModifier from "./TimeSpanModifier";
 import {AGE_GROUPS, ENDDATE, STARTDATE} from "../../utils/constants";
 import StatsScreen from "../StatsScreen/StatsScreen";
+import ThresholdModifier from "./ThresholdModifier";
 
 export default function Modifiers(props) {
 
@@ -24,19 +25,26 @@ export default function Modifiers(props) {
     // Time Span Modifiers temporal storage
     const [timeSpanModifierState, setTimeSpanModifierState] = useState(timeSpanModifiers[props.activeIndex]);
 
+    // All Threshold Modifiers
+    const [thresholdModifiers, setThresholdModifiers] = useState(Array.from({length: props.charts.length}, () => 0));
+    // Threshold Modifiers temporal storage
+    const [thresholdModifierState, setThresholdModifierState] = useState(thresholdModifiers[props.activeIndex]);
+
     // Track 'getData' function variables
     const [ageGroups, setAgeGroups] = useState(Array.from(AGE_GROUPS));
     const [timeSpan, setTimeSpan] = useState([STARTDATE, ENDDATE]);
+    const [threshold, setThreshold] = useState(0);
 
 
-    useEffect(() => {}, [computing]);
+    useEffect(() => {
+    }, [computing]);
 
     function applyModifiers() {
         setComputing(true);
         // Use setTimeout to simulate a time-consuming operation (replace this with your actual heavy function)
         setTimeout(() => {
             // Update chart data
-            chartData.modifiedData = chartData.getData(ageGroups, timeSpan);
+            chartData.modifiedData = chartData.getData(ageGroups, timeSpan, threshold);
             // Update Modifiers State
             setModifiersData();
             // Rerender Chart
@@ -53,6 +61,9 @@ export default function Modifiers(props) {
         // Time Span Modifiers
         timeSpanModifiers[props.activeIndex] = timeSpanModifierState;
         setTimeSpanModifiers(timeSpanModifiers);
+        // Threshold Modifiers
+        thresholdModifiers[props.activeIndex] = thresholdModifierState;
+        setThresholdModifiers(thresholdModifiers);
     }
 
 
@@ -71,8 +82,14 @@ export default function Modifiers(props) {
         setTimeSpan([startDate, endDate]);
     }
 
+    function updateThreshold(threshold) {
+        // Save Threshold State
+        setThresholdModifierState(threshold);
+        setThreshold(threshold);
+    }
+
     function renderAgeModifier() {
-        if (chartData.title === "Age" || chartData.title === "Gender" || chartData.title === "Encounters")
+        if (chartData.id === 0 || chartData.id === 1 || chartData.id === 3 || chartData.id === 4 || chartData.id === 5)
             return <AgeModifier key={props.activeIndex + "age"}
                                 chartData={chartData}
                                 initialStates={ageModifiers[props.activeIndex]}
@@ -80,20 +97,33 @@ export default function Modifiers(props) {
     }
 
     function renderTimeSpanModifier() {
-        if (chartData.title === "Encounters" || chartData.title === "Asserted Dates")
+        if (chartData.id === 3 || chartData.id === 2)
             return <TimeSpanModifier key={props.activeIndex + "timeSpan"}
                                      initialStates={timeSpanModifiers[props.activeIndex]}
                                      updateTimeSpan={updateTimeSpan}/>
     }
 
+    function renderThresholdModifier() {
+        if (chartData.id === 5)
+            return <ThresholdModifier key={props.activeIndex + "threshold"}
+                                      threshold={thresholdModifiers[props.activeIndex]}
+                                      updateThreshold={updateThreshold}/>
+    }
+
     return (
         <div className={"modifiers-box"}>
             <h2>Modifiers for: {chartData.title}</h2>
-            {renderAgeModifier()}
-            {renderTimeSpanModifier()}
-            {computing && <p>Computing...</p>}
-            {!computing && <button className={"apply-btn"} id={"apply"} onClick={applyModifiers}>Apply</button>}
-
+            <div className={"scroll-box"}>
+                {renderAgeModifier()}
+                {renderTimeSpanModifier()}
+                {renderThresholdModifier()}
+            </div>
+            <div className={"apply-box"}>
+                {computing && <p>Computing...</p>}
+                {!computing && <div>
+                    <button className={"apply-btn"} id={"apply"} onClick={applyModifiers}>Apply</button>
+                </div>}
+            </div>
         </div>
     );
 }

@@ -17,6 +17,15 @@ export default function MyPieChart(props) {
 
     props.data.datasets[0].backgroundColor = getColorArray(props.data.datasets[0].data.length);
 
+    /*const options = {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false,
+            }
+        }
+    };*/
+
     return (
 
         <ChartContainer title={props.title} active={props.active} onClick={props.onClick}>
