@@ -1,7 +1,6 @@
 import {AGE_GROUPS, BAR, ENDDATE, FEMALE, LINE, MALE, PIE, STARTDATE} from "./constants";
 import moment from "moment";
 import {getAllDataFromDB} from "./db";
-import {PI} from "chart.js/helpers";
 
 
 let patients;
