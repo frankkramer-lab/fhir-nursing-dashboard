@@ -3,7 +3,6 @@ import "./Modifiers.css"
 import AgeModifier from "./AgeModifier";
 import TimeSpanModifier from "./TimeSpanModifier";
 import {AGE_GROUPS, ENDDATE, STARTDATE} from "../../utils/constants";
-import StatsScreen from "../StatsScreen/StatsScreen";
 import ThresholdModifier from "./ThresholdModifier";
 
 export default function Modifiers(props) {
