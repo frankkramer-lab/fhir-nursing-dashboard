@@ -15,10 +15,15 @@
 
 #age-checkboxes label {
     margin-left: 20px;
+    font-size: 1rem;
 }
 #age-checkboxes ul {
     margin: 0;
     padding: 0;
     list-style: none;
     float: left;
+}
+
+#age-checkboxes input[type="checkbox"] {
+    accent-color: var(--purple);
 }
