@@ -41,7 +41,7 @@ export async function initCharts() {
             getData: getAgeData,
         },
         {
-            title: "Asserted Dates",
+            title: "Condition Records",
             id: 2,
             type: LINE,
             data: assertedDates,
@@ -57,7 +57,7 @@ export async function initCharts() {
             getData: getDiseasesData,
         },
         {
-            title: "Encounters",
+            title: "Admission Dates",
             id: 3,
             type: LINE,
             data: encountersData,

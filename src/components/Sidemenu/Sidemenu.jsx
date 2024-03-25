@@ -1,6 +1,7 @@
 import './Sidemenu.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {MenuItems} from "../../data/MenuItems";
+import logo from '../images/Logo_Care_Regio.png'
 
 export default function Sidemenu(props) {
 
@@ -8,6 +9,7 @@ export default function Sidemenu(props) {
         <>
             <div className="sidemenu">
                 <div className="logo">
+                    <img src={logo} alt="Logo von Care Regio"/>
                     <h1>FHIR Tool</h1>
                 </div>
                 <div className="menu">

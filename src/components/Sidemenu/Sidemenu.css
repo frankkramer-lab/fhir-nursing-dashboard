@@ -18,8 +18,13 @@
     text-align: center;
 }
 
+.logo img {
+    height: 52px;
+    width: 48px;
+}
+
 .menu {
-    padding-top: 4rem;
+    padding-top: 6rem;
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -34,7 +34,6 @@ export default function Modifiers(props) {
     const [timeSpan, setTimeSpan] = useState([STARTDATE, ENDDATE]);
     const [threshold, setThreshold] = useState(0);
 
-
     useEffect(() => {
     }, [computing]);
 
@@ -60,6 +59,7 @@ export default function Modifiers(props) {
         // Time Span Modifiers
         timeSpanModifiers[props.activeIndex] = timeSpanModifierState;
         setTimeSpanModifiers(timeSpanModifiers);
+        console.log(timeSpanModifiers);
         // Threshold Modifiers
         thresholdModifiers[props.activeIndex] = thresholdModifierState;
         setThresholdModifiers(thresholdModifiers);
