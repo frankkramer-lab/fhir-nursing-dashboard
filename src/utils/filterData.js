@@ -2,6 +2,7 @@ import {AGE_GROUPS, BAR, ENDDATE, FEMALE, GENDERS, LINE, MALE, PIE, STARTDATE} f
 import moment from "moment";
 import {getAllDataFromDB} from "./db";
 
+const daysToMonths = 3.2;
 
 let patients;
 let conditions;
@@ -160,7 +161,12 @@ const getAssertedDates = (ageGroups, timeSpan, genders, threshold) => {
         const dates = initDates(timeSpan);
 
         sortedConditions.forEach(condition => {
-            const assertedDate = moment(condition.assertedDate).format('DD.MM.YY');
+            let assertedDate;
+            if (moment(timeSpan[1]).diff(moment(timeSpan[0]), 'months', true) > daysToMonths) {
+                assertedDate = moment(condition.assertedDate).format('MMM YY');
+            } else {
+                assertedDate = moment(condition.assertedDate).format('DD.MM.YY');
+            }
 
             if (dates[assertedDate]) {
                 dates[assertedDate]++;
@@ -202,7 +208,12 @@ function getAdmissionData(ageGroups, timeSpan, genders, threshold) {
         const dates = initDates(timeSpan);
 
         sortedEncounters.forEach(e => {
-            const startDate = moment(e.periodStart).format('DD.MM.YY');
+            let startDate;
+            if (moment(timeSpan[1]).diff(moment(timeSpan[0]), 'months', true) > daysToMonths) {
+                startDate = moment(e.periodStart).format('MMM YY');
+            } else {
+                startDate = moment(e.periodStart).format('DD.MM.YY');
+            }
 
             if (dates[startDate]) {
                 dates[startDate]++;
@@ -212,7 +223,6 @@ function getAdmissionData(ageGroups, timeSpan, genders, threshold) {
         });
 
         return dates;
-
     }
 
     return {
@@ -227,37 +237,42 @@ function getAdmissionData(ageGroups, timeSpan, genders, threshold) {
 
 function getDismissionData(ageGroups, timeSpan, genders, threshold) {
 
-        const getDataset = () => {
-            // filter
-            let filteredEncounters = filterEncounters(ageGroups, timeSpan, true, genders);
+    const getDataset = () => {
+        // filter
+        let filteredEncounters = filterEncounters(ageGroups, timeSpan, true, genders);
 
-            // sort by Date
-            let sortedEncounters = filteredEncounters.sort((a, b) => a.periodEnd - b.periodEnd);
+        // sort by Date
+        let sortedEncounters = filteredEncounters.sort((a, b) => a.periodEnd - b.periodEnd);
 
-            const dates = initDates(timeSpan);
+        const dates = initDates(timeSpan);
 
-            sortedEncounters.forEach(e => {
-                const endDate = moment(e.periodEnd).format('DD.MM.YY');
+        sortedEncounters.forEach(e => {
+            let endDate;
+            if (moment(timeSpan[1]).diff(moment(timeSpan[0]), 'months', true) > daysToMonths) {
+                endDate = moment(e.periodEnd).format('MMM YY');
+            } else {
+                endDate = moment(e.periodEnd).format('DD.MM.YY');
+            }
 
-                if (dates[endDate]) {
-                    dates[endDate]++;
-                } else {
-                    dates[endDate] = 1;
-                }
-            });
+            if (dates[endDate]) {
+                dates[endDate]++;
+            } else {
+                dates[endDate] = 1;
+            }
+        });
 
-            return dates;
+        return dates;
 
-        }
+    }
 
-        return {
-            datasets: [
-                {
-                    label: 'Dismissions',
-                    data: getDataset()
-                }
-            ]
-        }
+    return {
+        datasets: [
+            {
+                label: 'Dismissions',
+                data: getDataset()
+            }
+        ]
+    }
 
 }
 
@@ -337,7 +352,12 @@ function initDates(timeSpan) {
     for (let i = 0; i < days; i++) {
         let date = new Date(timeSpan[0]);
         date.setDate(date.getDate() + i);
-        let dateString = moment(date).format('DD.MM.YY');
+        let dateString;
+        if (moment(timeSpan[1]).diff(moment(timeSpan[0]), 'months', true) > daysToMonths) {
+            dateString = moment(date).format('MMM YY');
+        } else {
+            dateString = moment(date).format('DD.MM.YY');
+        }
         d[dateString] = 0;
     }
     return d;

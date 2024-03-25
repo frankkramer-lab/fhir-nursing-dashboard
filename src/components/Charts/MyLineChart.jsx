@@ -11,17 +11,19 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
-import { Line } from 'react-chartjs-2';
+import {Line} from 'react-chartjs-2';
+import annotationPlugin from 'chartjs-plugin-annotation';
 import {getColorArray, addAlpha} from "../../utils/colorHelper";
 
 ChartJS.register(
     CategoryScale,
     LinearScale,
-    PointElement,
     LineElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    PointElement,
+    annotationPlugin
 );
 
 export default function MyLineChart(props) {
@@ -33,12 +35,38 @@ export default function MyLineChart(props) {
         props.data.datasets[i].borderColor = addAlpha(colors[i], 0.6);
     }
 
+    console.log(Object.keys(props.data.datasets[0].data))
+    let annotations = Object.keys(props.data.datasets[0].data).map((value, index) => {
+        if(value.split('.')[0] === '01')
+        return {
+            type: 'line',
+            mode: 'vertical',
+            scaleID: 'x',
+            value: value,
+            borderColor: 'purple',
+            borderWidth: 1,
+            label: {
+                enabled: true,
+                content: 'New Month'
+            }
+        };
+        else return null;
+    });
+    annotations = annotations.filter(item => item !== null);
+    console.log(annotations)
+
     // Konfiguration für den Line-Chart
     const options = {
         scales: {
             y: {
                 beginAtZero: true,
             },
+        },
+        plugins: {
+            annotation: {
+                drawTime: 'afterDatasetsDraw',
+                annotations: annotations
+            }
         },
     };
 
