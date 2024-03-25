@@ -53,6 +53,10 @@ export const AGE_GROUPS = [
 export const MALE = 'male';
 export const FEMALE = 'female'
 
+export const GENDERS = [
+    MALE,
+    FEMALE
+];
 
 // Colors
 export const charts01 = '#aee0ee';

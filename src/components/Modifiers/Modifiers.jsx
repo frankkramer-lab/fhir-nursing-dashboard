@@ -2,8 +2,9 @@ import React, {useEffect, useState} from "react";
 import "./Modifiers.css"
 import AgeModifier from "./AgeModifier";
 import TimeSpanModifier from "./TimeSpanModifier";
-import {AGE_GROUPS, ENDDATE, STARTDATE} from "../../utils/constants";
+import {AGE_GROUPS, ENDDATE, GENDERS, STARTDATE} from "../../utils/constants";
 import ThresholdModifier from "./ThresholdModifier";
+import GenderModifier from "./GenderModifier";
 
 export default function Modifiers(props) {
 
@@ -19,6 +20,11 @@ export default function Modifiers(props) {
     // Age Modifiers temporal storage
     const [ageModifierStates, setAgeModifierStates] = useState(ageModifiers[props.activeIndex]);
 
+    // All Gender Modifiers
+    const [genderModifiers, setGenderModifiers] = useState(Array.from({length: props.charts.length}, () => new Array(12).fill(true)));
+    // Gender Modifiers temporal storage
+    const [genderModifierStates, setGenderModifierStates] = useState(ageModifiers[props.activeIndex]);
+
     // All Time Span Modifiers
     const [timeSpanModifiers, setTimeSpanModifiers] = useState(Array.from({length: props.charts.length}, () => [STARTDATE, ENDDATE]));
     // Time Span Modifiers temporal storage
@@ -31,6 +37,7 @@ export default function Modifiers(props) {
 
     // Track 'getData' function variables
     const [ageGroups, setAgeGroups] = useState(Array.from(AGE_GROUPS));
+    const [genders, setGenders] = useState(Array.from(GENDERS));
     const [timeSpan, setTimeSpan] = useState([STARTDATE, ENDDATE]);
     const [threshold, setThreshold] = useState(0);
 
@@ -42,7 +49,7 @@ export default function Modifiers(props) {
         // Use setTimeout to simulate a time-consuming operation (replace this with your actual heavy function)
         setTimeout(() => {
             // Update chart data
-            chartData.modifiedData = chartData.getData(ageGroups, timeSpan, threshold);
+            chartData.modifiedData = chartData.getData(ageGroups, timeSpan, genders, threshold);
             // Update Modifiers State
             setModifiersData();
             // Rerender Chart
@@ -56,6 +63,9 @@ export default function Modifiers(props) {
         // Age Modifiers
         ageModifiers[props.activeIndex] = ageModifierStates;
         setAgeModifiers(ageModifiers);
+        // Gender Modifiers
+        genderModifiers[props.activeIndex] = genderModifierStates;
+        setGenderModifiers(genderModifiers);
         // Time Span Modifiers
         timeSpanModifiers[props.activeIndex] = timeSpanModifierState;
         setTimeSpanModifiers(timeSpanModifiers);
@@ -75,6 +85,15 @@ export default function Modifiers(props) {
         setAgeGroups(ag);
     }
 
+    function updateGenderModifiers(data) {
+        // Save Checkbox states
+        setGenderModifierStates(Array.from(data));
+
+        let gs = GENDERS.filter((g, index) => data[index] === true);
+        setGenders(gs);
+    }
+
+
     function updateTimeSpan(startDate, endDate) {
         // Save Time Span State
         setTimeSpanModifierState([startDate, endDate]);
@@ -88,15 +107,22 @@ export default function Modifiers(props) {
     }
 
     function renderAgeModifier() {
-        if (chartData.id === 0 || chartData.id === 1 || chartData.id === 3 || chartData.id === 4 || chartData.id === 5)
-            return <AgeModifier key={props.activeIndex + "age"}
-                                chartData={chartData}
-                                initialStates={ageModifiers[props.activeIndex]}
-                                updateAgeModifiers={updateAgeModifiers}/>
+        return <AgeModifier key={props.activeIndex + "age"}
+                            chartData={chartData}
+                            initialStates={ageModifiers[props.activeIndex]}
+                            updateAgeModifiers={updateAgeModifiers}/>
+    }
+
+    function renderGenderModifier() {
+        if (chartData.id !== 0 && chartData.id !== 1)
+        return <GenderModifier key={props.activeIndex + "gender"}
+                            chartData={chartData}
+                            initialStates={genderModifiers[props.activeIndex]}
+                            updateAgeModifiers={updateGenderModifiers}/>
     }
 
     function renderTimeSpanModifier() {
-        if (chartData.id === 3 || chartData.id === 2)
+        if (chartData.id === 3 || chartData.id === 2 || chartData.id === 6)
             return <TimeSpanModifier key={props.activeIndex + "timeSpan"}
                                      initialStates={timeSpanModifiers[props.activeIndex]}
                                      updateTimeSpan={updateTimeSpan}/>
@@ -114,6 +140,7 @@ export default function Modifiers(props) {
             <h2>Modifiers for: {chartData.title}</h2>
             <div className={"scroll-box"}>
                 {renderAgeModifier()}
+                {renderGenderModifier()}
                 {renderTimeSpanModifier()}
                 {renderThresholdModifier()}
             </div>

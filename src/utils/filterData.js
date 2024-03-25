@@ -1,4 +1,4 @@
-import {AGE_GROUPS, BAR, ENDDATE, FEMALE, LINE, MALE, PIE, STARTDATE} from "./constants";
+import {AGE_GROUPS, BAR, ENDDATE, FEMALE, GENDERS, LINE, MALE, PIE, STARTDATE} from "./constants";
 import moment from "moment";
 import {getAllDataFromDB} from "./db";
 
@@ -16,12 +16,13 @@ export async function initCharts() {
 
     // All functions need to take the arguments: ageGroups, timeSpan
 
-    let genderData = getGenderData(AGE_GROUPS, [STARTDATE, ENDDATE], 0);
-    let ageData = getAgeData(AGE_GROUPS, [STARTDATE, ENDDATE], 0);
-    let assertedDates = getAssertedDates(AGE_GROUPS, [STARTDATE, ENDDATE], 0);
-    let diseasesData = getDiseasesData(AGE_GROUPS, [STARTDATE, ENDDATE], 2300);
-    let encountersData = getEncountersData(AGE_GROUPS, [STARTDATE, ENDDATE], 0);
-    let encounterTypesData = getEncounterTypesData(AGE_GROUPS, [STARTDATE, ENDDATE], 0);
+    let genderData = getGenderData(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0);
+    let ageData = getAgeData(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0);
+    let assertedDates = getAssertedDates(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0);
+    let diseasesData = getDiseasesData(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 2300);
+    let admissionData = getAdmissionData(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0);
+    let dismissionData = getDismissionData(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0);
+    let encounterTypesData = getEncounterTypesData(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0);
 
     return [
         {
@@ -60,9 +61,9 @@ export async function initCharts() {
             title: "Admission Dates",
             id: 3,
             type: LINE,
-            data: encountersData,
-            modifiedData: encountersData,
-            getData: getEncountersData,
+            data: admissionData,
+            modifiedData: admissionData,
+            getData: getAdmissionData,
         },
         {
             title: "Encounter Types",
@@ -71,7 +72,16 @@ export async function initCharts() {
             data: encounterTypesData,
             modifiedData: encounterTypesData,
             getData: getEncounterTypesData,
-        }
+        },
+        {
+            title: "Dismission Dates",
+            id: 6,
+            type: LINE,
+            data: dismissionData,
+            modifiedData: dismissionData,
+            getData: getDismissionData,
+        },
+
     ];
 }
 
@@ -79,10 +89,9 @@ const getPatientById = (id) => {
     return patients.find(patient => patient.id === id)
 }
 
-export function getGenderData(ageGroups, timeSpan, threshold) {
+export function getGenderData(ageGroups, timeSpan, genders, threshold) {
 
-    /*let female = (await queryDataFromPatientsDB({gender: FEMALE, ageGroups: ageGroups})).length;
-    let male = (await queryDataFromPatientsDB({gender: MALE, ageGroups: ageGroups})).length;*/
+    let filteredPatients = filterPatients(ageGroups, timeSpan, genders);
 
     return {
         labels: [
@@ -91,8 +100,8 @@ export function getGenderData(ageGroups, timeSpan, threshold) {
         ],
         datasets: [{
             data: [
-                patients.filter(p => p.gender === MALE && ageGroups.includes(p.ageGroup)).length,
-                patients.filter(p => p.gender === FEMALE && ageGroups.includes(p.ageGroup)).length,
+                filteredPatients.filter(p => p.gender === MALE).length,
+                filteredPatients.filter(p => p.gender === FEMALE).length,
             ]
         }],
         // TODO: Adjust for divers and unknown
@@ -100,11 +109,13 @@ export function getGenderData(ageGroups, timeSpan, threshold) {
     }
 }
 
-export function getAgeData(ageGroups, timeSpan, threshold) {
+export function getAgeData(ageGroups, timeSpan, genders, threshold) {
+
+    let filteredPatients = filterPatients(ageGroups, timeSpan, genders);
 
     const getPatientCount = function (ageGroup, gender) {
-        if (gender) return patients.filter(p => p.ageGroup === ageGroup && p.gender === gender).length;
-        return patients.filter(p => p.ageGroup === ageGroup).length;
+        if (gender) return filteredPatients.filter(p => p.ageGroup === ageGroup && p.gender === gender).length;
+        return filteredPatients.filter(p => p.ageGroup === ageGroup).length;
     }
 
     const getDataset = (gender) =>
@@ -136,12 +147,12 @@ export function getAgeData(ageGroups, timeSpan, threshold) {
     }
 }
 
-const getAssertedDates = (ageGroups, timeSpan, threshold) => {
+const getAssertedDates = (ageGroups, timeSpan, genders, threshold) => {
 
     const getDataset = () => {
 
         // filter
-        let filteredConditions = conditions.filter(c => c.assertedDate >= timeSpan[0] && c.assertedDate <= timeSpan[1]);
+        let filteredConditions = filterConditions(ageGroups, timeSpan, genders);
 
         // sort by Date
         let sortedConditions = filteredConditions.sort((a, b) => a.assertedDate - b.assertedDate);
@@ -179,12 +190,11 @@ const getAssertedDates = (ageGroups, timeSpan, threshold) => {
     }
 }
 
-export function getEncountersData(ageGroups, timeSpan, threshold) {
+function getAdmissionData(ageGroups, timeSpan, genders, threshold) {
 
     const getDataset = () => {
         // filter
-        let filteredEncounters = encounters.filter(encounter => ageGroups.includes(getPatientById(encounter.patientID).ageGroup));
-        filteredEncounters = filteredEncounters.filter(encounter => encounter.periodStart >= timeSpan[0] && encounter.periodStart <= timeSpan[1]);
+        let filteredEncounters = filterEncounters(ageGroups, timeSpan, false, genders);
 
         // sort by Date
         let sortedEncounters = filteredEncounters.sort((a, b) => a.periodStart - b.periodStart);
@@ -208,18 +218,53 @@ export function getEncountersData(ageGroups, timeSpan, threshold) {
     return {
         datasets: [
             {
-                label: 'Encounters',
+                label: 'Admissions',
                 data: getDataset()
             }
         ]
     }
 }
 
-function getEncounterTypesData(ageGroups, timeSpan, threshold) {
+function getDismissionData(ageGroups, timeSpan, genders, threshold) {
+
+        const getDataset = () => {
+            // filter
+            let filteredEncounters = filterEncounters(ageGroups, timeSpan, true, genders);
+
+            // sort by Date
+            let sortedEncounters = filteredEncounters.sort((a, b) => a.periodEnd - b.periodEnd);
+
+            const dates = initDates(timeSpan);
+
+            sortedEncounters.forEach(e => {
+                const endDate = moment(e.periodEnd).format('DD.MM.YY');
+
+                if (dates[endDate]) {
+                    dates[endDate]++;
+                } else {
+                    dates[endDate] = 1;
+                }
+            });
+
+            return dates;
+
+        }
+
+        return {
+            datasets: [
+                {
+                    label: 'Dismissions',
+                    data: getDataset()
+                }
+            ]
+        }
+
+}
+
+function getEncounterTypesData(ageGroups, timeSpan, genders, threshold) {
 
     // filter
-    let filteredEncounters = encounters.filter(encounter => ageGroups.includes(getPatientById(encounter.patientID).ageGroup));
-    filteredEncounters = filteredEncounters.filter(encounter => encounter.periodStart >= timeSpan[0] && encounter.periodStart <= timeSpan[1]);
+    let filteredEncounters = filterEncounters(ageGroups, timeSpan, false, genders)
 
     const getDataset = () => {
         let data = {};
@@ -248,10 +293,9 @@ function getEncounterTypesData(ageGroups, timeSpan, threshold) {
 }
 
 
-function getDiseasesData(ageGroups, timeSpan, threshold) {
+function getDiseasesData(ageGroups, timeSpan, genders, threshold) {
 
-    let filteredConditions = conditions.filter(c => ageGroups.includes(getPatientById(c.patientID).ageGroup));
-    filteredConditions = filteredConditions.filter(c => c.assertedDate >= timeSpan[0] && c.assertedDate <= timeSpan[1]);
+    let filteredConditions = filterConditions(ageGroups, timeSpan, genders)
 
 
     const getDataset = () => {
@@ -297,4 +341,32 @@ function initDates(timeSpan) {
         d[dateString] = 0;
     }
     return d;
+}
+
+function filterPatients(ageGroups, timespan, genders) {
+    let filteredPatients = patients.filter(p => ageGroups.includes(p.ageGroup));
+    filteredPatients = filteredPatients.filter(p => genders.includes(p.gender));
+
+    return filteredPatients;
+}
+
+function filterConditions(ageGroups, timespan, genders) {
+    let filteredConditions = conditions.filter(c => c.assertedDate >= timespan[0] && c.assertedDate <= timespan[1])
+    filteredConditions = filteredConditions.filter(c => ageGroups.includes(getPatientById(c.patientID).ageGroup));
+    filteredConditions = filteredConditions.filter(c => {
+        return genders.includes(getPatientById(c.patientID).gender)
+    });
+    return filteredConditions;
+}
+
+function filterEncounters(ageGroups, timespan, enddate, genders) {
+    let filteredEncounters;
+    if (enddate) {
+        filteredEncounters = encounters.filter(e => e.periodEnd >= timespan[0] && e.periodEnd <= timespan[1])
+    } else {
+        filteredEncounters = encounters.filter(e => e.periodStart >= timespan[0] && e.periodStart <= timespan[1])
+    }
+    filteredEncounters = filteredEncounters.filter(e => ageGroups.includes(getPatientById(e.patientID).ageGroup));
+    filteredEncounters = filteredEncounters.filter(e => genders.includes(getPatientById(e.patientID).gender));
+    return filteredEncounters;
 }
