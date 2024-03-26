@@ -52,7 +52,7 @@ export default function StatsScreen(props) {
                 </div>
 
             </div>
-            <Modifiers updateComponent={UpdateComponent} charts={charts} activeIndex={activeChart}/>
+            <Modifiers key={activeChart} updateComponent={UpdateComponent} charts={charts} activeIndex={activeChart}/>
         </>
     );
 }
