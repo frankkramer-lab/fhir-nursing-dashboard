@@ -14,8 +14,8 @@ export const FIRST100PARAM = '?_count=100';
 // Charts
 export const PIE = 'pie';
 export const BAR = 'bar';
-
 export const LINE = 'line';
+export const NUMBER = 'number';
 
 // Time Span
 export const STARTDATE = new Date(2021, 0, 1, 0, 0, 0, 0);

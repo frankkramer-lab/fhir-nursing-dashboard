@@ -1,4 +1,4 @@
-import {AGE_GROUPS, BAR, ENDDATE, FEMALE, GENDERS, LINE, MALE, PIE, STARTDATE} from "./constants";
+import {AGE_GROUPS, BAR, ENDDATE, FEMALE, GENDERS, LINE, MALE, NUMBER, PIE, STARTDATE} from "./constants";
 import moment from "moment";
 import {getAllDataFromDB} from "./db";
 
@@ -24,6 +24,7 @@ export async function initCharts() {
     let admissionData = getAdmissionData(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0);
     let dismissionData = getDismissionData(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0);
     let encounterTypesData = getEncounterTypesData(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0);
+    let lengthOfStayData = getLengthOfStayData(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 1000);
 
     return [
         {
@@ -82,6 +83,14 @@ export async function initCharts() {
             modifiedData: dismissionData,
             getData: getDismissionData,
         },
+        {
+            title: "Average Length of Stay",
+            id: 7,
+            type: NUMBER,
+            data: lengthOfStayData,
+            modifiedData: lengthOfStayData,
+            getData: getLengthOfStayData,
+        }
 
     ];
 }
@@ -340,6 +349,29 @@ function getDiseasesData(ageGroups, timeSpan, genders, threshold) {
                 ...Object.values(data),
             ]
         }],
+    }
+}
+
+function getLengthOfStayData(ageGroups, timeSpan, genders, threshold) {
+    let filteredEncounters = filterEncounters(ageGroups, timeSpan, false, genders)
+
+    // Sum up the days of all encounters
+    let sum = filteredEncounters.reduce((accumulator, current) => {
+        let days = Math.round((current.periodEnd - current.periodStart) / (1000 * 60 * 60 * 24));
+        if (days <= threshold) {
+            return accumulator + days
+        }else{
+            return accumulator;
+        }
+    }, 0);
+
+    // Calculate the average to 2 decimal places
+    let avg = (sum / filteredEncounters.length)
+
+
+    return {
+        number: avg,
+        unit: ' days'
     }
 }
 

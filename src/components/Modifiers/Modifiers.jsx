@@ -122,14 +122,14 @@ export default function Modifiers(props) {
     }
 
     function renderTimeSpanModifier() {
-        if (chartData.id === 3 || chartData.id === 2 || chartData.id === 6)
+        if (chartData.id === 3 || chartData.id === 2 || chartData.id === 6 || chartData.id === 7)
             return <TimeSpanModifier key={props.activeIndex + "timeSpan"}
                                      initialStates={timeSpanModifiers[props.activeIndex]}
                                      updateTimeSpan={updateTimeSpan}/>
     }
 
     function renderThresholdModifier() {
-        if (chartData.id === 5)
+        if (chartData.id === 5 || chartData.id === 7)
             return <ThresholdModifier key={props.activeIndex + "threshold"}
                                       threshold={thresholdModifiers[props.activeIndex]}
                                       updateThreshold={updateThreshold}/>

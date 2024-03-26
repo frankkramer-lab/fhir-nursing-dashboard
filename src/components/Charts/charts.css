@@ -11,3 +11,14 @@
     display: flex;
     justify-content: center;
 }
+
+.number-display{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.number-display h2{
+    width: 90%;
+}

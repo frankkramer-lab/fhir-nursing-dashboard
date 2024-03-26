@@ -35,7 +35,6 @@ export default function MyLineChart(props) {
         props.data.datasets[i].borderColor = addAlpha(colors[i], 0.6);
     }
 
-    console.log(Object.keys(props.data.datasets[0].data))
     let annotations = Object.keys(props.data.datasets[0].data).map((value, index) => {
         if(value.split('.')[0] === '01')
         return {
@@ -53,7 +52,6 @@ export default function MyLineChart(props) {
         else return null;
     });
     annotations = annotations.filter(item => item !== null);
-    console.log(annotations)
 
     // Konfiguration für den Line-Chart
     const options = {
