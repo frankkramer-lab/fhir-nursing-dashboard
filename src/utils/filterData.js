@@ -118,7 +118,6 @@ class GenderDataProcessor extends DataProcessor {
 class AgeDataProcessor extends DataProcessor {
     process() {
         let filteredPatients = filterPatients(this.ageGroups, this.timeSpan, this.genders);
-        console.log(this.ageGroups);
 
         const getPatientCount = function (ageGroup, gender) {
             if (gender) return filteredPatients.filter(p => p.ageGroup === ageGroup && p.gender === gender).length;

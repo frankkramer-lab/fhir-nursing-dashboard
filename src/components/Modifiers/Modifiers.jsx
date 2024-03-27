@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import "./Modifiers.css"
 import AgeModifier from "./AgeModifier";
 import TimeSpanModifier from "./TimeSpanModifier";
-import {AGE_GROUPS, ENDDATE, FEMALE, GENDERS, STARTDATE} from "../../utils/constants";
+import {AGE_GROUPS, GENDERS} from "../../utils/constants";
 import ThresholdModifier from "./ThresholdModifier";
 import GenderModifier from "./GenderModifier";
 import {DataProcessor} from "../../utils/filterData";
@@ -30,12 +30,10 @@ export default function Modifiers(props) {
         setTimeout(() => {
             // Update Modifiers State
             setModifiersData();
-            console.log(chart);
             // Update chart data
-            if(chart.p instanceof DataProcessor) {
+            if (chart.p instanceof DataProcessor) {
                 chart.p.data = chart.p.process();
             }
-
             // Rerender Chart
             props.updateComponent();
             // Set computing to false after the heavy operation is completed
@@ -85,35 +83,60 @@ export default function Modifiers(props) {
     }
 
     function renderGenderModifier() {
-
-        if (chart.id !== 0 && chart.id !== 1)
         return <GenderModifier key={props.activeIndex + "gender"}
-                            chartData={chart}
-                            updateAgeModifiers={updateGenderModifiers}/>
+                               chartData={chart}
+                               updateAgeModifiers={updateGenderModifiers}/>
     }
 
     function renderTimeSpanModifier() {
-        if (chart.id === 3 || chart.id === 2 || chart.id === 6 || chart.id === 7)
-            return <TimeSpanModifier key={props.activeIndex + "timeSpan"}
-                                     chartData={chart}
-                                     updateTimeSpan={updateTimeSpan}/>
+        return <TimeSpanModifier key={props.activeIndex + "timeSpan"}
+                                 chartData={chart}
+                                 updateTimeSpan={updateTimeSpan}/>
     }
 
     function renderThresholdModifier() {
-        if (chart.id === 5 || chart.id === 7)
-            return <ThresholdModifier key={props.activeIndex + "threshold"}
-                                      threshold={threshold}
-                                      updateThreshold={updateThreshold}/>
+        return <ThresholdModifier key={props.activeIndex + "threshold"}
+                                  threshold={threshold}
+                                  updateThreshold={updateThreshold}/>
+    }
+
+    function renderModifiers() {
+        switch (chart.id) {
+            case 0:
+                // Gender Pie Chart
+                return [renderAgeModifier()];
+            case 1:
+                // Age Bar Chart
+                return [renderAgeModifier()];
+            case 2:
+                // Condition Records Line Chart
+                return [renderAgeModifier(), renderGenderModifier(), renderTimeSpanModifier()];
+            case 3:
+                // Admissions Line Chart
+                return [renderAgeModifier(), renderGenderModifier(), renderTimeSpanModifier()];
+            case 4:
+                // Encounter Types Pie Chart
+                return [renderAgeModifier(), renderGenderModifier(), renderTimeSpanModifier()];
+            case 5:
+                // Disease Types Pie Chart
+                return [renderAgeModifier(), renderGenderModifier(), renderThresholdModifier()];
+            case 6:
+                // Dismissions Line Chart
+                return [renderAgeModifier(), renderGenderModifier(), renderTimeSpanModifier()];
+            case 7:
+                // Avg Length of Stay Number
+                return [renderAgeModifier(), renderGenderModifier(), renderTimeSpanModifier(), renderThresholdModifier()];
+            default:
+                return [renderAgeModifier(), renderGenderModifier(), renderTimeSpanModifier(), renderThresholdModifier()];
+        }
     }
 
     return (
         <div className={"modifiers-box"}>
             <h2>Modifiers for: {chart.title}</h2>
             <div className={"scroll-box"}>
-                {renderAgeModifier()}
-                {renderGenderModifier()}
-                {renderTimeSpanModifier()}
-                {renderThresholdModifier()}
+                {renderModifiers().map(m => m)}
+                <div className={"spacer"} style={{height: '50px'}}></div>
             </div>
             <div className={"apply-box"}>
                 {computing && <p>Computing...</p>}
