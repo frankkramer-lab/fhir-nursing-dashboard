@@ -22,38 +22,32 @@ export default function StatsScreen(props) {
         forceUpdate();
     }
 
+    function renderChartComponent(index, chart) {
+        switch (chart.type) {
+            case PIE:
+                return <MyPieChart key={index} title={chart.title} active={index === activeChart}
+                                   data={chart.p.data} onClick={() => setActiveChart(index)}/>;
+            case BAR:
+                return <MyBarChart key={index} title={chart.title} active={index === activeChart}
+                                   data={chart.p.data} onClick={() => setActiveChart(index)}/>;
+            case LINE:
+                return <MyLineChart key={index} title={chart.title} active={index === activeChart}
+                                    data={chart.p.data} onClick={() => setActiveChart(index)}/>
+            case NUMBER:
+                return <NumberDisplay key={index} title={chart.title} active={index === activeChart}
+                                      data={chart.p.data} onClick={() => setActiveChart(index)}/>
+            default:
+                return null;
+        }
+    }
 
     return (
         <>
             <div className="scroll-container">
                 <div className="charts">
-                    {/*<TestApi/>*/}
                     <GroupHeading title={"Charts"}/>
                     {charts.map((chart, index) => {
-                        if (chart.type === PIE) {
-                            return (
-                                <MyPieChart key={index} title={chart.title} active={index === activeChart}
-                                            data={chart.modifiedData} onClick={() => setActiveChart(index)}/>
-                            );
-                        }
-                        if (chart.type === BAR) {
-                            return (
-                                <MyBarChart key={index} title={chart.title} active={index === activeChart}
-                                            data={chart.modifiedData} onClick={() => setActiveChart(index)}/>
-                            );
-                        }
-                        if (chart.type === LINE) {
-                            return (
-                                <MyLineChart key={index} title={chart.title} active={index === activeChart}
-                                             data={chart.modifiedData} onClick={() => setActiveChart(index)}/>
-                            );
-                        }
-                        if (chart.type === NUMBER) {
-                            return (
-                                <NumberDisplay key={index} title={chart.title} active={index === activeChart}
-                                               data={chart.modifiedData} onClick={() => setActiveChart(index)}/>
-                            );
-                        }
+                        return renderChartComponent(index, chart);
                     })}
                     <div className="buffer"></div>
                 </div>

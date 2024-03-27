@@ -5,8 +5,8 @@ import {ENDDATE, STARTDATE} from "../../utils/constants";
 
 export default function TimeSpanModifier(props) {
 
-    const [startDate, setStartDate] = useState(props.initialStates[0]);
-    const [endDate, setEndDate] = useState(props.initialStates[1]);
+    const [startDate, setStartDate] = useState(props.chartData.p.timeSpan[0]);
+    const [endDate, setEndDate] = useState(props.chartData.p.timeSpan[1]);
 
     function formatDateToYYYYMMDD(date) {
         const year = date.getFullYear();

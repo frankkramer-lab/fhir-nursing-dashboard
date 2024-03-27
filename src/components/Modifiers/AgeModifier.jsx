@@ -6,6 +6,10 @@ import {
 
 export default function AgeModifier(props) {
 
+    let initialStates = AGE_GROUPS.map(g => props.chartData.p.ageGroups.includes(g));
+    let allBox = !initialStates.includes(false);
+    initialStates.unshift(allBox);
+
     const toggleAll = (event) => {
         let checkboxes = document.getElementsByName('age-checkbox');
         for (let i = 0; i < checkboxes.length; i++) {
@@ -50,13 +54,13 @@ export default function AgeModifier(props) {
             <h2>Age</h2>
             <ul>
                 <li><input name={"age-checkbox"} type="checkbox" onClick={toggleAll}
-                           defaultChecked={props.initialStates[0]}/><label>All</label></li>
+                           defaultChecked={initialStates[0]}/><label>All</label></li>
 
                 {AGE_GROUPS.map((ageGroup, index) => {
                     return (
                         <li key={index}>
                             <input name={"age-checkbox"} type="checkbox" value={ageGroup} onClick={handleCheckboxChange}
-                                   defaultChecked={props.initialStates[index + 1]}/>
+                                   defaultChecked={initialStates[index + 1]}/>
                             <label>{ageGroup}</label>
                         </li>
                     );

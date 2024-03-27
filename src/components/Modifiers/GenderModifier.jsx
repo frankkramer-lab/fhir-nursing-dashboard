@@ -3,8 +3,12 @@ import "./GenderModifier.css"
 import {
     GENDERS,
 } from "../../utils/constants";
+import {DataProcessor} from "../../utils/filterData";
 
 export default function GenderModifier(props) {
+
+    let activeGenders = props.chartData.p.genders;
+    let genderModifierStates = GENDERS.map(g => activeGenders.includes(g));
 
     function updateData() {
         let checkboxes = document.getElementsByName('gender-checkbox');
@@ -28,7 +32,7 @@ export default function GenderModifier(props) {
                         <li key={index}>
                             <input name={"gender-checkbox"} type="checkbox" value={gender}
                                    onClick={updateData}
-                                   defaultChecked={props.initialStates[index]}/>
+                                   defaultChecked={genderModifierStates[index]}/>
                             <label>{gender}</label>
                         </li>
                     );
