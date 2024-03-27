@@ -1,14 +1,18 @@
-import React from "react";
+import React, {useState} from "react";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import "./AgeModifier.css"
-import {
-    AGE_GROUPS,
-} from "../../utils/constants";
+import {AGE_GROUPS} from "../../utils/constants";
+import {faPlus} from "@fortawesome/free-solid-svg-icons/faPlus";
+import {faCaretUp} from "@fortawesome/free-solid-svg-icons/faCaretUp";
 
 export default function AgeModifier(props) {
 
     let initialStates = AGE_GROUPS.map(g => props.chartData.p.ageGroups.includes(g));
     let allBox = !initialStates.includes(false);
     initialStates.unshift(allBox);
+
+    const [isCollapsed, setIsCollapsed] = useState(allBox);
+
 
     const toggleAll = (event) => {
         let checkboxes = document.getElementsByName('age-checkbox');
@@ -52,20 +56,28 @@ export default function AgeModifier(props) {
     return (
         <div id={"age-checkboxes"}>
             <h2>Age</h2>
-            <ul>
-                <li><input name={"age-checkbox"} type="checkbox" onClick={toggleAll}
-                           defaultChecked={initialStates[0]}/><label>All</label></li>
+            <button className={"collapse-button"} onClick={() => setIsCollapsed(!isCollapsed)}>
+                {isCollapsed ?
+                    <FontAwesomeIcon icon={faPlus}/> :
+                    <FontAwesomeIcon icon={faCaretUp}/>
+                }
+            </button>
+            {!isCollapsed && (
+                <ul>
+                    <li><input name={"age-checkbox"} type="checkbox" onClick={toggleAll}
+                               defaultChecked={initialStates[0]}/><label>All</label></li>
 
-                {AGE_GROUPS.map((ageGroup, index) => {
-                    return (
-                        <li key={index}>
-                            <input name={"age-checkbox"} type="checkbox" value={ageGroup} onClick={handleCheckboxChange}
-                                   defaultChecked={initialStates[index + 1]}/>
-                            <label>{ageGroup}</label>
-                        </li>
-                    );
-                })}
-            </ul>
+                    {AGE_GROUPS.map((ageGroup, index) => {
+                        return (
+                            <li key={index}>
+                                <input name={"age-checkbox"} type="checkbox" value={ageGroup}
+                                       onClick={handleCheckboxChange}
+                                       defaultChecked={initialStates[index + 1]}/>
+                                <label>{ageGroup}</label>
+                            </li>
+                        );
+                    })}
+                </ul>)}
         </div>
     );
 }

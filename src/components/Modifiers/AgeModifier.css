@@ -1,5 +1,6 @@
 
 #age-checkboxes{
+    position: relative;
     margin-top: 10px;
     margin-bottom: 10px;
     width: 100%;
@@ -26,4 +27,15 @@
 
 #age-checkboxes input[type="checkbox"] {
     accent-color: var(--purple);
+}
+
+.collapse-button {
+    position: absolute;
+    right: 25px;
+    top: 29px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--purple);
+    font-size: 1.2rem;
 }
