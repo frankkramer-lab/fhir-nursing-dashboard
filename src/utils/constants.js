@@ -58,6 +58,20 @@ export const GENDERS = [
     FEMALE
 ];
 
+
+// Settings
+let daysToMonths = Number(localStorage.getItem('daysToMonthThreshold')) || 3.2;
+
+export function getDaysToMonths() {
+    return daysToMonths;
+}
+
+export function setDaysToMonths(value) {
+    daysToMonths = value;
+    localStorage.setItem('daysToMonthThreshold', value);
+}
+
+
 // Colors
 export const charts01 = '#aee0ee';
 export const charts02 = '#71bada';

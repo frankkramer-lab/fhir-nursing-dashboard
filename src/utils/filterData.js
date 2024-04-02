@@ -1,8 +1,8 @@
-import {AGE_GROUPS, BAR, ENDDATE, FEMALE, GENDERS, LINE, MALE, NUMBER, PIE, STARTDATE} from "./constants";
+import {getDaysToMonths, AGE_GROUPS, BAR, ENDDATE, FEMALE, GENDERS, LINE, MALE, NUMBER, PIE, STARTDATE} from "./constants";
 import moment from "moment";
 import {getAllDataFromDB} from "./db";
 
-const daysToMonths = 3.2;
+
 
 let patients;
 let conditions;
@@ -168,7 +168,7 @@ class AssertedDatesDataProcessor extends DataProcessor {
 
             sortedConditions.forEach(condition => {
                 let assertedDate;
-                if (moment(this.timeSpan[1]).diff(moment(this.timeSpan[0]), 'months', true) > daysToMonths) {
+                if (moment(this.timeSpan[1]).diff(moment(this.timeSpan[0]), 'months', true) > getDaysToMonths()) {
                     assertedDate = moment(condition.assertedDate).format('MMM YY');
                 } else {
                     assertedDate = moment(condition.assertedDate).format('DD.MM.YY');
@@ -216,7 +216,7 @@ class AdmissionDatesDataProcessor extends DataProcessor {
 
             sortedEncounters.forEach(e => {
                 let startDate;
-                if (moment(this.timeSpan[1]).diff(moment(this.timeSpan[0]), 'months', true) > daysToMonths) {
+                if (moment(this.timeSpan[1]).diff(moment(this.timeSpan[0]), 'months', true) > getDaysToMonths()) {
                     startDate = moment(e.periodStart).format('MMM YY');
                 } else {
                     startDate = moment(e.periodStart).format('DD.MM.YY');
@@ -256,7 +256,7 @@ class DismissionDatesDataProcessor extends DataProcessor {
 
             sortedEncounters.forEach(e => {
                 let endDate;
-                if (moment(this.timeSpan[1]).diff(moment(this.timeSpan[0]), 'months', true) > daysToMonths) {
+                if (moment(this.timeSpan[1]).diff(moment(this.timeSpan[0]), 'months', true) > getDaysToMonths()) {
                     endDate = moment(e.periodEnd).format('MMM YY');
                 } else {
                     endDate = moment(e.periodEnd).format('DD.MM.YY');
@@ -392,7 +392,7 @@ function initDates(timeSpan) {
         let date = new Date(timeSpan[0]);
         date.setDate(date.getDate() + i);
         let dateString;
-        if (moment(timeSpan[1]).diff(moment(timeSpan[0]), 'months', true) > daysToMonths) {
+        if (moment(timeSpan[1]).diff(moment(timeSpan[0]), 'months', true) > getDaysToMonths()) {
             dateString = moment(date).format('MMM YY');
         } else {
             dateString = moment(date).format('DD.MM.YY');
