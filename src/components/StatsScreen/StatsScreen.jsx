@@ -8,14 +8,18 @@ import GroupHeading from "./GroupHeading";
 import {BAR, LINE, NUMBER, PIE} from "../../utils/constants";
 import MyLineChart from "../Charts/MyLineChart";
 import {NumberDisplay} from "../Charts/NumberDisplay";
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 export default function StatsScreen(props) {
 
     // force update function
     const [, forceUpdate] = useReducer(x => x + 1, {x: 0});
+    const [tabValue, setTabValue] = useState(0);
     const [activeChart, setActiveChart] = useState(0);
     const dataContext = useContext(DataContext);
     const [charts, setCharts] = useState(dataContext.charts);
+    const [stationCharts, setStationCharts] = useState(dataContext.stationCharts);
 
 
     function UpdateComponent() {
@@ -43,15 +47,33 @@ export default function StatsScreen(props) {
 
     return (
         <>
-            <div className="scroll-container">
-                <div className="charts">
-                    <GroupHeading title={"Charts"}/>
-                    {charts.map((chart, index) => {
-                        return renderChartComponent(index, chart);
-                    })}
-                    <div className="buffer"></div>
-                </div>
-
+            <div className={"stats-screen"}>
+                <Tabs value={tabValue} onChange={(event, newValue) => setTabValue(newValue)}>
+                    <Tab label="Global Charts"/>
+                    <Tab label="Station Charts"/>
+                </Tabs>
+                {tabValue === 0 && (
+                    <div className="scroll-container">
+                        <div className="charts">
+                            <GroupHeading title={"Charts"}/>
+                            {charts.map((chart, index) => {
+                                return renderChartComponent(index, chart);
+                            })}
+                            <div className="buffer"></div>
+                        </div>
+                    </div>
+                )}
+                {tabValue === 1 && (
+                    <div className="scroll-container">
+                        <div className="charts">
+                            <GroupHeading title={"Charts"}/>
+                            {stationCharts.map((chart, index) => {
+                                return renderChartComponent(index, chart);
+                            })}
+                            <div className="buffer"></div>
+                        </div>
+                    </div>
+                )}
             </div>
             <Modifiers key={activeChart} updateComponent={UpdateComponent} charts={charts} activeIndex={activeChart}/>
         </>

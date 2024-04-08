@@ -71,6 +71,7 @@ export function parseAllEncounterData(encounter) {
         e.periodStart = moment(element.period?.start); // Startzeit
         e.periodEnd = moment(element.period?.end); // Endzeit
         e.serviceProvider = element.serviceProvider?.reference.split("/")[1]; // Anbieter
+        e.station = element.location?.[0]?.location?.display; // Station
         // TODO: complete
         tableData.push(e);
     });

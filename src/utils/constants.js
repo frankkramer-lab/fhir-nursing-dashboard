@@ -58,18 +58,28 @@ export const GENDERS = [
     FEMALE
 ];
 
+// Infrastructure
+export const SUPPLYPOINTS = [
+    '1MD',
+    '2MD',
+    '2MD-IPF',
+    '3MD',
+    '4MD',
+    'AIN',
+    'UCH',
+    'HTC',
+    'AUG',
+    'URO',
+    'GCH'
+];
 
-// Settings
-let daysToMonths = Number(localStorage.getItem('daysToMonthThreshold')) || 3.2;
+export const STATIONS = [
+    "085 - Station 8.5",
+    "088 - Station 8.8",
+    "IZ21 - Station 2.1",
+    "IZ22 - Station 2.2"
+];
 
-export function getDaysToMonths() {
-    return daysToMonths;
-}
-
-export function setDaysToMonths(value) {
-    daysToMonths = value;
-    localStorage.setItem('daysToMonthThreshold', value);
-}
 
 
 // Colors
@@ -79,6 +89,8 @@ export const charts03 = '#2194bb';
 export const charts04 = '#026789';
 export const charts05 = '#DEAA00';
 
+
+// Different Color Options
 /*export const charts01 = '#EBEBFF';
 export const charts02 = '#B8BBD9';
 export const charts03 = '#858EB4';

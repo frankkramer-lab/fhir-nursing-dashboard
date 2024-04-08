@@ -1,6 +1,5 @@
 import './SettingsScreen.css';
-import {getDaysToMonths, setDaysToMonths} from "../../utils/constants";
-import {useState} from "react";
+import {getDaysToMonths, setDaysToMonths} from "../../utils/globalVars";
 import {SettingsContainer} from "./SettingsContainer";
 import {SettingsNumberInput} from "./SettingsNumberInput";
 

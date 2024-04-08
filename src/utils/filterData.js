@@ -1,30 +1,49 @@
-import {getDaysToMonths, AGE_GROUPS, BAR, ENDDATE, FEMALE, GENDERS, LINE, MALE, NUMBER, PIE, STARTDATE} from "./constants";
+import {AGE_GROUPS, BAR, ENDDATE, FEMALE, GENDERS, LINE, MALE, NUMBER, PIE, STARTDATE} from "./constants";
+import {getDaysToMonths} from "./globalVars";
 import moment from "moment";
 import {getAllDataFromDB} from "./db";
-
 
 
 let patients;
 let conditions;
 let encounters;
+let stationEncounters;
+let stationPatients;
 
-export async function initCharts() {
+export async function initCharts(updateProgress, stationID = null) {
 
     patients = await getAllDataFromDB('patients');
     conditions = await getAllDataFromDB('conditions');
     encounters = await getAllDataFromDB('encounters');
-
+    stationEncounters = await getAllDataFromDB('stationEncounters');
+    if (stationID) {
+        patients = getStationPatients(stationID);
+        console.log(patients)
+        encounters = getStationEncounters(stationID)
+        console.log(encounters)
+        conditions = getStationConditions(stationID);
+        console.log(conditions)
+    }
+    updateProgress(10);
 
     // All functions need to take the arguments: ageGroups, timeSpan
 
-    let genderDataProcessor = new GenderDataProcessor(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0);
-    let ageDataProcessor = new AgeDataProcessor(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0);
-    let assertedDatesProcessor = new AssertedDatesDataProcessor(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0);
-    let diseasesDataProcessor = new DiseaseDataProcessor(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 2300);
-    let admissionDataProcessor = new AdmissionDatesDataProcessor(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0);
-    let dismissionDataProcessor = new DismissionDatesDataProcessor(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0);
-    let encounterTypesDataProcessor = new EncounterTypesDataProcessor(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0);
-    let lengthOfStayDataProcessor = new LengthOfStayDataProcessor(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 14);
+    let genderDataProcessor = new GenderDataProcessor(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
+    updateProgress(20);
+    let ageDataProcessor = new AgeDataProcessor(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
+    updateProgress(30);
+    let assertedDatesProcessor = new AssertedDatesDataProcessor(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
+    updateProgress(40);
+    let diseasesDataProcessor = new DiseaseDataProcessor(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 2300, stationID);
+    updateProgress(50);
+    let admissionDataProcessor = new AdmissionDatesDataProcessor(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
+    updateProgress(60);
+    let dismissionDataProcessor = new DismissionDatesDataProcessor(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
+    updateProgress(70);
+    let encounterTypesDataProcessor = new EncounterTypesDataProcessor(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
+    updateProgress(80);
+    let lengthOfStayDataProcessor = new LengthOfStayDataProcessor(AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 14, stationID);
+    updateProgress(90);
 
     return [
         {
@@ -81,11 +100,12 @@ export async function initCharts() {
 
 
 export class DataProcessor {
-    constructor(ageGroups, timeSpan, genders, threshold) {
+    constructor(ageGroups, timeSpan, genders, threshold, stationID) {
         this.ageGroups = ageGroups;
         this.timeSpan = timeSpan;
         this.genders = genders;
         this.threshold = threshold;
+        this.stationID = stationID;
         this.data = this.process();
     }
 
@@ -96,7 +116,7 @@ export class DataProcessor {
 
 class GenderDataProcessor extends DataProcessor {
     process() {
-        let filteredPatients = filterPatients(this.ageGroups, this.timeSpan, this.genders);
+        let filteredPatients = filterPatients(this.ageGroups, this.timeSpan, this.genders, this.stationID);
 
         return {
             labels: [
@@ -117,7 +137,7 @@ class GenderDataProcessor extends DataProcessor {
 
 class AgeDataProcessor extends DataProcessor {
     process() {
-        let filteredPatients = filterPatients(this.ageGroups, this.timeSpan, this.genders);
+        let filteredPatients = filterPatients(this.ageGroups, this.timeSpan, this.genders, this.stationID);
 
         const getPatientCount = function (ageGroup, gender) {
             if (gender) return filteredPatients.filter(p => p.ageGroup === ageGroup && p.gender === gender).length;
@@ -159,7 +179,7 @@ class AssertedDatesDataProcessor extends DataProcessor {
         const getDataset = () => {
 
             // filter
-            let filteredConditions = filterConditions(this.ageGroups, this.timeSpan, this.genders);
+            let filteredConditions = filterConditions(this.ageGroups, this.timeSpan, this.genders, this.stationID);
 
             // sort by Date
             let sortedConditions = filteredConditions.sort((a, b) => a.assertedDate - b.assertedDate);
@@ -207,7 +227,7 @@ class AdmissionDatesDataProcessor extends DataProcessor {
     process() {
         const getDataset = () => {
             // filter
-            let filteredEncounters = filterEncounters(this.ageGroups, this.timeSpan, false, this.genders);
+            let filteredEncounters = filterEncounters(this.ageGroups, this.timeSpan, false, this.genders, this.stationID);
 
             // sort by Date
             let sortedEncounters = filteredEncounters.sort((a, b) => a.periodStart - b.periodStart);
@@ -247,7 +267,7 @@ class DismissionDatesDataProcessor extends DataProcessor {
     process() {
         const getDataset = () => {
             // filter
-            let filteredEncounters = filterEncounters(this.ageGroups, this.timeSpan, true, this.genders);
+            let filteredEncounters = filterEncounters(this.ageGroups, this.timeSpan, true, this.genders, this.stationID);
 
             // sort by Date
             let sortedEncounters = filteredEncounters.sort((a, b) => a.periodEnd - b.periodEnd);
@@ -285,10 +305,9 @@ class DismissionDatesDataProcessor extends DataProcessor {
 }
 
 
-
 class EncounterTypesDataProcessor extends DataProcessor {
     process() {
-        let filteredEncounters = filterEncounters(this.ageGroups, this.timeSpan, false, this.genders)
+        let filteredEncounters = filterEncounters(this.ageGroups, this.timeSpan, false, this.genders, this.stationID)
 
         const getDataset = () => {
             let data = {};
@@ -320,8 +339,8 @@ class EncounterTypesDataProcessor extends DataProcessor {
 
 class DiseaseDataProcessor extends DataProcessor {
     process() {
-        let filteredConditions = filterConditions(this.ageGroups, this.timeSpan, this.genders)
-        
+        let filteredConditions = filterConditions(this.ageGroups, this.timeSpan, this.genders, this.stationID)
+
         const getDataset = () => {
             let data = {};
 
@@ -356,7 +375,7 @@ class DiseaseDataProcessor extends DataProcessor {
 
 class LengthOfStayDataProcessor extends DataProcessor {
     process() {
-        let filteredEncounters = filterEncounters(this.ageGroups, this.timeSpan, false, this.genders)
+        let filteredEncounters = filterEncounters(this.ageGroups, this.timeSpan, false, this.genders, this.stationID)
 
         // Sum up the days of all encounters
         let sum = filteredEncounters.reduce((accumulator, current) => {
@@ -403,7 +422,9 @@ function initDates(timeSpan) {
 }
 
 
-const filterPatients = (ageGroups, timespan, genders) => {
+const filterPatients = (ageGroups, timespan, genders, stationID) => {
+
+
     let filteredPatients = patients.filter(p => ageGroups.includes(p.ageGroup));
     filteredPatients = filteredPatients.filter(p => genders.includes(p.gender));
 
@@ -411,7 +432,7 @@ const filterPatients = (ageGroups, timespan, genders) => {
 }
 
 
-const filterConditions = (ageGroups, timespan, genders) => {
+const filterConditions = (ageGroups, timespan, genders, stationID) => {
     let filteredConditions = conditions.filter(c => c.assertedDate >= timespan[0] && c.assertedDate <= timespan[1])
     filteredConditions = filteredConditions.filter(c => ageGroups.includes(getPatientById(c.patientID).ageGroup));
     filteredConditions = filteredConditions.filter(c => {
@@ -421,14 +442,37 @@ const filterConditions = (ageGroups, timespan, genders) => {
 }
 
 
-const filterEncounters = (ageGroups, timespan, enddate, genders) => {
+const filterEncounters = (ageGroups, timespan, enddate, genders, stationID) => {
     let filteredEncounters;
     if (enddate) {
         filteredEncounters = encounters.filter(e => e.periodEnd >= timespan[0] && e.periodEnd <= timespan[1])
     } else {
         filteredEncounters = encounters.filter(e => e.periodStart >= timespan[0] && e.periodStart <= timespan[1])
+
     }
     filteredEncounters = filteredEncounters.filter(e => ageGroups.includes(getPatientById(e.patientID).ageGroup));
     filteredEncounters = filteredEncounters.filter(e => genders.includes(getPatientById(e.patientID).gender));
     return filteredEncounters;
+}
+
+function getStationPatients(stationId) {
+    const patientIdsOnStation = stationEncounters
+        .filter(e => e.station === stationId)
+        .map(e => e.patientID);
+
+
+    return patients.filter(p => patientIdsOnStation.includes(p.id));
+}
+
+function getStationConditions(stationId) {
+    const patientIdsOnStation = stationEncounters
+        .filter(e => e.station === stationId)
+        .map(e => e.patientID);
+
+
+    return conditions.filter(c => patientIdsOnStation.includes(c.patientID));
+}
+
+function getStationEncounters(StationId) {
+    return stationEncounters.filter(e => e.station === StationId);
 }

@@ -3,6 +3,7 @@ const dbVersion = 2;
 const patientsStore = 'patients';
 const conditionsStore = 'conditions';
 const encountersStore = 'encounters';
+const stationEncountersStore = 'stationEncounters';
 
 
 // Check if object store (key) has {count} entries
@@ -61,6 +62,9 @@ export function initDB() {
             }
             if (!db.objectStoreNames.contains(encountersStore)) {
                 db.createObjectStore(encountersStore, {keyPath: 'id'});
+            }
+            if (!db.objectStoreNames.contains(stationEncountersStore)) {
+                db.createObjectStore(stationEncountersStore, {keyPath: 'id'});
             }
 
             console.log('Database upgraded');
@@ -154,15 +158,23 @@ export function insertConditionsIntoDB(conditions) {
     });
 }
 
-export function insertEncountersIntoDB(encounters) {
+export function insertEncountersIntoDB(encounters, station = false) {
     return new Promise((resolve, reject) => {
         const openRequest = indexedDB.open(dbName, dbVersion);
 
 
         openRequest.onsuccess = function (event) {
             const db = event.target.result;
-            const transaction = db.transaction(encountersStore, 'readwrite');
-            const objectStore = transaction.objectStore(encountersStore);
+
+            let transaction;
+            let objectStore;
+            if (station) {
+                transaction = db.transaction(stationEncountersStore, 'readwrite');
+                objectStore = transaction.objectStore(stationEncountersStore);
+            } else {
+                transaction = db.transaction(encountersStore, 'readwrite');
+                objectStore = transaction.objectStore(encountersStore);
+            }
 
             encounters.forEach(encounter => {
                 objectStore.add({
@@ -176,6 +188,7 @@ export function insertEncountersIntoDB(encounters) {
                     periodStart: encounter.periodStart.toDate(),
                     periodEnd: encounter.periodEnd.toDate(),
                     serviceProvider: encounter.serviceProvider,
+                    station: encounter.station,
                 });
             });
 
