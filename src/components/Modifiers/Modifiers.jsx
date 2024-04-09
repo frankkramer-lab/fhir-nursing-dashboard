@@ -6,6 +6,7 @@ import {AGE_GROUPS, GENDERS} from "../../utils/constants";
 import ThresholdModifier from "./ThresholdModifier";
 import GenderModifier from "./GenderModifier";
 import {DataProcessor} from "../../utils/filterData";
+import {getActiveStation} from "../../utils/globalVars";
 
 export default function Modifiers(props) {
 
@@ -77,25 +78,25 @@ export default function Modifiers(props) {
     }
 
     function renderAgeModifier() {
-        return <AgeModifier key={props.activeIndex + "age"}
+        return <AgeModifier key={props.activeIndex + "age" + props.tabIndex}
                             chartData={chart}
                             updateAgeModifiers={updateAgeModifiers}/>
     }
 
     function renderGenderModifier() {
-        return <GenderModifier key={props.activeIndex + "gender"}
+        return <GenderModifier key={props.activeIndex + "gender" + props.tabIndex}
                                chartData={chart}
                                updateAgeModifiers={updateGenderModifiers}/>
     }
 
     function renderTimeSpanModifier() {
-        return <TimeSpanModifier key={props.activeIndex + "timeSpan"}
+        return <TimeSpanModifier key={props.activeIndex + "timeSpan" + props.tabIndex}
                                  chartData={chart}
                                  updateTimeSpan={updateTimeSpan}/>
     }
 
     function renderThresholdModifier() {
-        return <ThresholdModifier key={props.activeIndex + "threshold"}
+        return <ThresholdModifier key={props.activeIndex + "threshold" + props.tabIndex}
                                   threshold={threshold}
                                   updateThreshold={updateThreshold}/>
     }

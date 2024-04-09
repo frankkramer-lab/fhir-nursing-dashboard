@@ -18,7 +18,6 @@ export default function GenderModifier(props) {
                 data[i] = 1;
             }
         }
-        console.log(data);
         props.updateAgeModifiers(data.map(d => Boolean(d)));
     }
 
