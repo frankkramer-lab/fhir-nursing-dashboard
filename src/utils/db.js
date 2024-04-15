@@ -4,6 +4,7 @@ const patientsStore = 'patients';
 const conditionsStore = 'conditions';
 const encountersStore = 'encounters';
 const stationEncountersStore = 'stationEncounters';
+const proceduresStore = 'procedures';
 
 
 // Check if object store (key) has {count} entries
@@ -65,6 +66,9 @@ export function initDB() {
             }
             if (!db.objectStoreNames.contains(stationEncountersStore)) {
                 db.createObjectStore(stationEncountersStore, {keyPath: 'id'});
+            }
+            if (!db.objectStoreNames.contains(proceduresStore)) {
+                db.createObjectStore(proceduresStore, {keyPath: 'id'});
             }
 
             console.log('Database upgraded');
@@ -205,6 +209,42 @@ export function insertEncountersIntoDB(encounters, station = false) {
     });
 }
 
+export function insertProceduresIntoDB(procedures) {
+    return new Promise((resolve, reject) => {
+        const openRequest = indexedDB.open(dbName, dbVersion);
+
+
+        openRequest.onsuccess = function (event) {
+            const db = event.target.result;
+            const transaction = db.transaction(proceduresStore, 'readwrite');
+            const objectStore = transaction.objectStore(proceduresStore);
+
+            procedures.forEach(procedure => {
+                objectStore.add({
+                    id: procedure.id,
+                    patientID: procedure.patientID,
+                    category: procedure.category,
+                    categoryCode: procedure.categoryCode,
+                    code: procedure.code,
+                    display: procedure.display,
+                    performedDateTime: procedure.performedDateTime.toDate(),
+                    status: procedure.status,
+                });
+            });
+
+            transaction.oncomplete = function () {
+                db.close();
+            };
+            return resolve();
+        };
+
+        openRequest.onerror = function (event) {
+            console.error('Error opening database:', event.target.error);
+            return resolve();
+        }
+    });
+}
+
 export function queryDataFromPatientsDB(query) {
     return new Promise((resolve, reject) => {
         const openRequest = indexedDB.open(dbName, dbVersion);
@@ -248,6 +288,7 @@ export function queryDataFromPatientsDB(query) {
         };
     });
 }
+
 
 export function getAllDataFromDB(storeName) {
     return new Promise((resolve, reject) => {

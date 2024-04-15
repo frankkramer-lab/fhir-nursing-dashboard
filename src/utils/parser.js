@@ -78,3 +78,27 @@ export function parseAllEncounterData(encounter) {
 
     return tableData;
 }
+
+export function parseAllProceduresData(procedures) {
+    const tableData = [];
+    console.log(procedures);
+    procedures.forEach(element => {
+        if (!element) {
+            return null;
+        }
+        let p = {};
+        p.id = element.id; // ID
+        p.patientID = element.subject?.reference.split("/")[1]; // Patient ID
+        p.code = element.code?.coding?.[0]?.code; // Code
+        p.display = element.code?.coding?.[0]?.display; // Klartext
+        p.category = element.category?.coding?.[0]?.display; // Kategorie
+        p.categoryCode = element.category?.coding?.[0]?.code; // Kategorie-Code
+        p.status = element.status; // Status der Ausführung
+        p.performedDateTime = moment(element.performedDateTime); // Datum und Zeit
+
+        tableData.push(p);
+    });
+
+    console.log(tableData);
+    return tableData;
+}

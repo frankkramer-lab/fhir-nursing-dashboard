@@ -1,10 +1,10 @@
 import * as Constants from "./constants";
-import {parseAllConditionData, parseAllEncounterData, parseAllPatientData} from "./parser";
+import {parseAllConditionData, parseAllEncounterData, parseAllPatientData, parseAllProceduresData} from "./parser";
 import {
     checkIndexedDBFilled,
     initDB,
     insertConditionsIntoDB, insertEncountersIntoDB,
-    insertPatientsIntoDB
+    insertPatientsIntoDB, insertProceduresIntoDB
 } from "./db";
 
 import React, {createContext, useState, useEffect, useReducer} from 'react';
@@ -29,7 +29,7 @@ export const APIWraper = ({children}) => {
         useEffect(() => {
             setLoading(true);
             initDB().then(() => {
-                Promise.all([getPatients(updateProgress), getConditions(updateProgress), getEncounters(updateProgress, '&type=einrichtungskontakt'), getEncounters(updateProgress, '&type=versorgungsstellenkontakt')]) // Promise.all, um mehrere Promises gleichzeitig auszuführen
+                Promise.all([getPatients(updateProgress), getConditions(updateProgress), getEncounters(updateProgress, '&type=einrichtungskontakt'), getEncounters(updateProgress, '&type=versorgungsstellenkontakt'), getProcedures(updateProgress)]) // Promise.all, um mehrere Promises gleichzeitig auszuführen
                     .then(async () => {
                             setProgress(0);
                             setCharts(await initCharts(updateProgress));
@@ -186,6 +186,20 @@ async function getEncounters(updateProgress, query = '') {
 
 
     return parsedData;
+}
+
+async function getProcedures(updateProgress, query = '') {
+    // check local DB
+    let dataCount = await fetchDataAmmount('Procedure', query);
+    const local = await localDBFilled('procedures', dataCount);
+    if (local) return;
+
+    // request data from server
+    let procedures = await fetchAll(Constants.API_BASE_URL + 'Procedure?_count=1000' + query, [], updateProgress);
+
+    // save in local DB
+    let parsedData = parseAllProceduresData(procedures);
+    await insertProceduresIntoDB(parsedData);
 }
 
 async function localDBFilled(key, count) {

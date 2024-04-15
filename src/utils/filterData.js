@@ -10,6 +10,7 @@ export async function initCharts(updateProgress, stationID = null) {
     let conditions = await getAllDataFromDB('conditions');
     let encounters = await getAllDataFromDB('encounters');
     let stationEncounters = await getAllDataFromDB('stationEncounters');
+    let procedures = await getAllDataFromDB('procedures');
 
     updateProgress(10);
 
