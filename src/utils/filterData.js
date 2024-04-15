@@ -17,7 +17,7 @@ export async function initCharts(updateProgress, stationID = null) {
     // All functions need to take the arguments: ageGroups, timeSpan
 
     let genderDataProcessor = new GenderDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
-    updateProgress(20);
+    updateProgress(30);
     let ageDataProcessor = new AgeDataProcessor(patients, conditions, encounters, stationEncounters,AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
     updateProgress(30);
     let assertedDatesProcessor = new AssertedDatesDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
