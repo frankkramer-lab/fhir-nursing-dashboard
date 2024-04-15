@@ -1,7 +1,7 @@
 // Settings
 import {STATIONS} from "./constants";
 
-let daysToMonths = Number(localStorage.getItem('daysToMonthThreshold')) || 3.2;
+let daysToMonths = 3.2;
 
 export function getDaysToMonths() {
     return daysToMonths;
@@ -15,7 +15,7 @@ export function setDaysToMonths(value) {
 
 
 // Active Station
-let activeStation = localStorage.getItem('activeStation') || STATIONS[0];
+let activeStation = STATIONS[0];
 
 export function getActiveStation() {
     return activeStation;

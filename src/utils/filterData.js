@@ -7,30 +7,33 @@ import {getAllDataFromDB} from "./db";
 export async function initCharts(updateProgress, stationID = null) {
 
     let patients = await getAllDataFromDB('patients');
+    updateProgress(5);
     let conditions = await getAllDataFromDB('conditions');
-    let encounters = await getAllDataFromDB('encounters');
-    let stationEncounters = await getAllDataFromDB('stationEncounters');
-
     updateProgress(10);
+    let encounters = await getAllDataFromDB('encounters');
+    updateProgress(15);
+    let stationEncounters = await getAllDataFromDB('stationEncounters');
+    updateProgress(20);
+
 
     // All functions need to take the arguments: ageGroups, timeSpan
 
     let genderDataProcessor = new GenderDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
-    updateProgress(20);
-    let ageDataProcessor = new AgeDataProcessor(patients, conditions, encounters, stationEncounters,AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
     updateProgress(30);
-    let assertedDatesProcessor = new AssertedDatesDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
+    let ageDataProcessor = new AgeDataProcessor(patients, conditions, encounters, stationEncounters,AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
     updateProgress(40);
-    let diseasesDataProcessor = new DiseaseDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, (stationID===null? 2300 : 500), stationID);
+    let assertedDatesProcessor = new AssertedDatesDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
     updateProgress(50);
-    let admissionDataProcessor = new AdmissionDatesDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
+    let diseasesDataProcessor = new DiseaseDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, (stationID===null? 2300 : 500), stationID);
     updateProgress(60);
-    let dismissionDataProcessor = new DismissionDatesDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
+    let admissionDataProcessor = new AdmissionDatesDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
     updateProgress(70);
-    let encounterTypesDataProcessor = new EncounterTypesDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
+    let dismissionDataProcessor = new DismissionDatesDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
     updateProgress(80);
-    let lengthOfStayDataProcessor = new LengthOfStayDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 14, stationID);
+    let encounterTypesDataProcessor = new EncounterTypesDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
     updateProgress(90);
+    let lengthOfStayDataProcessor = new LengthOfStayDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 14, stationID);
+    updateProgress(99);
 
     return [
         {

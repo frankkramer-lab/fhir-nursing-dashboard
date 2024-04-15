@@ -9,7 +9,7 @@ import {
 
 import React, {createContext, useState, useEffect, useReducer} from 'react';
 import {DataProcessor, initCharts} from "./filterData";
-import {getActiveStation} from "./globalVars";
+import {getActiveStation, setActiveStation} from "./globalVars";
 
 export const DataContext = createContext(null);
 
@@ -32,16 +32,24 @@ export const APIWraper = ({children}) => {
                 Promise.all([getPatients(updateProgress), getConditions(updateProgress), getEncounters(updateProgress, '&type=einrichtungskontakt'), getEncounters(updateProgress, '&type=versorgungsstellenkontakt')]) // Promise.all, um mehrere Promises gleichzeitig auszuführen
                     .then(async () => {
                             setProgress(0);
-                            setCharts(await initCharts(updateProgress));
-                            setProgress(0);
-                            setStationCharts(await initCharts(updateProgress, getActiveStation()));
+
+                            const worker = new Worker(new URL('../workers/calculationWorker.js', import.meta.url));
+
+                            worker.addEventListener('message', (e) => {
+                                const {type, payload} = e.data;
+                                if (type === 'result') {
+                                    setCharts(payload);
+                                    setLoading(false);
+                                    worker.terminate();
+                                } else if (type === 'progress') {
+                                    setProgress(payload);
+                                }
+                            });
+
+                            worker.postMessage(null);
                         }
                     )
                     .catch(error => console.error('Fehler:', error))
-                    .finally(() => {
-                        setLoading(false);
-                        setProgress(0);
-                    }); // loading false, nachdem alle Fetch-Aufrufe abgeschlossen
             });
         }, []);
 

@@ -1,6 +1,6 @@
 import "./StatsScreen.css";
 import MyPieChart from "../Charts/MyPieChart";
-import {useContext, useReducer, useState} from "react";
+import {useContext, useEffect, useReducer, useState} from "react";
 import {DataContext} from "../../utils/api";
 import Modifiers from "../Modifiers/Modifiers";
 import MyBarChart from "../Charts/MyBarChart";
@@ -18,26 +18,55 @@ export default function StatsScreen(props) {
     // force update function
     const [, forceUpdate] = useReducer(x => x + 1, {x: 0});
     const [loadingStation, setLoadingStation] = useState(false);
+    const [progress, setProgress] = useState(0);
     const [tabValue, setTabValue] = useState(0);
     const [activeChart, setActiveChart] = useState(0);
     const dataContext = useContext(DataContext);
     const [charts, setCharts] = useState(dataContext.charts);
     const [stationCharts, setStationCharts] = useState(dataContext.stationCharts);
+    const [currentWorker, setCurrentWorker] = useState(null);
 
 
     function UpdateComponent() {
         forceUpdate();
     }
 
+    useEffect(() => {
+        loadCharts(getActiveStation());
+
+        return () => {
+            if (currentWorker) currentWorker.terminate();
+        }
+    }, []);
+
     function changeStation(event) {
-        setLoadingStation(true);
         let station = event.target.value;
-        setActiveStation(station);
-        initCharts(() => {
-        }, station).then((data) => {
-            setStationCharts(data);
-            setLoadingStation(false);
+        loadCharts(station);
+    }
+
+    function loadCharts(station) {
+        setLoadingStation(true);
+
+        if (currentWorker) {
+            console.log("worker terminated");
+            currentWorker.terminate();
+        }
+        const worker = new Worker(new URL('../../workers/calculationWorker.js', import.meta.url));
+
+        worker.addEventListener('message', (e) => {
+            const {type, payload} = e.data;
+            if (type === 'result') {
+                setStationCharts(payload);
+                setLoadingStation(false);
+                worker.terminate();
+            } else if (type === 'progress') {
+                setProgress(payload);
+            }
         });
+
+        setCurrentWorker(worker);
+        worker.postMessage(station);
+        setActiveStation(station);
     }
 
     function renderChartComponent(index, chart) {
@@ -90,7 +119,7 @@ export default function StatsScreen(props) {
                         </div>
                         {loadingStation && (
                             <div className="loading-station">
-                                <p>Loading...</p>
+                                <p>Loading... {progress}%</p>
                             </div>
                         )}
                         {!loadingStation && (
@@ -104,12 +133,14 @@ export default function StatsScreen(props) {
                     </div>
                 )}
             </div>
-            <Modifiers key={activeChart+tabValue}
-                       updateComponent={UpdateComponent}
-                       charts={tabValue === 0 ? charts : stationCharts}
-                       activeIndex={activeChart}
-                       tabIndex={tabValue}
-            />
+            {(!loadingStation || tabValue===0) && (
+                <Modifiers key={activeChart + tabValue}
+                           updateComponent={UpdateComponent}
+                           charts={tabValue === 0 ? charts : stationCharts}
+                           activeIndex={activeChart}
+                           tabIndex={tabValue}
+                />
+            )}
         </>
     );
 }
