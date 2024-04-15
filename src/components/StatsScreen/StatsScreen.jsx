@@ -35,7 +35,10 @@ export default function StatsScreen(props) {
         loadCharts(getActiveStation());
 
         return () => {
-            if (currentWorker) currentWorker.terminate();
+            if (currentWorker) {
+                currentWorker.terminate();
+                console.log("worker terminated")
+            }
         }
     }, []);
 
