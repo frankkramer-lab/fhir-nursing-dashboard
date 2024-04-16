@@ -31,25 +31,19 @@ export const APIWraper = ({children}) => {
             initDB().then(() => {
                 Promise.all([getPatients(updateProgress), getConditions(updateProgress), getEncounters(updateProgress, '&type=einrichtungskontakt'), getEncounters(updateProgress, '&type=versorgungsstellenkontakt'), getProcedures(updateProgress)]) // Promise.all, um mehrere Promises gleichzeitig auszuführen
                     .then(async () => {
+                            console.time("api init charts")
                             setProgress(0);
-
-                            const worker = new Worker(new URL('../workers/calculationWorker.js', import.meta.url));
-
-                            worker.addEventListener('message', (e) => {
-                                const {type, payload} = e.data;
-                                if (type === 'result') {
-                                    setCharts(payload);
-                                    setLoading(false);
-                                    worker.terminate();
-                                } else if (type === 'progress') {
-                                    setProgress(payload);
-                                }
-                            });
-
-                            worker.postMessage(null);
+                            setCharts(await initCharts(updateProgress));
+                            setProgress(0);
+                            setStationCharts(await initCharts(updateProgress, getActiveStation()));
+                            console.timeEnd("api init charts")
                         }
                     )
                     .catch(error => console.error('Fehler:', error))
+                    .finally(() => {
+                        setLoading(false);
+                        setProgress(0);
+                    }); // loading false, nachdem alle Fetch-Aufrufe abgeschlossen
             });
         }, []);
 

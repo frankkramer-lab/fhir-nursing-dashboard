@@ -3,6 +3,7 @@ import {STATIONS} from "./constants";
 
 let daysToMonths = 3.2;
 
+
 export function getDaysToMonths() {
     return daysToMonths;
 }

@@ -4,34 +4,69 @@ import moment from "moment";
 import {getAllDataFromDB} from "./db";
 
 
+// Global variables to store the data
+// This is a workaround to avoid loading the data multiple times
+// The data is loaded once and then stored in these variables
+
+// General data
+let [patients, conditions, encounters, stationEncounters, procedures] = [null, null, null, null, null];
+
+// Station specific data
+let [stationPatients, stationConditions, selectedStationEncounters] = [null, null, null];
+
+
 export async function initCharts(updateProgress, stationID = null) {
 
-    let patients = await getAllDataFromDB('patients');
-    let conditions = await getAllDataFromDB('conditions');
-    let encounters = await getAllDataFromDB('encounters');
-    let stationEncounters = await getAllDataFromDB('stationEncounters');
-    let procedures = await getAllDataFromDB('procedures');
+    console.time("get from db");
+    if (!patients || !conditions || !encounters || !stationEncounters || !procedures) {
+        [patients, conditions, encounters, stationEncounters, procedures] = await Promise.all([
+            getAllDataFromDB('patients'),
+            getAllDataFromDB('conditions'),
+            getAllDataFromDB('encounters'),
+            getAllDataFromDB('stationEncounters'),
+            getAllDataFromDB('procedures')
+        ]);
+    }
+    console.timeEnd("get from db");
 
-    updateProgress(10);
+
+
+    if (stationID) {
+        stationPatients = getStationPatients(patients, stationEncounters, stationID);
+        selectedStationEncounters = getStationEncounters(stationEncounters, stationID)
+        stationConditions = getStationConditions(conditions, stationEncounters, stationID);
+    }
+
 
     // All functions need to take the arguments: ageGroups, timeSpan
 
+    console.time("init processors");
+    console.time("init gender processor")
     let genderDataProcessor = new GenderDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
-    updateProgress(30);
-    let ageDataProcessor = new AgeDataProcessor(patients, conditions, encounters, stationEncounters,AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
-    updateProgress(30);
+    console.timeEnd("init gender processor");
+    console.time("init age processor")
+    let ageDataProcessor = new AgeDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
+    console.timeEnd("init age processor");
+    /*console.time("init asserted dates processor")
     let assertedDatesProcessor = new AssertedDatesDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
-    updateProgress(40);
-    let diseasesDataProcessor = new DiseaseDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, (stationID===null? 2300 : 500), stationID);
-    updateProgress(50);
+    console.timeEnd("init asserted dates processor")*/
+    console.time("init diseases processor")
+    let diseasesDataProcessor = new DiseaseDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, (stationID === null ? 2300 : 500), stationID);
+    console.timeEnd("init diseases processor")
+    console.time("init admission processor")
     let admissionDataProcessor = new AdmissionDatesDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
-    updateProgress(60);
+    console.timeEnd("init admission processor")
+    console.time("init dismission processor")
     let dismissionDataProcessor = new DismissionDatesDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
-    updateProgress(70);
+    console.timeEnd("init dismission processor")
+    console.time("init encounter types processor")
     let encounterTypesDataProcessor = new EncounterTypesDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
-    updateProgress(80);
+    console.timeEnd("init encounter types processor")
+    console.time("init length of stay processor")
     let lengthOfStayDataProcessor = new LengthOfStayDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 14, stationID);
-    updateProgress(90);
+    console.timeEnd("init length of stay processor")
+
+    console.timeEnd("init processors");
 
     return [
         {
@@ -46,23 +81,23 @@ export async function initCharts(updateProgress, stationID = null) {
             type: BAR,
             p: ageDataProcessor,
         },
-        {
+        /*{
             title: "Condition Records",
             id: 2,
             type: LINE,
             p: assertedDatesProcessor
+        },*/
+        {
+            title: "Admission Dates",
+            id: 3,
+            type: LINE,
+            p: admissionDataProcessor,
         },
         {
             title: "Diseases",
             id: 5,
             type: PIE,
             p: diseasesDataProcessor,
-        },
-        {
-            title: "Admission Dates",
-            id: 3,
-            type: LINE,
-            p: admissionDataProcessor,
         },
         {
             title: "Encounter Types",
@@ -94,9 +129,9 @@ export class DataProcessor {
         this.encounters = encounters;
         this.stationEncounters = stationEncounters;
         if (stationID) {
-            this.patients = getStationPatients(this.patients, this.stationEncounters, stationID);
-            this.encounters = getStationEncounters(this.stationEncounters, stationID)
-            this.conditions = getStationConditions(this.conditions, this.stationEncounters, stationID);
+            this.patients = stationPatients;
+            this.encounters = selectedStationEncounters;
+            this.conditions = stationConditions;
         }
         this.ageGroups = ageGroups;
         this.timeSpan = timeSpan;
@@ -107,7 +142,7 @@ export class DataProcessor {
     }
 
     process() {
-        throw new Error("Method 'process' must be implemented.");
+        throw new Error("Method 'getData' must be implemented.");
     }
 }
 

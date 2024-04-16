@@ -24,53 +24,22 @@ export default function StatsScreen(props) {
     const dataContext = useContext(DataContext);
     const [charts, setCharts] = useState(dataContext.charts);
     const [stationCharts, setStationCharts] = useState(dataContext.stationCharts);
-    const [currentWorker, setCurrentWorker] = useState(null);
-
 
     function UpdateComponent() {
         forceUpdate();
     }
 
-    useEffect(() => {
-        loadCharts(getActiveStation());
-
-        return () => {
-            if (currentWorker) {
-                currentWorker.terminate();
-                console.log("worker terminated")
-            }
-        }
-    }, []);
-
     function changeStation(event) {
-        let station = event.target.value;
-        loadCharts(station);
-    }
-
-    function loadCharts(station) {
         setLoadingStation(true);
-
-        if (currentWorker) {
-            console.log("worker terminated");
-            currentWorker.terminate();
-        }
-        const worker = new Worker(new URL('../../workers/calculationWorker.js', import.meta.url));
-
-        worker.addEventListener('message', (e) => {
-            const {type, payload} = e.data;
-            if (type === 'result') {
-                setStationCharts(payload);
-                setLoadingStation(false);
-                worker.terminate();
-            } else if (type === 'progress') {
-                setProgress(payload);
-            }
-        });
-
-        setCurrentWorker(worker);
-        worker.postMessage(station);
+        let station = event.target.value;
         setActiveStation(station);
+        initCharts(() => {
+        }, station).then((data) => {
+            setStationCharts(data);
+            setLoadingStation(false);
+        });
     }
+
 
     function renderChartComponent(index, chart) {
         switch (chart.type) {
@@ -130,13 +99,12 @@ export default function StatsScreen(props) {
                                 {stationCharts.map((chart, index) => {
                                     return renderChartComponent(index, chart);
                                 })}
-                                <div className="buffer"></div>
                             </div>
                         )}
                     </div>
                 )}
             </div>
-            {(!loadingStation || tabValue===0) && (
+            {(!loadingStation || tabValue === 0) && (
                 <Modifiers key={activeChart + tabValue}
                            updateComponent={UpdateComponent}
                            charts={tabValue === 0 ? charts : stationCharts}

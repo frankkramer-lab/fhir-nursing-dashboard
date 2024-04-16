@@ -3,6 +3,7 @@
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-gap: 2rem;
+    margin-bottom: 50px;
 }
 
 .scroll-container {
@@ -14,10 +15,6 @@
     margin-top: 20px;
     align-items: center;
     overflow: auto;
-}
-
-.buffer{
-    height: 50px;
 }
 
 
