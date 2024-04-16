@@ -72,7 +72,7 @@ export default function StatsScreen(props) {
                         <div className="charts">
                             <GroupHeading title={"Charts"}/>
                             {charts.map((chart, index) => {
-                                return renderChartComponent(index, chart);
+                                if (chart.showAt.includes(tabValue)) return renderChartComponent(index, chart);
                             })}
                             <div className="buffer"></div>
                         </div>
@@ -97,7 +97,7 @@ export default function StatsScreen(props) {
                         {!loadingStation && (
                             <div className="charts">
                                 {stationCharts.map((chart, index) => {
-                                    return renderChartComponent(index, chart);
+                                    if (chart.showAt.includes(tabValue))  return renderChartComponent(index, chart);
                                 })}
                             </div>
                         )}

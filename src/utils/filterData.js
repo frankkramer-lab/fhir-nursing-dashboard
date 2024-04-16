@@ -51,7 +51,8 @@ export async function initCharts(updateProgress, stationID = null) {
     let assertedDatesProcessor = new AssertedDatesDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
     console.timeEnd("init asserted dates processor")*/
     console.time("init diseases processor")
-    let diseasesDataProcessor = new DiseaseDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, (stationID === null ? 2300 : 500), stationID);
+    // Removed from global Charts (> loading time)
+    let diseasesDataProcessor = stationID === null ? null : new DiseaseDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, (stationID === null ? 2300 : 500), stationID);
     console.timeEnd("init diseases processor")
     console.time("init admission processor")
     let admissionDataProcessor = new AdmissionDatesDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
@@ -68,53 +69,62 @@ export async function initCharts(updateProgress, stationID = null) {
 
     console.timeEnd("init processors");
 
+
     return [
         {
-            title: "Gender",
-            id: 0,
-            type: PIE,
-            p: genderDataProcessor,
+            title: "Gender", // Title of the chart
+            id: 0, // Unique ID
+            type: PIE, // Chart type
+            showAt: [0, 1], // Tab index where the chart should be shown (0 = global, 1 = station)
+            p: genderDataProcessor, // Processor
         },
         {
             title: "Age",
             id: 1,
             type: BAR,
+            showAt: [0, 1],
             p: ageDataProcessor,
         },
         /*{
             title: "Condition Records",
             id: 2,
             type: LINE,
+            showAt: [0, 1],
             p: assertedDatesProcessor
         },*/
         {
             title: "Admission Dates",
             id: 3,
             type: LINE,
+            showAt: [0, 1],
             p: admissionDataProcessor,
         },
         {
             title: "Diseases",
             id: 5,
             type: PIE,
+            showAt: [1],
             p: diseasesDataProcessor,
         },
         {
             title: "Encounter Types",
             id: 4,
             type: PIE,
+            showAt: [0, 1],
             p: encounterTypesDataProcessor,
         },
         {
             title: "Dismission Dates",
             id: 6,
             type: LINE,
+            showAt: [0, 1],
             p: dismissionDataProcessor,
         },
         {
             title: "Average Length of Stay",
             id: 7,
             type: NUMBER,
+            showAt: [0, 1],
             p: lengthOfStayDataProcessor,
         }
 
@@ -396,9 +406,8 @@ class DiseaseDataProcessor extends DataProcessor {
         return {
             labels: Object.keys(data),
             datasets: [{
-                data: [
-                    ...Object.values(data),
-                ]
+                data: Object.values(data),
+
             }],
         }
     }
