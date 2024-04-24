@@ -1,6 +1,6 @@
-// function modified from github.com/henryzt
 import moment from "moment";
 
+// function modified from github.com/henryzt
 export function parsePatientData(patients) {
     const tableData = [];
     patients.forEach(element => {
@@ -79,7 +79,7 @@ export function parseEncounterData(encounter) {
     return tableData;
 }
 
-export function parseProceduresData(procedures) {
+export function parseProcedureData(procedures) {
     const tableData = [];
     console.log(procedures);
     procedures.forEach(element => {

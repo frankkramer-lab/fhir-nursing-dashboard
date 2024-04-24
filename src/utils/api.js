@@ -1,5 +1,5 @@
 import * as Constants from "./constants";
-import {parseConditionData, parseEncounterData, parsePatientData, parseProceduresData} from "./parser";
+import {parseConditionData, parseEncounterData, parsePatientData, parseProcedureData} from "./parser";
 import {
     checkIndexedDBFilled,
     initDB,
@@ -7,7 +7,7 @@ import {
     insertPatientsIntoDB, insertProceduresIntoDB
 } from "./db";
 
-import React, {createContext, useState, useEffect, useReducer} from 'react';
+import React, {createContext, useState, useEffect} from 'react';
 import {DataProcessor, initCharts} from "./filterData";
 import {getActiveStation, setActiveStation} from "./globalVars";
 
@@ -200,7 +200,7 @@ async function getProcedures(updateProgress, query = '') {
     let procedures = await fetchAll(Constants.API_BASE_URL + 'Procedure?_count=1000' + query, [], updateProgress);
 
     // save in local DB
-    let parsedData = parseProceduresData(procedures);
+    let parsedData = parseProcedureData(procedures);
     await insertProceduresIntoDB(parsedData);
 }
 

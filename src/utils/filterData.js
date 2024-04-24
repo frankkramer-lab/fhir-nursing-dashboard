@@ -12,7 +12,7 @@ import {getAllDataFromDB} from "./db";
 let [patients, conditions, encounters, stationEncounters, procedures] = [null, null, null, null, null];
 
 // Station specific data
-let [stationPatients, stationConditions, selectedStationEncounters] = [null, null, null];
+let [stationPatients, stationConditions, selectedStationEncounters, stationProcedures] = [null, null, null, null];
 
 
 export async function initCharts(updateProgress, stationID = null) {
@@ -30,11 +30,11 @@ export async function initCharts(updateProgress, stationID = null) {
     console.timeEnd("get from db");
 
 
-
     if (stationID) {
         stationPatients = getStationPatients(patients, stationEncounters, stationID);
         selectedStationEncounters = getStationEncounters(stationEncounters, stationID)
         stationConditions = getStationConditions(conditions, stationEncounters, stationID);
+        stationProcedures = getStationProcedures(procedures, stationEncounters, stationID);
     }
 
 
@@ -42,29 +42,29 @@ export async function initCharts(updateProgress, stationID = null) {
 
     console.time("init processors");
     console.time("init gender processor")
-    let genderDataProcessor = new GenderDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
+    let genderDataProcessor = new GenderDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
     console.timeEnd("init gender processor");
     console.time("init age processor")
-    let ageDataProcessor = new AgeDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
+    let ageDataProcessor = new AgeDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
     console.timeEnd("init age processor");
     /*console.time("init asserted dates processor")
-    let assertedDatesProcessor = new AssertedDatesDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
+    let assertedDatesProcessor = new AssertedDatesDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
     console.timeEnd("init asserted dates processor")*/
     console.time("init diseases processor")
     // Removed from global Charts (> loading time)
-    let diseasesDataProcessor = stationID === null ? null : new DiseaseDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, (stationID === null ? 2300 : 500), stationID);
+    let diseasesDataProcessor = stationID === null ? null : new DiseaseDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, (stationID === null ? 2300 : 500), stationID);
     console.timeEnd("init diseases processor")
     console.time("init admission processor")
-    let admissionDataProcessor = new AdmissionDatesDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
+    let admissionDataProcessor = new AdmissionDatesDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
     console.timeEnd("init admission processor")
     console.time("init dismission processor")
-    let dismissionDataProcessor = new DismissionDatesDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
+    let dismissionDataProcessor = new DismissionDatesDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
     console.timeEnd("init dismission processor")
     console.time("init encounter types processor")
-    let encounterTypesDataProcessor = new EncounterTypesDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
+    let encounterTypesDataProcessor = new EncounterTypesDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
     console.timeEnd("init encounter types processor")
     console.time("init length of stay processor")
-    let lengthOfStayDataProcessor = new LengthOfStayDataProcessor(patients, conditions, encounters, stationEncounters, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 14, stationID);
+    let lengthOfStayDataProcessor = new LengthOfStayDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 14, stationID);
     console.timeEnd("init length of stay processor")
 
     console.timeEnd("init processors");
@@ -133,15 +133,17 @@ export async function initCharts(updateProgress, stationID = null) {
 
 
 export class DataProcessor {
-    constructor(patients, conditions, encounters, stationEncounters, ageGroups, timeSpan, genders, threshold, stationID) {
+    constructor(patients, conditions, encounters, stationEncounters, procedures, ageGroups, timeSpan, genders, threshold, stationID) {
         this.patients = patients;
         this.conditions = conditions;
         this.encounters = encounters;
         this.stationEncounters = stationEncounters;
+        this.procedures = procedures;
         if (stationID) {
             this.patients = stationPatients;
             this.encounters = selectedStationEncounters;
             this.conditions = stationConditions;
+            this.procedures = stationProcedures;
         }
         this.ageGroups = ageGroups;
         this.timeSpan = timeSpan;
@@ -439,6 +441,13 @@ class LengthOfStayDataProcessor extends DataProcessor {
     }
 }
 
+class ProceduresDataProcessor extends DataProcessor {
+    process() {
+        let filteredProcedures = filterProcedures(this.procedures, this.patients, this.ageGroups, this.timeSpan, this.genders)
+
+    }
+}
+
 const getPatientById = (patients, id) => {
     return patients.find(patient => patient.id === id)
 }
@@ -466,7 +475,6 @@ function initDates(timeSpan) {
 const filterPatients = (patients, ageGroups, timespan, genders) => {
     let filteredPatients = patients.filter(p => ageGroups.includes(p.ageGroup));
     filteredPatients = filteredPatients.filter(p => genders.includes(p.gender));
-
     return filteredPatients;
 }
 
@@ -474,9 +482,7 @@ const filterPatients = (patients, ageGroups, timespan, genders) => {
 const filterConditions = (conditions, patients, ageGroups, timespan, genders) => {
     let filteredConditions = conditions.filter(c => c.assertedDate >= timespan[0] && c.assertedDate <= timespan[1])
     filteredConditions = filteredConditions.filter(c => ageGroups.includes(getPatientById(patients, c.patientID).ageGroup));
-    filteredConditions = filteredConditions.filter(c => {
-        return genders.includes(getPatientById(patients, c.patientID).gender)
-    });
+    filteredConditions = filteredConditions.filter(c => genders.includes(getPatientById(patients, c.patientID).gender));
     return filteredConditions;
 }
 
@@ -494,12 +500,17 @@ const filterEncounters = (encounters, patients, ageGroups, timespan, enddate, ge
     return filteredEncounters;
 }
 
+const filterProcedures = (procedures, patients, ageGroups, timespan, genders) => {
+    let filteredProcedures = procedures.filter(p => p.performedDateTime >= timespan[0] && p.performedDateTime <= timespan[1]);
+    filteredProcedures = filteredProcedures.filter(p => ageGroups.includes(getPatientById(patients, p.patientID).ageGroup));
+    filteredProcedures = filteredProcedures.filter(p => genders.includes(getPatientById(patients, p.patientID).gender));
+    return filteredProcedures;
+}
+
 function getStationPatients(patients, stationEncounters, stationId) {
     const patientIdsOnStation = stationEncounters
         .filter(e => e.station === stationId)
         .map(e => e.patientID);
-
-
     return patients.filter(p => patientIdsOnStation.includes(p.id));
 }
 
@@ -507,11 +518,16 @@ function getStationConditions(conditions, stationEncounters, stationId) {
     const patientIdsOnStation = stationEncounters
         .filter(e => e.station === stationId)
         .map(e => e.patientID);
-
-
     return conditions.filter(c => patientIdsOnStation.includes(c.patientID));
 }
 
 function getStationEncounters(stationEncounters, StationId) {
     return stationEncounters.filter(e => e.station === StationId);
+}
+
+function getStationProcedures(procedures, stationEncounters, stationId){
+    const patientIdsOnStation = stationEncounters
+        .filter(e => e.station === stationId)
+        .map(e => e.patientID);
+    return procedures.filter(p => patientIdsOnStation.includes(p.patientID));
 }
