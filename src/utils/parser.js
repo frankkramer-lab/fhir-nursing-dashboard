@@ -1,7 +1,7 @@
 // function modified from github.com/henryzt
 import moment from "moment";
 
-export function parseAllPatientData(patients) {
+export function parsePatientData(patients) {
     const tableData = [];
     patients.forEach(element => {
         if (!element) {
@@ -33,7 +33,7 @@ export function parseAllPatientData(patients) {
 }
 
 
-export function parseAllConditionData(conditions) {
+export function parseConditionData(conditions) {
     const tableData = [];
     conditions.forEach(element => {
         if (!element) {
@@ -54,7 +54,7 @@ export function parseAllConditionData(conditions) {
     return tableData;
 }
 
-export function parseAllEncounterData(encounter) {
+export function parseEncounterData(encounter) {
     const tableData = [];
     encounter.forEach(element => {
         if (!element) {
@@ -79,7 +79,7 @@ export function parseAllEncounterData(encounter) {
     return tableData;
 }
 
-export function parseAllProceduresData(procedures) {
+export function parseProceduresData(procedures) {
     const tableData = [];
     console.log(procedures);
     procedures.forEach(element => {

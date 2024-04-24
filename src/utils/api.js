@@ -1,5 +1,5 @@
 import * as Constants from "./constants";
-import {parseAllConditionData, parseAllEncounterData, parseAllPatientData, parseAllProceduresData} from "./parser";
+import {parseConditionData, parseEncounterData, parsePatientData, parseProceduresData} from "./parser";
 import {
     checkIndexedDBFilled,
     initDB,
@@ -146,7 +146,7 @@ async function getPatients(updateProgress, query = '') {
     let patients = await fetchAll(Constants.API_BASE_URL + 'Patient?_count=500' + query, [], updateProgress);
 
     // save in local DB
-    let parsedData = parseAllPatientData(patients)
+    let parsedData = parsePatientData(patients)
     await insertPatientsIntoDB(parsedData);
 }
 
@@ -161,7 +161,7 @@ async function getConditions(updateProgress, query = '') {
     let conditions = await fetchAll(Constants.API_BASE_URL + 'Condition?_count=1000' + query, [], updateProgress);
 
     // save in local DB
-    let parsedData = parseAllConditionData(conditions);
+    let parsedData = parseConditionData(conditions);
     await insertConditionsIntoDB(parsedData);
 }
 
@@ -180,7 +180,7 @@ async function getEncounters(updateProgress, query = '') {
     let encounters = await fetchAll(Constants.API_BASE_URL + 'Encounter?_count=500' + query, [], updateProgress);
 
     // save in local DB
-    let parsedData = parseAllEncounterData(encounters);
+    let parsedData = parseEncounterData(encounters);
     if (query.includes('type=einrichtungskontakt'))
         await insertEncountersIntoDB(parsedData);
     else
@@ -200,7 +200,7 @@ async function getProcedures(updateProgress, query = '') {
     let procedures = await fetchAll(Constants.API_BASE_URL + 'Procedure?_count=1000' + query, [], updateProgress);
 
     // save in local DB
-    let parsedData = parseAllProceduresData(procedures);
+    let parsedData = parseProceduresData(procedures);
     await insertProceduresIntoDB(parsedData);
 }
 
