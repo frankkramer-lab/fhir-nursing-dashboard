@@ -70,7 +70,7 @@ export default function StatsScreen(props) {
                 {tabValue === 0 && (
                     <div className="scroll-container">
                         <div className="charts">
-                            <GroupHeading title={"Charts"}/>
+                            {/*<GroupHeading title={"Charts"}/>*/}
                             {charts.map((chart, index) => {
                                 if (chart.showAt.includes(tabValue)) return renderChartComponent(index, chart);
                             })}
