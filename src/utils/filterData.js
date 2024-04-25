@@ -66,6 +66,9 @@ export async function initCharts(updateProgress, stationID = null) {
     console.time("init length of stay processor")
     let lengthOfStayDataProcessor = new LengthOfStayDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 14, stationID);
     console.timeEnd("init length of stay processor")
+    console.time("init procedures processor")
+    let proceduresDataProcessor = stationID === null ? null : new ProceduresDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 14, stationID);
+    console.timeEnd("init procedures processor")
 
     console.timeEnd("init processors");
 
@@ -126,6 +129,13 @@ export async function initCharts(updateProgress, stationID = null) {
             type: NUMBER,
             showAt: [0, 1],
             p: lengthOfStayDataProcessor,
+        },
+        {
+            title: "Procedures per Day",
+            id: 8,
+            type: NUMBER,
+            showAt: [1],
+            p: proceduresDataProcessor,
         }
 
     ];
@@ -279,18 +289,8 @@ class AdmissionDatesDataProcessor extends DataProcessor {
             const dates = initDates(this.timeSpan);
 
             sortedEncounters.forEach(e => {
-                let startDate;
-                if (moment(this.timeSpan[1]).diff(moment(this.timeSpan[0]), 'months', true) > getDaysToMonths()) {
-                    startDate = moment(e.periodStart).format('MMM YY');
-                } else {
-                    startDate = moment(e.periodStart).format('DD.MM.YY');
-                }
-
-                if (dates[startDate]) {
-                    dates[startDate]++;
-                } else {
-                    dates[startDate] = 1;
-                }
+                let startDate = formatDaysToMonthText(this.timeSpan, e.periodStart);
+                dates[startDate] = (dates[startDate] || 0) + 1;
             });
 
             return dates;
@@ -319,18 +319,8 @@ class DismissionDatesDataProcessor extends DataProcessor {
             const dates = initDates(this.timeSpan);
 
             sortedEncounters.forEach(e => {
-                let endDate;
-                if (moment(this.timeSpan[1]).diff(moment(this.timeSpan[0]), 'months', true) > getDaysToMonths()) {
-                    endDate = moment(e.periodEnd).format('MMM YY');
-                } else {
-                    endDate = moment(e.periodEnd).format('DD.MM.YY');
-                }
-
-                if (dates[endDate]) {
-                    dates[endDate]++;
-                } else {
-                    dates[endDate] = 1;
-                }
+                let endDate = formatDaysToMonthText(this.timeSpan, e.periodEnd);
+                dates[endDate] = (dates[endDate] || 0) + 1;
             });
 
             return dates;
@@ -444,6 +434,36 @@ class LengthOfStayDataProcessor extends DataProcessor {
 class ProceduresDataProcessor extends DataProcessor {
     process() {
         let filteredProcedures = filterProcedures(this.procedures, this.patients, this.ageGroups, this.timeSpan, this.genders)
+        /*const getDataset = () => {
+            // sort by Date
+            let sortedProcedures = filteredProcedures.sort((a, b) => a.performedDateTime - b.performedDateTime);
+
+            const dates = initDates(this.timeSpan);
+
+            sortedProcedures.forEach(p => {
+                let date = formatDaysToMonthText(this.timeSpan, p.performedDateTime);
+                dates[date] = (dates[date] || 0) + 1;
+            });
+
+            return dates;
+        }
+
+        return {
+            datasets: [
+                {
+                    label: 'Procedures',
+                    data: getDataset()
+                }
+            ]
+        }*/
+
+        console.log(this.timeSpan)
+        console.log(moment(this.timeSpan[1]).diff(moment(this.timeSpan[0]), 'days'));
+
+        return {
+            number: filteredProcedures.length / (moment(this.timeSpan[1]).diff(moment(this.timeSpan[0]), 'days')),
+            unit: ''
+        }
 
     }
 }
@@ -530,4 +550,12 @@ function getStationProcedures(procedures, stationEncounters, stationId){
         .filter(e => e.station === stationId)
         .map(e => e.patientID);
     return procedures.filter(p => patientIdsOnStation.includes(p.patientID));
+}
+
+function  formatDaysToMonthText(timeSpan, date){
+    if (moment(timeSpan[1]).diff(moment(timeSpan[0]), 'months', true) > getDaysToMonths()) {
+        return moment(date).format('MMM YY');
+    } else {
+        return moment(date).format('DD.MM.YY');
+    }
 }

@@ -63,7 +63,10 @@ export default function StatsScreen(props) {
     return (
         <>
             <div className={"stats-screen"}>
-                <Tabs value={tabValue} onChange={(event, newValue) => setTabValue(newValue)}>
+                <Tabs value={tabValue} onChange={(event, newValue) => {
+                    setActiveChart(0);
+                    setTabValue(newValue)
+                }}>
                     <Tab label="Global Charts"/>
                     <Tab label="Station Charts"/>
                 </Tabs>
