@@ -8,7 +8,7 @@ import {
 } from "./db";
 
 import React, {createContext, useState, useEffect} from 'react';
-import {DataProcessor, initCharts} from "./filterData";
+import {initCharts} from "./filterData";
 import {getActiveStation, setActiveStation} from "./globalVars";
 
 export const DataContext = createContext(null);

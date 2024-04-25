@@ -1,10 +1,9 @@
 import "./StatsScreen.css";
 import MyPieChart from "../Charts/MyPieChart";
-import {useContext, useEffect, useReducer, useState} from "react";
+import {useContext, useReducer, useState} from "react";
 import {DataContext} from "../../utils/api";
 import Modifiers from "../Modifiers/Modifiers";
 import MyBarChart from "../Charts/MyBarChart";
-import GroupHeading from "./GroupHeading";
 import {BAR, LINE, NUMBER, PIE, STATIONS} from "../../utils/constants";
 import MyLineChart from "../Charts/MyLineChart";
 import {NumberDisplay} from "../Charts/NumberDisplay";
