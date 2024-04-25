@@ -181,7 +181,8 @@ class GenderDataProcessor extends DataProcessor {
                 data: [
                     filteredPatients.filter(p => p.gender === MALE).length,
                     filteredPatients.filter(p => p.gender === FEMALE).length,
-                ]
+                ],
+                details: ['Male','Female']
             }],
             // TODO: Adjust for divers and unknown
 
@@ -374,6 +375,7 @@ class EncounterTypesDataProcessor extends DataProcessor {
 class DiseaseDataProcessor extends DataProcessor {
     process() {
         let filteredConditions = filterConditions(this.conditions, this.patients, this.ageGroups, this.timeSpan, this.genders, this.stationID)
+        let details = {};
 
         const getDataset = () => {
             let data = {};
@@ -381,15 +383,19 @@ class DiseaseDataProcessor extends DataProcessor {
             filteredConditions.forEach(c => {
                 if (!data[c.code]) {
                     data[c.code] = 0;
+                    details[c.code] = c.display;
                 }
                 data[c.code]++;
             });
+
+            console.log(data)
 
             // Filter by threshold
             const filteredKeys = Object.keys(data).filter(key => data[key] > this.threshold);
             const thresholdData = Object.fromEntries(filteredKeys.map(key => [key, data[key]]));
             // Sort by value
             const entries = Object.entries(thresholdData).sort(([, a], [, b]) => b - a);
+            console.log(details);
             return Object.fromEntries(entries);
         }
 
@@ -456,9 +462,6 @@ class ProceduresDataProcessor extends DataProcessor {
                 }
             ]
         }*/
-
-        console.log(this.timeSpan)
-        console.log(moment(this.timeSpan[1]).diff(moment(this.timeSpan[0]), 'days'));
 
         return {
             number: filteredProcedures.length / (moment(this.timeSpan[1]).diff(moment(this.timeSpan[0]), 'days')),
