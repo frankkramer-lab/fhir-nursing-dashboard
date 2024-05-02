@@ -133,7 +133,7 @@ export async function initCharts(updateProgress, stationID = null) {
         {
             title: "Procedures per Day",
             id: 8,
-            type: NUMBER,
+            type: LINE,
             showAt: [1],
             p: proceduresDataProcessor,
         }
@@ -440,7 +440,7 @@ class LengthOfStayDataProcessor extends DataProcessor {
 class ProceduresDataProcessor extends DataProcessor {
     process() {
         let filteredProcedures = filterProcedures(this.procedures, this.patients, this.ageGroups, this.timeSpan, this.genders)
-        /*const getDataset = () => {
+        const getDataset = () => {
             // sort by Date
             let sortedProcedures = filteredProcedures.sort((a, b) => a.performedDateTime - b.performedDateTime);
 
@@ -461,12 +461,12 @@ class ProceduresDataProcessor extends DataProcessor {
                     data: getDataset()
                 }
             ]
-        }*/
+        }
 
-        return {
+        /*return {
             number: filteredProcedures.length / (moment(this.timeSpan[1]).diff(moment(this.timeSpan[0]), 'days')),
             unit: ''
-        }
+        }*/
 
     }
 }
@@ -549,10 +549,17 @@ function getStationEncounters(stationEncounters, StationId) {
 }
 
 function getStationProcedures(procedures, stationEncounters, stationId){
-    const patientIdsOnStation = stationEncounters
+    const patientEncountersOnStation = stationEncounters.filter(e => e.station === stationId);
+
+    return procedures.filter(procedure => {
+        const patientEncounter = patientEncountersOnStation.find(e => e.patientID === procedure.patientID);
+        return (patientEncounter !== undefined) && procedure.performedDateTime >= patientEncounter.periodStart && procedure.performedDateTime <= patientEncounter.periodEnd;
+    });
+
+    /*const patientIdsOnStation = stationEncounters
         .filter(e => e.station === stationId)
         .map(e => e.patientID);
-    return procedures.filter(p => patientIdsOnStation.includes(p.patientID));
+    return procedures.filter(p => patientIdsOnStation.includes(p.patientID));*/
 }
 
 function  formatDaysToMonthText(timeSpan, date){
