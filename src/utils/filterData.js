@@ -549,17 +549,15 @@ function getStationEncounters(stationEncounters, StationId) {
 }
 
 function getStationProcedures(procedures, stationEncounters, stationId){
+    // get all encounters on the station
     const patientEncountersOnStation = stationEncounters.filter(e => e.station === stationId);
 
     return procedures.filter(procedure => {
+        // get the encounter of the patient
         const patientEncounter = patientEncountersOnStation.find(e => e.patientID === procedure.patientID);
+        // check if the procedure was performed during the encounter
         return (patientEncounter !== undefined) && procedure.performedDateTime >= patientEncounter.periodStart && procedure.performedDateTime <= patientEncounter.periodEnd;
     });
-
-    /*const patientIdsOnStation = stationEncounters
-        .filter(e => e.station === stationId)
-        .map(e => e.patientID);
-    return procedures.filter(p => patientIdsOnStation.includes(p.patientID));*/
 }
 
 function  formatDaysToMonthText(timeSpan, date){
