@@ -405,7 +405,7 @@ class DiseaseDataProcessor extends DataProcessor {
             labels: Object.keys(data),
             datasets: [{
                 data: Object.values(data),
-
+                details: Object.keys(data).map(key => key + ": " + details[key])
             }],
         }
     }
