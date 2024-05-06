@@ -25,9 +25,10 @@ export async function checkIndexedDBFilled(key, count) {
             const objectStore = transaction.objectStore(key);
             const countRequest = objectStore.count();
 
+
             countRequest.onsuccess = function () {
                 const doesMatch = countRequest.result === count;
-                console.log(key + ' count matches:', doesMatch);
+                console.log(key + ' count (' + countRequest.result + '/' + count + ') matches:', doesMatch);
                 db.close();
                 resolve(doesMatch);
             };

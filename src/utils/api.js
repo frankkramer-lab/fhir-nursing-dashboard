@@ -90,6 +90,7 @@ export const APIWraper = ({children}) => {
     }
 ;
 
+let refetchCounter = 0;
 
 function fetchAll(url, allResults = [], updateProgress) {
     return fetch(url, {
@@ -105,7 +106,15 @@ function fetchAll(url, allResults = [], updateProgress) {
 
             if (!response.ok) {
                 const error = (data && data.message) || response.statusText;
-                return Promise.reject(error);
+                console.log('error', error);
+                // retry
+                if(refetchCounter < 10){
+                    refetchCounter++;
+                    console.log('retrying ' + refetchCounter);
+                    return fetchAll(url, allResults, updateProgress)
+                }else{
+                    return Promise.reject(error);
+                }
             }
             const resources = data.entry.map(e => e.resource);
             allResults.push(...resources);
@@ -113,12 +122,14 @@ function fetchAll(url, allResults = [], updateProgress) {
 
             // Reccursion to get all pagesvs yio
             if (data.link) {
+                refetchCounter = 0;
                 const next = data.link.find(e => e.relation === 'next');
                 if (next) {
                     return fetchAll(next.url, allResults, updateProgress);
                 }
             }
 
+            refetchCounter = 0;
             return (allResults);
         })
 }
@@ -193,11 +204,12 @@ async function getEncounters(updateProgress, query = '') {
 async function getProcedures(updateProgress, query = '') {
     // check local DB
     let dataCount = await fetchDataAmmount('Procedure', query);
+    console.log(dataCount);
     const local = await localDBFilled('procedures', dataCount);
     if (local) return;
 
     // request data from server
-    let procedures = await fetchAll(Constants.API_BASE_URL + 'Procedure?_count=1000' + query, [], updateProgress);
+    let procedures = await fetchAll(Constants.API_BASE_URL + 'Procedure?_count=3000' + query, [], updateProgress);
 
     // save in local DB
     let parsedData = parseProcedureData(procedures);

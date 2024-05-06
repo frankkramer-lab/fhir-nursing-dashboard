@@ -182,7 +182,7 @@ class GenderDataProcessor extends DataProcessor {
                     filteredPatients.filter(p => p.gender === MALE).length,
                     filteredPatients.filter(p => p.gender === FEMALE).length,
                 ],
-                details: ['Male','Female']
+                details: ['Male', 'Female']
             }],
             // TODO: Adjust for divers and unknown
 
@@ -439,6 +439,7 @@ class LengthOfStayDataProcessor extends DataProcessor {
 
 class ProceduresDataProcessor extends DataProcessor {
     process() {
+        let shortenedProcedures = this.procedures.filter((p, i) => (i + 1) % 10 === 0);
         let filteredProcedures = filterProcedures(this.procedures, this.patients, this.ageGroups, this.timeSpan, this.genders)
         const getDataset = () => {
             // sort by Date
@@ -548,7 +549,7 @@ function getStationEncounters(stationEncounters, StationId) {
     return stationEncounters.filter(e => e.station === StationId);
 }
 
-function getStationProcedures(procedures, stationEncounters, stationId){
+function getStationProcedures(procedures, stationEncounters, stationId) {
     // get all encounters on the station
     const patientEncountersOnStation = stationEncounters.filter(e => e.station === stationId);
 
@@ -560,7 +561,7 @@ function getStationProcedures(procedures, stationEncounters, stationId){
     });
 }
 
-function  formatDaysToMonthText(timeSpan, date){
+function formatDaysToMonthText(timeSpan, date) {
     if (moment(timeSpan[1]).diff(moment(timeSpan[0]), 'months', true) > getDaysToMonths()) {
         return moment(date).format('MMM YY');
     } else {
