@@ -1,4 +1,4 @@
-import {AGE_GROUPS, BAR, ENDDATE, FEMALE, GENDERS, LINE, MALE, NUMBER, PIE, STARTDATE} from "./constants";
+import {AGE_GROUPS, BAR, ENDDATE, FEMALE, GENDERS, LINE, MALE, NUMBER, PIE, STARTDATE, STATIONS} from "./constants";
 import {getDaysToMonths} from "./globalVars";
 import moment from "moment";
 import {getAllDataFromDB} from "./db";
@@ -14,6 +14,10 @@ let [patients, conditions, encounters, stationEncounters, procedures] = [null, n
 // Station specific data
 let [stationPatients, stationConditions, selectedStationEncounters, stationProcedures] = [null, null, null, null];
 
+const stationProceduresStorage = {};
+const stationPatientsStorage = {};
+const stationConditionsStorage = {};
+const selectedStationEncountersStorage = {};
 
 export async function initCharts(updateProgress, stationID = null) {
 
@@ -31,10 +35,14 @@ export async function initCharts(updateProgress, stationID = null) {
 
 
     if (stationID) {
-        stationPatients = getStationPatients(patients, stationEncounters, stationID);
-        selectedStationEncounters = getStationEncounters(stationEncounters, stationID)
-        stationConditions = getStationConditions(conditions, stationEncounters, stationID);
-        stationProcedures = getStationProcedures(procedures, stationEncounters, stationID);
+        console.time("get station data");
+        [stationPatients, selectedStationEncounters, stationConditions, stationProcedures] = await Promise.all([
+            getStationPatients(patients, stationEncounters, stationID),
+            getStationEncounters(stationEncounters, stationID),
+            getStationConditions(conditions, stationEncounters, stationID),
+            getStationProcedures(procedures, stationEncounters, stationID)
+        ])
+        console.timeEnd("get station data")
     }
 
 
@@ -389,7 +397,6 @@ class DiseaseDataProcessor extends DataProcessor {
             });
 
 
-
             // Filter by threshold
             const filteredKeys = Object.keys(data).filter(key => data[key] > this.threshold);
             const thresholdData = Object.fromEntries(filteredKeys.map(key => [key, data[key]]));
@@ -530,34 +537,45 @@ const filterProcedures = (procedures, patients, ageGroups, timespan, genders) =>
     return filteredProcedures;
 }
 
-function getStationPatients(patients, stationEncounters, stationId) {
+async function getStationPatients(patients, stationEncounters, stationId) {
+    if(stationPatientsStorage.hasOwnProperty(stationId)) return stationPatientsStorage[stationId];
     const patientIdsOnStation = stationEncounters
         .filter(e => e.station === stationId)
         .map(e => e.patientID);
-    return patients.filter(p => patientIdsOnStation.includes(p.id));
+    stationPatientsStorage[stationId] = patients.filter(p => patientIdsOnStation.includes(p.id));
+    return stationPatientsStorage[stationId];
 }
 
-function getStationConditions(conditions, stationEncounters, stationId) {
+async function getStationConditions(conditions, stationEncounters, stationId) {
+    if(stationConditionsStorage.hasOwnProperty(stationId)) return stationConditionsStorage[stationId];
+
     const patientIdsOnStation = stationEncounters
         .filter(e => e.station === stationId)
         .map(e => e.patientID);
-    return conditions.filter(c => patientIdsOnStation.includes(c.patientID));
+    stationConditionsStorage[stationId] = conditions.filter(c => patientIdsOnStation.includes(c.patientID));
+    return stationConditionsStorage[stationId];
 }
 
-function getStationEncounters(stationEncounters, StationId) {
-    return stationEncounters.filter(e => e.station === StationId);
+async function getStationEncounters(stationEncounters, StationId) {
+    selectedStationEncountersStorage[StationId] =  stationEncounters.filter(e => e.station === StationId);
+    return selectedStationEncountersStorage[StationId];
 }
 
-function getStationProcedures(procedures, stationEncounters, stationId) {
+async function getStationProcedures(procedures, stationEncounters, stationId) {
     // get all encounters on the station
+    if(stationProceduresStorage.hasOwnProperty(stationId)) return stationProceduresStorage[stationId];
+
     const patientEncountersOnStation = stationEncounters.filter(e => e.station === stationId);
 
-    return procedures.filter(procedure => {
+    const StationProcedures = procedures.filter(procedure => {
         // get the encounter of the patient
         const patientEncounter = patientEncountersOnStation.find(e => e.patientID === procedure.patientID);
         // check if the procedure was performed during the encounter
         return (patientEncounter !== undefined) && procedure.performedDateTime >= patientEncounter.periodStart && procedure.performedDateTime <= patientEncounter.periodEnd;
     });
+
+    stationProceduresStorage[stationId] = StationProcedures;
+    return StationProcedures;
 }
 
 function formatDaysToMonthText(timeSpan, date) {
