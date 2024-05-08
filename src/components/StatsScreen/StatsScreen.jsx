@@ -1,6 +1,6 @@
 import "./StatsScreen.css";
 import MyPieChart from "../Charts/MyPieChart";
-import {useContext, useReducer, useState} from "react";
+import {useContext, useEffect, useReducer, useState} from "react";
 import {DataContext} from "../../utils/api";
 import Modifiers from "../Modifiers/Modifiers";
 import MyBarChart from "../Charts/MyBarChart";
@@ -17,7 +17,6 @@ export default function StatsScreen(props) {
     // force update function
     const [, forceUpdate] = useReducer(x => x + 1, {x: 0});
     const [loadingStation, setLoadingStation] = useState(false);
-    const [progress, setProgress] = useState(0);
     const [tabValue, setTabValue] = useState(0);
     const [activeChart, setActiveChart] = useState(0);
     const dataContext = useContext(DataContext);
@@ -32,11 +31,11 @@ export default function StatsScreen(props) {
         setLoadingStation(true);
         let station = event.target.value;
         setActiveStation(station);
-        initCharts(() => {
+        setTimeout( ()=> {initCharts(() => {
         }, station).then((data) => {
             setStationCharts(data);
             setLoadingStation(false);
-        });
+        })}, 0);
     }
 
 
@@ -93,13 +92,13 @@ export default function StatsScreen(props) {
                         </div>
                         {loadingStation && (
                             <div className="loading-station">
-                                <p>Loading... {progress}%</p>
+                                <p>Loading...</p>
                             </div>
                         )}
                         {!loadingStation && (
                             <div className="charts">
                                 {stationCharts.map((chart, index) => {
-                                    if (chart.showAt.includes(tabValue))  return renderChartComponent(index, chart);
+                                    if (chart.showAt.includes(tabValue)) return renderChartComponent(index, chart);
                                 })}
                             </div>
                         )}

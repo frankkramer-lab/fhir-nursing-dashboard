@@ -127,6 +127,9 @@ export default function Modifiers(props) {
             case 7:
                 // Avg Length of Stay Number
                 return [renderAgeModifier(), renderGenderModifier(), renderTimeSpanModifier(), renderThresholdModifier()];
+            case 8:
+                // Procedures per Day Line Chart
+                return [renderAgeModifier(), renderGenderModifier(), renderTimeSpanModifier()];
             default:
                 return [renderAgeModifier(), renderGenderModifier(), renderTimeSpanModifier(), renderThresholdModifier()];
         }
