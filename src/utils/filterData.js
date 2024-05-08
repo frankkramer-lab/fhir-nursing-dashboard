@@ -388,14 +388,13 @@ class DiseaseDataProcessor extends DataProcessor {
                 data[c.code]++;
             });
 
-            console.log(data)
+
 
             // Filter by threshold
             const filteredKeys = Object.keys(data).filter(key => data[key] > this.threshold);
             const thresholdData = Object.fromEntries(filteredKeys.map(key => [key, data[key]]));
             // Sort by value
             const entries = Object.entries(thresholdData).sort(([, a], [, b]) => b - a);
-            console.log(details);
             return Object.fromEntries(entries);
         }
 
