@@ -502,16 +502,18 @@ function initDates(timeSpan) {
 
 
 const filterPatients = (patients, ageGroups, timespan, genders) => {
-    let filteredPatients = patients.filter(p => ageGroups.includes(p.ageGroup));
-    filteredPatients = filteredPatients.filter(p => genders.includes(p.gender));
+    let filteredPatients = patients.filter(p => (ageGroups.includes(p.ageGroup) && genders.includes(p.gender)));
     return filteredPatients;
 }
 
 
 const filterConditions = (conditions, patients, ageGroups, timespan, genders) => {
-    let filteredConditions = conditions.filter(c => c.assertedDate >= timespan[0] && c.assertedDate <= timespan[1])
-    filteredConditions = filteredConditions.filter(c => ageGroups.includes(getPatientById(patients, c.patientID).ageGroup));
-    filteredConditions = filteredConditions.filter(c => genders.includes(getPatientById(patients, c.patientID).gender));
+    let filteredConditions = conditions.filter(c => c.assertedDate >= timespan[0] && c.assertedDate <= timespan[1]);
+    filteredConditions = filteredConditions.filter(c => {
+        const patient = getPatientById(patients, c.patientID);
+        return ageGroups.includes(patient.ageGroup) && genders.includes(patient.gender);
+    });
+
     return filteredConditions;
 }
 
@@ -524,20 +526,24 @@ const filterEncounters = (encounters, patients, ageGroups, timespan, enddate, ge
         filteredEncounters = encounters.filter(e => e.periodStart >= timespan[0] && e.periodStart <= timespan[1])
 
     }
-    filteredEncounters = filteredEncounters.filter(e => ageGroups.includes(getPatientById(patients, e.patientID).ageGroup));
-    filteredEncounters = filteredEncounters.filter(e => genders.includes(getPatientById(patients, e.patientID).gender));
+    filteredEncounters = filteredEncounters.filter(e => {
+        const patient = getPatientById(patients, e.patientID);
+        return ageGroups.includes(patient.ageGroup) && genders.includes(patient.gender)
+    });
     return filteredEncounters;
 }
 
 const filterProcedures = (procedures, patients, ageGroups, timespan, genders) => {
     let filteredProcedures = procedures.filter(p => p.performedDateTime >= timespan[0] && p.performedDateTime <= timespan[1]);
-    filteredProcedures = filteredProcedures.filter(p => ageGroups.includes(getPatientById(patients, p.patientID).ageGroup));
-    filteredProcedures = filteredProcedures.filter(p => genders.includes(getPatientById(patients, p.patientID).gender));
+    filteredProcedures = filteredProcedures.filter(p => {
+        const patient = getPatientById(patients, p.patientID);
+        return ageGroups.includes(patient.ageGroup) && genders.includes(patient.gender);
+    });
     return filteredProcedures;
 }
 
 async function getStationPatients(patients, stationEncounters, stationId) {
-    if(stationPatientsStorage.hasOwnProperty(stationId)) return stationPatientsStorage[stationId];
+    if (stationPatientsStorage.hasOwnProperty(stationId)) return stationPatientsStorage[stationId];
     const patientIdsOnStation = stationEncounters
         .filter(e => e.station === stationId)
         .map(e => e.patientID);
@@ -546,7 +552,7 @@ async function getStationPatients(patients, stationEncounters, stationId) {
 }
 
 async function getStationConditions(conditions, stationEncounters, stationId) {
-    if(stationConditionsStorage.hasOwnProperty(stationId)) return stationConditionsStorage[stationId];
+    if (stationConditionsStorage.hasOwnProperty(stationId)) return stationConditionsStorage[stationId];
 
     const patientIdsOnStation = stationEncounters
         .filter(e => e.station === stationId)
@@ -556,13 +562,13 @@ async function getStationConditions(conditions, stationEncounters, stationId) {
 }
 
 async function getStationEncounters(stationEncounters, StationId) {
-    selectedStationEncountersStorage[StationId] =  stationEncounters.filter(e => e.station === StationId);
+    selectedStationEncountersStorage[StationId] = stationEncounters.filter(e => e.station === StationId);
     return selectedStationEncountersStorage[StationId];
 }
 
 async function getStationProcedures(procedures, stationEncounters, stationId) {
     // get all encounters on the station
-    if(stationProceduresStorage.hasOwnProperty(stationId)) return stationProceduresStorage[stationId];
+    if (stationProceduresStorage.hasOwnProperty(stationId)) return stationProceduresStorage[stationId];
 
     const patientEncountersOnStation = stationEncounters.filter(e => e.station === stationId);
 
