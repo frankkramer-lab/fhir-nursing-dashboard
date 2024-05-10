@@ -11,6 +11,10 @@ export const ALWAYS_LOAD = false; // TODO: Change to false in production
 // Change later -> go through pages
 export const FIRST100PARAM = '?_count=100';
 
+
+// System
+export const LOGINDIVIDUALPROCESSORTIMES = false;
+
 // Charts
 export const PIE = 'pie';
 export const BAR = 'bar';

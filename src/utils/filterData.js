@@ -1,4 +1,4 @@
-import {AGE_GROUPS, BAR, ENDDATE, FEMALE, GENDERS, LINE, MALE, NUMBER, PIE, STARTDATE, STATIONS} from "./constants";
+import {AGE_GROUPS, BAR, ENDDATE, FEMALE, GENDERS, LINE, MALE, NUMBER, PIE, STARTDATE, LOGINDIVIDUALPROCESSORTIMES} from "./constants";
 import {getDaysToMonths} from "./globalVars";
 import moment from "moment";
 import {getAllDataFromDB} from "./db";
@@ -49,34 +49,34 @@ export async function initCharts(updateProgress, stationID = null) {
     // All functions need to take the arguments: ageGroups, timeSpan
 
     console.time("init processors");
-    console.time("init gender processor")
+    if(LOGINDIVIDUALPROCESSORTIMES) console.time("init gender processor")
     let genderDataProcessor = new GenderDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
-    console.timeEnd("init gender processor");
-    console.time("init age processor")
+    if(LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init gender processor");
+    if(LOGINDIVIDUALPROCESSORTIMES) console.time("init age processor")
     let ageDataProcessor = new AgeDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
-    console.timeEnd("init age processor");
+    if(LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init age processor");
     /*console.time("init asserted dates processor")
     let assertedDatesProcessor = new AssertedDatesDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
     console.timeEnd("init asserted dates processor")*/
-    console.time("init diseases processor")
+    if(LOGINDIVIDUALPROCESSORTIMES) console.time("init diseases processor")
     // Removed from global Charts (> loading time)
     let diseasesDataProcessor = stationID === null ? null : new DiseaseDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, (stationID === null ? 2300 : 500), stationID);
-    console.timeEnd("init diseases processor")
-    console.time("init admission processor")
+    if(LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init diseases processor")
+    if(LOGINDIVIDUALPROCESSORTIMES) console.time("init admission processor")
     let admissionDataProcessor = new AdmissionDatesDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
-    console.timeEnd("init admission processor")
-    console.time("init dismission processor")
+    if(LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init admission processor")
+    if(LOGINDIVIDUALPROCESSORTIMES) console.time("init dismission processor")
     let dismissionDataProcessor = new DismissionDatesDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
-    console.timeEnd("init dismission processor")
-    console.time("init encounter types processor")
+    if(LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init dismission processor")
+    if(LOGINDIVIDUALPROCESSORTIMES) console.time("init encounter types processor")
     let encounterTypesDataProcessor = new EncounterTypesDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
-    console.timeEnd("init encounter types processor")
-    console.time("init length of stay processor")
+    if(LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init encounter types processor")
+    if(LOGINDIVIDUALPROCESSORTIMES) console.time("init length of stay processor")
     let lengthOfStayDataProcessor = new LengthOfStayDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 14, stationID);
-    console.timeEnd("init length of stay processor")
-    console.time("init procedures processor")
+    if(LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init length of stay processor")
+    if(LOGINDIVIDUALPROCESSORTIMES) console.time("init procedures processor")
     let proceduresDataProcessor = stationID === null ? null : new ProceduresDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 14, stationID);
-    console.timeEnd("init procedures processor")
+    if(LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init procedures processor")
 
     console.timeEnd("init processors");
 
