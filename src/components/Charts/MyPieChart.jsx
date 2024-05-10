@@ -25,6 +25,7 @@ export default function MyPieChart(props) {
 
     const openDialog = (event) => {
         if (props.data.datasets[0].details) {
+            if (getElementAtEvent(chartRef.current, event).length === 0) return;
             let dataIndex = getElementAtEvent(chartRef.current, event)[0].index;
             let detailsText = props.data.datasets[0].details[dataIndex];
             setDetails(detailsText + ": " + props.data.datasets[0].data[dataIndex])
