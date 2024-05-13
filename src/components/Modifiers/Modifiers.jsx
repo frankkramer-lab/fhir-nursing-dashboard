@@ -7,6 +7,7 @@ import ThresholdModifier from "./ThresholdModifier";
 import GenderModifier from "./GenderModifier";
 import {DataProcessor} from "../../utils/filterData";
 import {getActiveStation} from "../../utils/globalVars";
+import ProcedureKeyModifier from "./ProcedureKeyModifier";
 
 export default function Modifiers(props) {
 
@@ -21,6 +22,7 @@ export default function Modifiers(props) {
     const [genders, setGenders] = useState(chart.p.genders);
     const [timeSpan, setTimeSpan] = useState(chart.p.timeSpan);
     const [threshold, setThreshold] = useState(chart.p.threshold);
+    const [procedureKeys, setProcedureKeys] = useState(chart.p.procedureKeys);
 
     useEffect(() => {
     }, [computing]);
@@ -51,6 +53,8 @@ export default function Modifiers(props) {
         chart.p.timeSpan = timeSpan;
         // Threshold Modifiers
         chart.p.threshold = threshold;
+        // Procedure Keys Modifiers
+        chart.p.procedureKeys = procedureKeys;
     }
 
 
@@ -77,6 +81,11 @@ export default function Modifiers(props) {
         setThreshold(threshold);
     }
 
+    function updateProcedureKeys(procedureKeys){
+        // Save Procedure Keys State
+        setProcedureKeys(procedureKeys);
+    }
+
     function renderAgeModifier() {
         return <AgeModifier key={props.activeIndex + "age" + props.tabIndex}
                             chartData={chart}
@@ -99,6 +108,12 @@ export default function Modifiers(props) {
         return <ThresholdModifier key={props.activeIndex + "threshold" + props.tabIndex}
                                   threshold={threshold}
                                   updateThreshold={updateThreshold}/>
+    }
+
+    function renderProcedureKeyModifier(){
+        return <ProcedureKeyModifier key={props.activeIndex + "procedureKey" + props.tabIndex}
+                                     procedureKeys={procedureKeys}
+                                     updateProcedureKeys={updateProcedureKeys}/>
     }
 
     function renderModifiers() {
@@ -130,6 +145,8 @@ export default function Modifiers(props) {
             case 8:
                 // Procedures per Day Line Chart
                 return [renderAgeModifier(), renderGenderModifier(), renderTimeSpanModifier()];
+            case 9:
+                return [renderProcedureKeyModifier(), renderAgeModifier(), renderGenderModifier(), renderTimeSpanModifier(), renderThresholdModifier()];
             default:
                 return [renderAgeModifier(), renderGenderModifier(), renderTimeSpanModifier(), renderThresholdModifier()];
         }

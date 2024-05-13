@@ -109,7 +109,7 @@ export async function initCharts(updateProgress, stationID = null) {
     if (proceduresDataProcessor) proceduresDataProcessor.initialize();
     if (LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init procedures processor")
     if (LOGINDIVIDUALPROCESSORTIMES) console.time("init individual procedures processor")
-    let individualProceduresProcessor = stationID === null ? null : new IndividualProceduresDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID, getProcedureKeys()[0]);
+    let individualProceduresProcessor = stationID === null ? null : new IndividualProceduresDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID, [getProcedureKeys()[0]]);
     if (individualProceduresProcessor) individualProceduresProcessor.initialize();
     if (LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init individual procedures processor")
 
@@ -524,24 +524,26 @@ class ProceduresDataProcessor extends DataProcessor {
 
 class IndividualProceduresDataProcessor extends DataProcessor {
 
-    constructor(patients, conditions, encounters, stationEncounters, procedures, ageGroups, timeSpan, genders, threshold, stationID, procedureKey) {
+    constructor(patients, conditions, encounters, stationEncounters, procedures, ageGroups, timeSpan, genders, threshold, stationID, procedureKeys) {
         super(patients, conditions, encounters, stationEncounters, procedures, ageGroups, timeSpan, genders, threshold, stationID);
-        this.procedureKey = procedureKey;
+        this.procedureKeys = procedureKeys;
     }
 
     process() {
         // Only Nursing Procedures
         let filteredProcedures = this.procedures.filter(p => p.categoryCode === "9632001");
-        // Filter by procedureKey
-        filteredProcedures = filteredProcedures.filter(p => p.display === this.procedureKey); // Can be changed to a code if database completed
         // Standard filter
         filteredProcedures = filterProcedures(filteredProcedures, this.patients, this.ageGroups, this.timeSpan, this.genders)
 
-        const getDataset = () => {
-            // sort by Date
-            let sortedProcedures = filteredProcedures.sort((a, b) => a.performedDateTime - b.performedDateTime);
 
-            const dates = initDates(this.timeSpan);
+        const getDataset = (procedureKey) => {
+            // Filter by procedureKey
+            let filteredByKeyProcedures = filteredProcedures.filter(p => p.display === procedureKey); // Can be changed to a code if database completed
+
+            // sort by Date
+            let sortedProcedures = filteredByKeyProcedures.sort((a, b) => a.performedDateTime - b.performedDateTime);
+
+            let dates = initDates(this.timeSpan);
 
             sortedProcedures.forEach(p => {
                 let date = formatDaysToMonthText(this.timeSpan, p.performedDateTime);
@@ -551,13 +553,17 @@ class IndividualProceduresDataProcessor extends DataProcessor {
             return dates;
         }
 
+        let datasets = [];
+
+        for (let i = 0; i < this.procedureKeys.length; i++) {
+            datasets.push({
+                label: this.procedureKeys[i],
+                data: getDataset(this.procedureKeys[i])
+            });
+        }
+
         return {
-            datasets: [
-                {
-                    label: this.procedureKey,
-                    data: getDataset()
-                }
-            ]
+            datasets: datasets
         }
     }
 }
