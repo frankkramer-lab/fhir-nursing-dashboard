@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import {getProcedureKeys} from "../../utils/globalVars";
+import {charts04} from "../../utils/constants";
 
 
 export default function ProcedureKeyModifier(props) {
@@ -18,10 +19,10 @@ export default function ProcedureKeyModifier(props) {
     })
 
     function updateKeys(entries) {
-        if(entries.length === 0) {
+        if (entries.length === 0) {
             entries = [];
         }
-        if(entries.length >= 3) {
+        if (entries.length >= 3) {
             entries = entries.slice(entries.length - 3, entries.length);
         }
         setProcedureKeys(entries);
@@ -39,6 +40,37 @@ export default function ProcedureKeyModifier(props) {
             value={procedureKeys}
             options={options}
             onChange={(e) => updateKeys(e)}
+            styles={{  // style for the dropdown menu
+                clearIndicator: (provided, state) => ({
+                  ...provided,
+                    color: charts04,
+                }),
+                menu: (provided, state) => ({
+                    ...provided,
+                }),
+                control: (provided, state) => ({
+                    ...provided,
+                    borderRadius: "10px",
+                    borderColor: charts04,
+                    padding: "5px",
+                    marginRight: "10px",
+                }),
+                singleValue: (provided, state) => ({
+                    ...provided,
+                }),
+                multiValue: (provided, state) => ({
+                    ...provided,
+                    borderRadius: "5px",
+                    backgroundColor: charts04,
+                    color: 'white',
+                }),
+                multiValueLabel: (provided, state) => ({
+                    ...provided,
+                    borderRadius: "5px",
+                    backgroundColor: charts04,
+                    color: 'white',
+                }),
+            }}
         />
     );
 }
