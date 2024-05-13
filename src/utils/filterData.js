@@ -1,5 +1,17 @@
-import {AGE_GROUPS, BAR, ENDDATE, FEMALE, GENDERS, LINE, MALE, NUMBER, PIE, STARTDATE, LOGINDIVIDUALPROCESSORTIMES} from "./constants";
-import {getDaysToMonths} from "./globalVars";
+import {
+    AGE_GROUPS,
+    BAR,
+    ENDDATE,
+    FEMALE,
+    GENDERS,
+    LINE,
+    MALE,
+    NUMBER,
+    PIE,
+    STARTDATE,
+    LOGINDIVIDUALPROCESSORTIMES
+} from "./constants";
+import {getDaysToMonths, getProcedureKeys, setProcedureKeys} from "./globalVars";
 import moment from "moment";
 import {getAllDataFromDB} from "./db";
 
@@ -45,38 +57,61 @@ export async function initCharts(updateProgress, stationID = null) {
         console.timeEnd("get station data")
     }
 
+    if (stationID) {
+        console.time("get procedure keys");
+        let keys = new Set();
+        stationProcedures.filter(p => p.categoryCode === "9632001").forEach(p => keys.add(p.display));
+        let keysArray = Array.from(keys);
+        keysArray.sort();
+        setProcedureKeys(keysArray);
+        console.timeEnd("get procedure keys");
+    }
+
 
     // All functions need to take the arguments: ageGroups, timeSpan
 
     console.time("init processors");
-    if(LOGINDIVIDUALPROCESSORTIMES) console.time("init gender processor")
+    if (LOGINDIVIDUALPROCESSORTIMES) console.time("init gender processor")
     let genderDataProcessor = new GenderDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
-    if(LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init gender processor");
-    if(LOGINDIVIDUALPROCESSORTIMES) console.time("init age processor")
+    if (genderDataProcessor) genderDataProcessor.initialize();
+    if (LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init gender processor");
+    if (LOGINDIVIDUALPROCESSORTIMES) console.time("init age processor")
     let ageDataProcessor = new AgeDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
-    if(LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init age processor");
+    if (ageDataProcessor) ageDataProcessor.initialize();
+    if (LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init age processor");
     /*console.time("init asserted dates processor")
     let assertedDatesProcessor = new AssertedDatesDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
+    assertedDatesProcessor.initialize();
     console.timeEnd("init asserted dates processor")*/
-    if(LOGINDIVIDUALPROCESSORTIMES) console.time("init diseases processor")
+    if (LOGINDIVIDUALPROCESSORTIMES) console.time("init diseases processor")
     // Removed from global Charts (> loading time)
     let diseasesDataProcessor = stationID === null ? null : new DiseaseDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, (stationID === null ? 2300 : 500), stationID);
-    if(LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init diseases processor")
-    if(LOGINDIVIDUALPROCESSORTIMES) console.time("init admission processor")
+    if (diseasesDataProcessor) diseasesDataProcessor.initialize();
+    if (LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init diseases processor")
+    if (LOGINDIVIDUALPROCESSORTIMES) console.time("init admission processor")
     let admissionDataProcessor = new AdmissionDatesDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
-    if(LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init admission processor")
-    if(LOGINDIVIDUALPROCESSORTIMES) console.time("init dismission processor")
+    if (admissionDataProcessor) admissionDataProcessor.initialize();
+    if (LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init admission processor")
+    if (LOGINDIVIDUALPROCESSORTIMES) console.time("init dismission processor")
     let dismissionDataProcessor = new DismissionDatesDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
-    if(LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init dismission processor")
-    if(LOGINDIVIDUALPROCESSORTIMES) console.time("init encounter types processor")
+    if (dismissionDataProcessor) dismissionDataProcessor.initialize();
+    if (LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init dismission processor")
+    if (LOGINDIVIDUALPROCESSORTIMES) console.time("init encounter types processor")
     let encounterTypesDataProcessor = new EncounterTypesDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
-    if(LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init encounter types processor")
-    if(LOGINDIVIDUALPROCESSORTIMES) console.time("init length of stay processor")
+    if (encounterTypesDataProcessor) encounterTypesDataProcessor.initialize();
+    if (LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init encounter types processor")
+    if (LOGINDIVIDUALPROCESSORTIMES) console.time("init length of stay processor")
     let lengthOfStayDataProcessor = new LengthOfStayDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 14, stationID);
-    if(LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init length of stay processor")
-    if(LOGINDIVIDUALPROCESSORTIMES) console.time("init procedures processor")
+    if (lengthOfStayDataProcessor) lengthOfStayDataProcessor.initialize();
+    if (LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init length of stay processor")
+    if (LOGINDIVIDUALPROCESSORTIMES) console.time("init procedures processor")
     let proceduresDataProcessor = stationID === null ? null : new ProceduresDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 14, stationID);
-    if(LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init procedures processor")
+    if (proceduresDataProcessor) proceduresDataProcessor.initialize();
+    if (LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init procedures processor")
+    if (LOGINDIVIDUALPROCESSORTIMES) console.time("init individual procedures processor")
+    let individualProceduresProcessor = stationID === null ? null : new IndividualProceduresDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID, getProcedureKeys()[0]);
+    if (individualProceduresProcessor) individualProceduresProcessor.initialize();
+    if (LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init individual procedures processor")
 
     console.timeEnd("init processors");
 
@@ -139,12 +174,19 @@ export async function initCharts(updateProgress, stationID = null) {
             p: lengthOfStayDataProcessor,
         },
         {
+            title: "Individual Procedures",
+            id: 9,
+            type: LINE,
+            showAt: [1],
+            p: individualProceduresProcessor,
+        },
+        {
             title: "Procedures per Day",
             id: 8,
             type: NUMBER,
             showAt: [1],
             p: proceduresDataProcessor,
-        }
+        },
 
     ];
 }
@@ -168,6 +210,9 @@ export class DataProcessor {
         this.genders = genders;
         this.threshold = threshold;
         this.stationID = stationID;
+    }
+
+    initialize() {
         this.data = this.process();
     }
 
@@ -474,6 +519,46 @@ class ProceduresDataProcessor extends DataProcessor {
             unit: ''
         }
 
+    }
+}
+
+class IndividualProceduresDataProcessor extends DataProcessor {
+
+    constructor(patients, conditions, encounters, stationEncounters, procedures, ageGroups, timeSpan, genders, threshold, stationID, procedureKey) {
+        super(patients, conditions, encounters, stationEncounters, procedures, ageGroups, timeSpan, genders, threshold, stationID);
+        this.procedureKey = procedureKey;
+    }
+
+    process() {
+        // Only Nursing Procedures
+        let filteredProcedures = this.procedures.filter(p => p.categoryCode === "9632001");
+        // Filter by procedureKey
+        filteredProcedures = filteredProcedures.filter(p => p.display === this.procedureKey); // Can be changed to a code if database completed
+        // Standard filter
+        filteredProcedures = filterProcedures(filteredProcedures, this.patients, this.ageGroups, this.timeSpan, this.genders)
+
+        const getDataset = () => {
+            // sort by Date
+            let sortedProcedures = filteredProcedures.sort((a, b) => a.performedDateTime - b.performedDateTime);
+
+            const dates = initDates(this.timeSpan);
+
+            sortedProcedures.forEach(p => {
+                let date = formatDaysToMonthText(this.timeSpan, p.performedDateTime);
+                dates[date] = (dates[date] || 0) + 1;
+            });
+
+            return dates;
+        }
+
+        return {
+            datasets: [
+                {
+                    label: this.procedureKey,
+                    data: getDataset()
+                }
+            ]
+        }
     }
 }
 

@@ -26,3 +26,13 @@ export function setActiveStation(value) {
     activeStation = value;
     localStorage.setItem('activeStation', value);
 }
+
+let procedureKeys = [];
+
+export function getProcedureKeys() {
+    return procedureKeys;
+}
+
+export function setProcedureKeys(value) {
+    procedureKeys = value;
+}
