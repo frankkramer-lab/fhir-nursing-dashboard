@@ -112,6 +112,11 @@ export async function initCharts(updateProgress, stationID = null) {
     let individualProceduresProcessor = stationID === null ? null : new IndividualProceduresDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID, [getProcedureKeys()[0]]);
     if (individualProceduresProcessor) individualProceduresProcessor.initialize();
     if (LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init individual procedures processor")
+    if (LOGINDIVIDUALPROCESSORTIMES) console.time("init artificial respiration processor")
+    let artificialRespirationDataProcessor = new ArtificialRespirationDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
+    if(artificialRespirationDataProcessor) artificialRespirationDataProcessor.initialize();
+    if (LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init artificial respiration processor")
+
 
     console.timeEnd("init processors");
 
@@ -187,6 +192,13 @@ export async function initCharts(updateProgress, stationID = null) {
             showAt: [1],
             p: proceduresDataProcessor,
         },
+        {
+            title: "Artificial Respiration",
+            id: 10,
+            type: LINE,
+            showAt: [0, 1],
+            p: artificialRespirationDataProcessor,
+        }
 
     ];
 }
@@ -568,6 +580,37 @@ class IndividualProceduresDataProcessor extends DataProcessor {
     }
 }
 
+
+class ArtificialRespirationDataProcessor extends DataProcessor {
+    process() {
+        let filteredProcedures = this.procedures.filter(p => p.categoryCode === "40617009");
+        filteredProcedures = filterProcedures(filteredProcedures, this.patients, this.ageGroups, this.timeSpan, this.genders);
+
+        const getDataset = () => {
+            // sort by Date
+            let sortedProcedures = filteredProcedures.sort((a, b) => a.performedDateTime - b.performedDateTime);
+
+            const dates = initDates(this.timeSpan);
+
+            sortedProcedures.forEach(p => {
+                let date = formatDaysToMonthText(this.timeSpan, p.performedDateTime);
+                dates[date] = (dates[date] || 0) + 1;
+            });
+
+            return dates;
+        }
+
+        return {
+            datasets: [
+                {
+                    label: 'Artificial Respiration',
+                    data: getDataset()
+                }
+            ]
+        }
+    }
+}
+
 const getPatientById = (patients, id) => {
     return patients.find(patient => patient.id === id)
 }
@@ -663,9 +706,14 @@ async function getStationProcedures(procedures, stationEncounters, stationId) {
 
     const patientEncountersOnStation = stationEncounters.filter(e => e.station === stationId);
 
+    const patientEncounterLookup = patientEncountersOnStation.reduce((lookup, encounter) => {
+        lookup[encounter.patientID] = encounter;
+        return lookup;
+    }, {});
+
     const StationProcedures = procedures.filter(procedure => {
         // get the encounter of the patient
-        const patientEncounter = patientEncountersOnStation.find(e => e.patientID === procedure.patientID);
+        const patientEncounter = patientEncounterLookup[procedure.patientID];
         // check if the procedure was performed during the encounter
         return (patientEncounter !== undefined) && procedure.performedDateTime >= patientEncounter.periodStart && procedure.performedDateTime <= patientEncounter.periodEnd;
     });
