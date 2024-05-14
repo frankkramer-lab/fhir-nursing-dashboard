@@ -30,7 +30,6 @@ export default function ProcedureKeyModifier(props) {
         props.updateProcedureKeys(keys);
     }
 
-    console.log(procedureKeys);
 
     return (
         <Select
