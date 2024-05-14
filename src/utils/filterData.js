@@ -114,7 +114,7 @@ export async function initCharts(updateProgress, stationID = null) {
     if (LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init individual procedures processor")
     if (LOGINDIVIDUALPROCESSORTIMES) console.time("init artificial respiration processor")
     let artificialRespirationDataProcessor = new ArtificialRespirationDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
-    if(artificialRespirationDataProcessor) artificialRespirationDataProcessor.initialize();
+    if (artificialRespirationDataProcessor) artificialRespirationDataProcessor.initialize();
     if (LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init artificial respiration processor")
 
 
@@ -615,6 +615,14 @@ const getPatientById = (patients, id) => {
     return patients.find(patient => patient.id === id)
 }
 
+const getPatientsLookup = (p) => {
+    let lookup = {};
+    p.forEach(patient => {
+        lookup[patient.id] = patient;
+    });
+    return lookup;
+}
+
 function initDates(timeSpan) {
     const d = {};
     let days = Math.round((timeSpan[1] - timeSpan[0]) / (1000 * 60 * 60 * 24));
@@ -643,8 +651,9 @@ const filterPatients = (patients, ageGroups, timespan, genders) => {
 
 const filterConditions = (conditions, patients, ageGroups, timespan, genders) => {
     let filteredConditions = conditions.filter(c => c.assertedDate >= timespan[0] && c.assertedDate <= timespan[1]);
+    let patientsLookup = getPatientsLookup(patients);
     filteredConditions = filteredConditions.filter(c => {
-        const patient = getPatientById(patients, c.patientID);
+        const patient = patientsLookup[c.patientID];
         return ageGroups.includes(patient.ageGroup) && genders.includes(patient.gender);
     });
 
@@ -660,19 +669,24 @@ const filterEncounters = (encounters, patients, ageGroups, timespan, enddate, ge
         filteredEncounters = encounters.filter(e => e.periodStart >= timespan[0] && e.periodStart <= timespan[1])
 
     }
+    const patientsLookup = getPatientsLookup(patients);
+
     filteredEncounters = filteredEncounters.filter(e => {
-        const patient = getPatientById(patients, e.patientID);
+        const patient = patientsLookup[e.patientID];
         return ageGroups.includes(patient.ageGroup) && genders.includes(patient.gender)
     });
     return filteredEncounters;
 }
 
 const filterProcedures = (procedures, patients, ageGroups, timespan, genders) => {
-    let filteredProcedures = procedures.filter(p => p.performedDateTime >= timespan[0] && p.performedDateTime <= timespan[1]);
-    filteredProcedures = filteredProcedures.filter(p => {
-        const patient = getPatientById(patients, p.patientID);
-        return ageGroups.includes(patient.ageGroup) && genders.includes(patient.gender);
+    console.time("filter procedures")
+    const patientsLookup = getPatientsLookup(patients)
+
+    let filteredProcedures = procedures.filter(p => {
+        const patient = patientsLookup[p.patientID];
+        return p.performedDateTime >= timespan[0] && p.performedDateTime <= timespan[1] && ageGroups.includes(patient.ageGroup) && genders.includes(patient.gender);
     });
+    console.timeEnd("filter procedures")
     return filteredProcedures;
 }
 
