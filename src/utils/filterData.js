@@ -679,14 +679,11 @@ const filterEncounters = (encounters, patients, ageGroups, timespan, enddate, ge
 }
 
 const filterProcedures = (procedures, patients, ageGroups, timespan, genders) => {
-    console.time("filter procedures")
     const patientsLookup = getPatientsLookup(patients)
-
     let filteredProcedures = procedures.filter(p => {
         const patient = patientsLookup[p.patientID];
         return p.performedDateTime >= timespan[0] && p.performedDateTime <= timespan[1] && ageGroups.includes(patient.ageGroup) && genders.includes(patient.gender);
     });
-    console.timeEnd("filter procedures")
     return filteredProcedures;
 }
 
