@@ -6,7 +6,7 @@ import {AGE_GROUPS, GENDERS} from "../../utils/constants";
 import ThresholdModifier from "./ThresholdModifier";
 import GenderModifier from "./GenderModifier";
 import {DataProcessor} from "../../utils/filterData";
-import {getActiveStation} from "../../utils/globalVars";
+import {getActiveStation, getArtificialRespirationKeys, getProcedureKeys} from "../../utils/globalVars";
 import ProcedureKeyModifier from "./ProcedureKeyModifier";
 
 export default function Modifiers(props) {
@@ -110,9 +110,10 @@ export default function Modifiers(props) {
                                   updateThreshold={updateThreshold}/>
     }
 
-    function renderProcedureKeyModifier(){
+    function renderProcedureKeyModifier(allKeys){
         return <ProcedureKeyModifier key={props.activeIndex + "procedureKey" + props.tabIndex}
                                      procedureKeys={procedureKeys}
+                                     allKeys={allKeys}
                                      updateProcedureKeys={updateProcedureKeys}/>
     }
 
@@ -146,7 +147,9 @@ export default function Modifiers(props) {
                 // Procedures per Day Line Chart
                 return [renderAgeModifier(), renderGenderModifier(), renderTimeSpanModifier()];
             case 9:
-                return [renderProcedureKeyModifier(), renderAgeModifier(), renderGenderModifier(), renderTimeSpanModifier(), renderThresholdModifier()];
+                return [renderProcedureKeyModifier(getProcedureKeys()), renderAgeModifier(), renderGenderModifier(), renderTimeSpanModifier()];
+            case 10:
+                return [renderProcedureKeyModifier(getArtificialRespirationKeys()), renderAgeModifier(), renderGenderModifier(), renderTimeSpanModifier()];
             default:
                 return [renderAgeModifier(), renderGenderModifier(), renderTimeSpanModifier(), renderThresholdModifier()];
         }

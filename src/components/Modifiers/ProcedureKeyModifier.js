@@ -1,6 +1,5 @@
 import React from 'react';
 import Select from 'react-select';
-import {getProcedureKeys} from "../../utils/globalVars";
 import {charts04} from "../../utils/constants";
 
 
@@ -14,7 +13,7 @@ export default function ProcedureKeyModifier(props) {
 
     const options = [];
 
-    getProcedureKeys().map((key) => {
+    props.allKeys.map((key) => {
         options.push({value: key, label: key})
     })
 

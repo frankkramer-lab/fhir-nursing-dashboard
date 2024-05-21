@@ -36,3 +36,14 @@ export function getProcedureKeys() {
 export function setProcedureKeys(value) {
     procedureKeys = value;
 }
+
+
+let artificialRespirationKeys = [];
+
+export function getArtificialRespirationKeys() {
+    return artificialRespirationKeys;
+}
+
+export function setArtificialRespirationKeys(value) {
+    artificialRespirationKeys = value;
+}

@@ -11,7 +11,13 @@ import {
     STARTDATE,
     LOGINDIVIDUALPROCESSORTIMES
 } from "./constants";
-import {getDaysToMonths, getProcedureKeys, setProcedureKeys} from "./globalVars";
+import {
+    getArtificialRespirationKeys,
+    getDaysToMonths,
+    getProcedureKeys,
+    setArtificialRespirationKeys,
+    setProcedureKeys
+} from "./globalVars";
 import moment from "moment";
 import {getAllDataFromDB} from "./db";
 
@@ -57,14 +63,22 @@ export async function initCharts(updateProgress, stationID = null) {
         console.timeEnd("get station data")
     }
 
+    console.time("get procedure keys");
     if (stationID) {
-        console.time("get procedure keys");
+        setProcedureKeys(getKeys("9632001", true));
+    }
+    setArtificialRespirationKeys(getKeys("40617009", false));
+    console.timeEnd("get procedure keys");
+
+    function getKeys(code, isStation) {
         let keys = new Set();
-        stationProcedures.filter(p => p.categoryCode === "9632001").forEach(p => keys.add(p.display));
+        if (isStation) {
+            stationProcedures.filter(p => p.categoryCode === code).forEach(p => keys.add(p.display));
+        } else {
+            procedures.filter(p => p.categoryCode === code).forEach(p => keys.add(p.display));
+        }
         let keysArray = Array.from(keys);
-        keysArray.sort();
-        setProcedureKeys(keysArray);
-        console.timeEnd("get procedure keys");
+        return keysArray.sort();
     }
 
 
@@ -113,7 +127,7 @@ export async function initCharts(updateProgress, stationID = null) {
     if (individualProceduresProcessor) individualProceduresProcessor.initialize();
     if (LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init individual procedures processor")
     if (LOGINDIVIDUALPROCESSORTIMES) console.time("init artificial respiration processor")
-    let artificialRespirationDataProcessor = new ArtificialRespirationDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
+    let artificialRespirationDataProcessor = new ArtificialRespirationDataProcessor(patients, conditions, encounters, stationEncounters, procedures, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID, [getArtificialRespirationKeys()[0]]);
     if (artificialRespirationDataProcessor) artificialRespirationDataProcessor.initialize();
     if (LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init artificial respiration processor")
 
@@ -582,13 +596,25 @@ class IndividualProceduresDataProcessor extends DataProcessor {
 
 
 class ArtificialRespirationDataProcessor extends DataProcessor {
+
+    constructor(patients, conditions, encounters, stationEncounters, procedures, ageGroups, timeSpan, genders, threshold, stationID, procedureKeys) {
+        super(patients, conditions, encounters, stationEncounters, procedures, ageGroups, timeSpan, genders, threshold, stationID);
+        this.procedureKeys = procedureKeys;
+    }
+
+
     process() {
+        // Only Artificial Respiration Procedures
         let filteredProcedures = this.procedures.filter(p => p.categoryCode === "40617009");
+        // Standard filter
         filteredProcedures = filterProcedures(filteredProcedures, this.patients, this.ageGroups, this.timeSpan, this.genders);
 
-        const getDataset = () => {
+        const getDataset = (procedureKey) => {
+            // Filter by procedureKey
+            let filteredByKeyProcedures = filteredProcedures.filter(p => p.display === procedureKey); // Can be changed to a code if database completed
+
             // sort by Date
-            let sortedProcedures = filteredProcedures.sort((a, b) => a.performedDateTime - b.performedDateTime);
+            let sortedProcedures = filteredByKeyProcedures.sort((a, b) => a.performedDateTime - b.performedDateTime);
 
             const dates = initDates(this.timeSpan);
 
@@ -600,13 +626,17 @@ class ArtificialRespirationDataProcessor extends DataProcessor {
             return dates;
         }
 
+        let datasets = [];
+
+        for (let i = 0; i < this.procedureKeys.length; i++) {
+            datasets.push({
+                label: this.procedureKeys[i],
+                data: getDataset(this.procedureKeys[i])
+            });
+        }
+
         return {
-            datasets: [
-                {
-                    label: 'Artificial Respiration',
-                    data: getDataset()
-                }
-            ]
+            datasets: datasets
         }
     }
 }

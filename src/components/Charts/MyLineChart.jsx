@@ -35,23 +35,34 @@ export default function MyLineChart(props) {
         props.data.datasets[i].borderColor = addAlpha(colors[i], 0.6);
     }
 
-    let annotations = Object.keys(props.data.datasets[0].data).map((value, index) => {
-        if(value.split('.')[0] === '01')
-        return {
-            type: 'line',
-            mode: 'vertical',
-            scaleID: 'x',
-            value: value,
-            borderColor: 'purple',
-            borderWidth: 1,
-            label: {
-                enabled: true,
-                content: 'New Month'
-            }
-        };
-        else return null;
-    });
-    annotations = annotations.filter(item => item !== null);
+    let annotations
+
+    console.log(props.data);
+    console.log(props.data.datasets);
+    console.log(props.data.datasets.length > 0);
+
+
+    if (props.data.datasets.length > 0) {
+        annotations = Object.keys(props.data.datasets[0].data).map((value, index) => {
+            if (value.split('.')[0] === '01')
+                return {
+                    type: 'line',
+                    mode: 'vertical',
+                    scaleID: 'x',
+                    value: value,
+                    borderColor: 'purple',
+                    borderWidth: 1,
+                    label: {
+                        enabled: true,
+                        content: 'New Month'
+                    }
+                };
+            else return null;
+        });
+        annotations = annotations.filter(item => item !== null);
+    }else{
+        annotations = [];
+    }
 
     // Konfiguration für den Line-Chart
     const options = {
