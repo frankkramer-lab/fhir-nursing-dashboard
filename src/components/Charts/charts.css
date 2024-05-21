@@ -22,3 +22,9 @@
 .number-display h2{
     width: 90%;
 }
+
+.number-display h1:hover {
+    color: #042b52;
+    cursor: pointer;
+}
+

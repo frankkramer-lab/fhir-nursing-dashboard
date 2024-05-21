@@ -509,7 +509,8 @@ class LengthOfStayDataProcessor extends DataProcessor {
 
         return {
             number: avg,
-            unit: ' days'
+            unit: ' days',
+            details: 'The threshold is ' + this.threshold + ' days. It cuts off all stays longer than ' + this.threshold + ' days.'
         }
     }
 }
@@ -542,7 +543,8 @@ class ProceduresDataProcessor extends DataProcessor {
 
         return {
             number: filteredProcedures.length / (moment(this.timeSpan[1]).diff(moment(this.timeSpan[0]), 'days')),
-            unit: ''
+            unit: '',
+            details: 'Procedures per day are calculated by dividing all filtered Procedures by number of days'
         }
 
     }

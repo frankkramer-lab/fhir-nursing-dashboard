@@ -37,10 +37,6 @@ export default function MyLineChart(props) {
 
     let annotations
 
-    console.log(props.data);
-    console.log(props.data.datasets);
-    console.log(props.data.datasets.length > 0);
-
 
     if (props.data.datasets.length > 0) {
         annotations = Object.keys(props.data.datasets[0].data).map((value, index) => {
