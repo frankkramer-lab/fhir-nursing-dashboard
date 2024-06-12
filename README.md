@@ -28,7 +28,7 @@ Make sure you are connected with the university network or VPN to access the FHI
 FHIR server via SSH in the terminal.
 
 The connection parameters for the FHIR server are configured in
-the ```constants.js``` file in the ```src/utils folder```. If the server address, user or password changes, you need to
+the ```constants.js``` file in the ```src/utils``` folder. If the server address, user or password changes, you need to
 update the
 file.
 
