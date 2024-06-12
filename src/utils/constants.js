@@ -7,9 +7,7 @@
 export const API_BASE_URL = 'http://localhost:8080/fhir-server/api/v4/';
 export const USER = 'fhiruser';
 export const PASSWORD = 'change-password';
-export const ALWAYS_LOAD = false; // TODO: Change to false in production
-// Change later -> go through pages
-export const FIRST100PARAM = '?_count=100';
+export const ALWAYS_LOAD = false; // true -> always load from server, false -> load from local DB if available
 
 
 // System
@@ -83,7 +81,6 @@ export const STATIONS = [
     "IZ21 - Station 2.1",
     "IZ22 - Station 2.2"
 ];
-
 
 
 // Colors

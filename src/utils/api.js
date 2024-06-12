@@ -47,28 +47,6 @@ export const APIWraper = ({children}) => {
             });
         }, []);
 
-        /*useEffect(() => {
-            setLoading(true);
-            initDB().then(async () => {
-                    let encounters = await getEncounters(updateProgress, '&date=le2021-01-31&type=einrichtungskontakt');
-                    console.log(encounters);
-                    let ids = encounters.map(e => e.patientID);
-                    let query = '&_id=' + ids.join(',');
-                    console.log(query);
-                    await getPatients(updateProgress, query);
-                    query = '&subject=' + ids.join(',');
-                    console.log(query);
-                    await getConditions(updateProgress, query);
-                    setCharts(await initCharts());
-                }
-            )
-                .catch(error => console.error('Fehler:', error))
-                .finally(() => {
-                    setLoading(false);
-                    setProgress(0);
-                }); // loading false, nachdem alle Fetch-Aufrufe abgeschlossen
-        }, []);*/
-
         if (loading)
             return (
                 <div style={{
