@@ -120,7 +120,7 @@ function fetchAll(url, allResults = [], updateProgress) {
             allResults.push(...resources);
             updateProgress(progress);
 
-            // Reccursion to get all pagesvs yio
+            // Reccursion to get all pages
             if (data.link) {
                 refetchCounter = 0;
                 const next = data.link.find(e => e.relation === 'next');

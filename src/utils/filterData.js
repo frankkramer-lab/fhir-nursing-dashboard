@@ -243,7 +243,7 @@ export class DataProcessor {
     }
 
     process() {
-        throw new Error("Method 'getData' must be implemented.");
+        throw new Error("Method 'process' must be implemented.");
     }
 }
 
@@ -546,7 +546,6 @@ class ProceduresDataProcessor extends DataProcessor {
             unit: '',
             details: 'Procedures per day are calculated by dividing all filtered Procedures by number of days'
         }
-
     }
 }
 
