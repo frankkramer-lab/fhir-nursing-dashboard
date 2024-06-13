@@ -46,9 +46,9 @@ export const APIWraper = ({children}) => {
                     .then(async () => {
                             console.time("api init charts")
                             setProgress(0);
-                            setCharts(await initCharts(updateProgress));
+                            setCharts(await initCharts());
                             setProgress(0);
-                            setStationCharts(await initCharts(updateProgress, getActiveStation()));
+                            setStationCharts(await initCharts(getActiveStation()));
                             console.timeEnd("api init charts")
                         }
                     )

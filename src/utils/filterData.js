@@ -1,3 +1,8 @@
+/**
+ * This file contains utility functions and classes for filtering and processing data for charts.
+ * It includes functions for initializing charts, filtering data based on various criteria, and classes for processing data for different types of charts.
+ */
+
 import {
     AGE_GROUPS,
     BAR,
@@ -38,7 +43,12 @@ const stationConditionsStorage = {};
 const selectedStationEncountersStorage = {};
 const stationObservationsStorage = {};
 
-export async function initCharts(updateProgress, stationID = null) {
+/**
+ * Initializes the charts by loading data, filtering it based on the provided criteria, and initializing the data processors.
+ * @param {string} stationID - The ID of the station to filter data by. If null, data for all stations is used.
+ * @returns {Array} An array of chart objects.
+ */
+export async function initCharts(stationID = null) {
 
     console.time("get from db");
     if (!patients || !conditions || !encounters || !stationEncounters || !procedures) {
@@ -109,6 +119,7 @@ export async function initCharts(updateProgress, stationID = null) {
     console.timeEnd("init asserted dates processor")*/
     if (LOGINDIVIDUALPROCESSORTIMES) console.time("init diseases processor")
     // Removed from global Charts (> loading time)
+    // Threshold is set to 500 for station charts
     let diseasesDataProcessor = stationID === null ? null : new DiseaseDataProcessor(patients, conditions, encounters, stationEncounters, procedures, observations, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, (stationID === null ? 2300 : 500), stationID);
     if (diseasesDataProcessor) diseasesDataProcessor.initialize();
     if (LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init diseases processor")
@@ -125,11 +136,12 @@ export async function initCharts(updateProgress, stationID = null) {
     if (encounterTypesDataProcessor) encounterTypesDataProcessor.initialize();
     if (LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init encounter types processor")
     if (LOGINDIVIDUALPROCESSORTIMES) console.time("init length of stay processor")
+    // The threshold is set to 14 days for the LengthOfStayDataProcessor
     let lengthOfStayDataProcessor = new LengthOfStayDataProcessor(patients, conditions, encounters, stationEncounters, procedures, observations, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 14, stationID);
     if (lengthOfStayDataProcessor) lengthOfStayDataProcessor.initialize();
     if (LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init length of stay processor")
     if (LOGINDIVIDUALPROCESSORTIMES) console.time("init procedures processor")
-    let proceduresDataProcessor = stationID === null ? null : new ProceduresDataProcessor(patients, conditions, encounters, stationEncounters, procedures, observations, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 14, stationID);
+    let proceduresDataProcessor = stationID === null ? null : new ProceduresDataProcessor(patients, conditions, encounters, stationEncounters, procedures, observations, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
     if (proceduresDataProcessor) proceduresDataProcessor.initialize();
     if (LOGINDIVIDUALPROCESSORTIMES) console.timeEnd("init procedures processor")
     if (LOGINDIVIDUALPROCESSORTIMES) console.time("init individual procedures processor")
@@ -228,7 +240,26 @@ export async function initCharts(updateProgress, stationID = null) {
 }
 
 // !!! If the constructor of this class gets changed the constructor of the subclasses overwriting it need to be changed as well (e.g. IndividualProceduresDataProcessor)
+/**
+ * The DataProcessor class is a base class for processing different types of data.
+ * It provides a constructor for initializing the data and a method for processing it.
+ * The process method must be implemented by subclasses.
+ */
 export class DataProcessor {
+    /**
+     * Constructs a new DataProcessor object.
+     * @param {Array} patients - The patients data.
+     * @param {Array} conditions - The conditions data.
+     * @param {Array} encounters - The encounters data.
+     * @param {Array} stationEncounters - The station encounters data.
+     * @param {Array} procedures - The procedures data.
+     * @param {Array} observations - The observations data.
+     * @param {Array} ageGroups - The age groups to consider.
+     * @param {Array} timeSpan - The time span to consider.
+     * @param {Array} genders - The genders to consider.
+     * @param {number} threshold - The threshold for filtering data.
+     * @param {string} stationID - The ID of the station to filter data by. If null, data for all stations is used.
+     */
     constructor(patients, conditions, encounters, stationEncounters, procedures, observations, ageGroups, timeSpan, genders, threshold, stationID) {
         this.patients = patients;
         this.conditions = conditions;
@@ -250,10 +281,17 @@ export class DataProcessor {
         this.stationID = stationID;
     }
 
+    /**
+     * Initializes the data processor by calling the process method.
+     */
     initialize() {
         this.data = this.process();
     }
 
+    /**
+     * Processes the data. This method must be implemented by subclasses.
+     * @throws {Error} If the method is not implemented by a subclass.
+     */
     process() {
         throw new Error("Method 'process' must be implemented.");
     }
@@ -741,6 +779,19 @@ const filterObservations = (observations, patients, ageGroups, timeSpan, genders
     return filteredObservations;
 }
 
+/**
+ * Retrieves conditions for a specific station.
+ *
+ * This function filters the conditions based on the encounters that occurred at the specified station.
+ * It checks if the condition was recorded during the encounter period.
+ * The results are then stored in a global storage for future use.
+ *
+ * @async
+ * @param {Array} conditions - The array of all conditions.
+ * @param {Array} stationEncounters - The array of all encounters that occurred at stations.
+ * @param {string} stationId - The ID of the station to retrieve conditions for.
+ * @returns {Array} An array of conditions for the specified station.
+ */
 async function getStationPatients(patients, stationEncounters, stationId) {
     if (stationPatientsStorage.hasOwnProperty(stationId)) return stationPatientsStorage[stationId];
     const patientIdsOnStation = stationEncounters
@@ -760,11 +811,35 @@ async function getStationConditions(conditions, stationEncounters, stationId) {
     return stationConditionsStorage[stationId];
 }
 
+/**
+ * Retrieves encounters for a specific station.
+ *
+ * This function filters the encounters based on the station ID.
+ * The results are then stored in a global storage for future use.
+ *
+ * @async
+ * @param {Array} stationEncounters - The array of all encounters that occurred at stations.
+ * @param {string} StationId - The ID of the station to retrieve encounters for.
+ * @returns {Array} An array of encounters for the specified station.
+ */
 async function getStationEncounters(stationEncounters, StationId) {
     selectedStationEncountersStorage[StationId] = stationEncounters.filter(e => e.station === StationId);
     return selectedStationEncountersStorage[StationId];
 }
 
+/**
+ * Retrieves procedures for a specific station.
+ *
+ * This function filters the procedures based on the encounters that occurred at the specified station.
+ * It checks if the procedure was performed during the encounter period.
+ * The results are then stored in a global storage for future use.
+ *
+ * @async
+ * @param {Array} procedures - The array of all procedures.
+ * @param {Array} stationEncounters - The array of all encounters that occurred at stations.
+ * @param {string} stationId - The ID of the station to retrieve procedures for.
+ * @returns {Array} An array of procedures for the specified station.
+ */
 async function getStationProcedures(procedures, stationEncounters, stationId) {
     // get all encounters on the station
     if (stationProceduresStorage.hasOwnProperty(stationId)) return stationProceduresStorage[stationId];
@@ -787,6 +862,19 @@ async function getStationProcedures(procedures, stationEncounters, stationId) {
     return StationProcedures;
 }
 
+/**
+ * Retrieves observations for a specific station.
+ *
+ * This function filters the observations based on the encounters that occurred at the specified station.
+ * It checks if the observation was performed during the encounter period.
+ * The results are then stored in a global storage for future use.
+ *
+ * @async
+ * @param {Array} observations - The array of all observations.
+ * @param {Array} stationEncounters - The array of all encounters that occurred at stations.
+ * @param {string} stationId - The ID of the station to retrieve observations for.
+ * @returns {Array} An array of observations for the specified station.
+ */
 async function getStationObservations(observations, stationEncounters, stationId) {
     if (stationObservationsStorage.hasOwnProperty(stationId)) return stationObservationsStorage[stationId];
 
@@ -809,6 +897,13 @@ async function getStationObservations(observations, stationEncounters, stationId
 
 }
 
+/**
+ * Formats a date into a specific string format based on the difference between two dates.
+ * If the difference is greater than a certain threshold, the date is formatted as 'MMM YY'. Otherwise, it's formatted as 'DD.MM.YY'.
+ * @param {Array} timeSpan - An array containing two dates to calculate the difference from.
+ * @param {Date} date - The date to format.
+ * @returns {string} The formatted date.
+ */
 function formatDaysToMonthText(timeSpan, date) {
     if (moment(timeSpan[1]).diff(moment(timeSpan[0]), 'months', true) > getDaysToMonths()) {
         return moment(date).format('MMM YY');

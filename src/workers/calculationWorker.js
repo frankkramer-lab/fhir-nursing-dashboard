@@ -16,7 +16,5 @@ self.addEventListener('message', async function (e) {
 });
 
 async function performComplexCalculation(station) {
-    return await initCharts((p) => {
-        self.postMessage({type: 'progress', payload: p});
-    }, station);
+    return await initCharts(station);
 }

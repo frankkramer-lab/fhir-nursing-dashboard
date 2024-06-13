@@ -31,8 +31,7 @@ export default function StatsScreen(props) {
         setLoadingStation(true);
         let station = event.target.value;
         setActiveStation(station);
-        setTimeout( ()=> {initCharts(() => {
-        }, station).then((data) => {
+        setTimeout( ()=> {initCharts(station).then((data) => {
             setStationCharts(data);
             setLoadingStation(false);
         })}, 0);
