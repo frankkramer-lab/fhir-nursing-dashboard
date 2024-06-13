@@ -102,3 +102,24 @@ export function parseProcedureData(procedures) {
     console.log(tableData);
     return tableData;
 }
+
+export function parseObservationData(observations) {
+    const tableData = [];
+    observations.forEach(element => {
+        if (!element) {
+            return null;
+        }
+        let o = {};
+        o.id = element.id; // ID
+        o.patientID = element.subject?.reference.split("/")[1]; // Patient ID
+        o.typeCode = element.code?.coding?.[0]?.code; // Code
+        o.typeDisplay = element.code?.coding?.[0]?.display; // display
+        o.code = element.valueCodeableConcept?.coding?.[0]?.code; // Code
+        o.display = element.valueCodeableConcept?.coding?.[0]?.display; // Klartext
+        o.performedDateTime = moment(element.effectiveDateTime); // Datum und Zeit
+
+        tableData.push(o);
+    });
+
+    return tableData;
+}

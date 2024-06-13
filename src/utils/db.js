@@ -1,10 +1,13 @@
+import moment from "moment/moment";
+
 const dbName = 'MedicalDatabase';
-const dbVersion = 2;
+const dbVersion = 3;
 const patientsStore = 'patients';
 const conditionsStore = 'conditions';
 const encountersStore = 'encounters';
 const stationEncountersStore = 'stationEncounters';
 const proceduresStore = 'procedures';
+const observationsStore = 'observations';
 
 
 // Check if object store (key) has {count} entries
@@ -70,6 +73,9 @@ export function initDB() {
             }
             if (!db.objectStoreNames.contains(proceduresStore)) {
                 db.createObjectStore(proceduresStore, {keyPath: 'id'});
+            }
+            if (!db.objectStoreNames.contains(observationsStore)) {
+                db.createObjectStore(observationsStore, {keyPath: 'id'});
             }
 
             console.log('Database upgraded');
@@ -230,6 +236,41 @@ export function insertProceduresIntoDB(procedures) {
                     display: procedure.display,
                     performedDateTime: procedure.performedDateTime.toDate(),
                     status: procedure.status,
+                });
+            });
+
+            transaction.oncomplete = function () {
+                db.close();
+            };
+            return resolve();
+        };
+
+        openRequest.onerror = function (event) {
+            console.error('Error opening database:', event.target.error);
+            return resolve();
+        }
+    });
+}
+
+export function insertObservationsIntoDB(observations) {
+    return new Promise((resolve, reject) => {
+        const openRequest = indexedDB.open(dbName, dbVersion);
+
+
+        openRequest.onsuccess = function (event) {
+            const db = event.target.result;
+            const transaction = db.transaction(observationsStore, 'readwrite');
+            const objectStore = transaction.objectStore(observationsStore);
+
+            observations.forEach(observation => {
+                objectStore.add({
+                    id: observation.id,
+                    patientID: observation.patientID,
+                    typeCode: observation.typeCode,// Code
+                    typeDisplay: observation.typeDisplay, // display
+                    code: observation.code,// Code
+                    display: observation.display,// Klartext
+                    performedDateTime: observation.performedDateTime.toDate(), // Datum und Zeit
                 });
             });
 

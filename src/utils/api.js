@@ -1,9 +1,15 @@
 import * as Constants from "./constants";
-import {parseConditionData, parseEncounterData, parsePatientData, parseProcedureData} from "./parser";
+import {
+    parseConditionData,
+    parseEncounterData,
+    parsePatientData,
+    parseProcedureData,
+    parseObservationData
+} from "./parser";
 import {
     checkIndexedDBFilled,
     initDB,
-    insertConditionsIntoDB, insertEncountersIntoDB,
+    insertConditionsIntoDB, insertEncountersIntoDB, insertObservationsIntoDB,
     insertPatientsIntoDB, insertProceduresIntoDB
 } from "./db";
 
@@ -29,7 +35,14 @@ export const APIWraper = ({children}) => {
         useEffect(() => {
             setLoading(true);
             initDB().then(() => {
-                Promise.all([getPatients(updateProgress), getConditions(updateProgress), getEncounters(updateProgress, '&type=einrichtungskontakt'), getEncounters(updateProgress, '&type=versorgungsstellenkontakt'), getProcedures(updateProgress)]) // Promise.all, um mehrere Promises gleichzeitig auszuführen
+                Promise.all([
+                    getPatients(updateProgress),
+                    getConditions(updateProgress),
+                    getEncounters(updateProgress, '&type=einrichtungskontakt'),
+                    getEncounters(updateProgress, '&type=versorgungsstellenkontakt'),
+                    getProcedures(updateProgress),
+                    getObservations(updateProgress),
+                ]) // Promise.all, um mehrere Promises gleichzeitig auszuführen
                     .then(async () => {
                             console.time("api init charts")
                             setProgress(0);
@@ -86,11 +99,11 @@ function fetchAll(url, allResults = [], updateProgress) {
                 const error = (data && data.message) || response.statusText;
                 console.log('error', error);
                 // retry
-                if(refetchCounter < 10){
+                if (refetchCounter < 10) {
                     refetchCounter++;
                     console.log('retrying ' + refetchCounter);
                     return fetchAll(url, allResults, updateProgress)
-                }else{
+                } else {
                     return Promise.reject(error);
                 }
             }
@@ -191,6 +204,21 @@ async function getProcedures(updateProgress, query = '') {
     // save in local DB
     let parsedData = parseProcedureData(procedures);
     await insertProceduresIntoDB(parsedData);
+}
+
+async function getObservations(updateProgress, query = '') {
+    // check local DB
+    let dataCount = await fetchDataAmmount('Observation', query);
+    const local = await localDBFilled('observations', dataCount);
+    if (local) return;
+
+    // request data from server
+    let observations = await fetchAll(Constants.API_BASE_URL + 'Observation?_count=500' + query, [], updateProgress);
+
+    // save in local DB
+    let parsedData = parseObservationData(observations);
+    await insertObservationsIntoDB(parsedData);
+
 }
 
 async function localDBFilled(key, count) {
