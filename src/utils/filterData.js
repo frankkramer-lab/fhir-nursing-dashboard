@@ -68,18 +68,14 @@ export async function initCharts(updateProgress, stationID = null) {
 
     console.time("get procedure keys");
     if (stationID) {
-        setProcedureKeys(getKeys("9632001", true));
+        setProcedureKeys(getStationProcedureKeys("9632001"));
     }
     setArtificialRespirationKeys(getObservationKeys("363787002:704321009=40617009", false));
     console.timeEnd("get procedure keys");
 
-    function getKeys(code, isStation) {
+    function getStationProcedureKeys(code) {
         let keys = new Set();
-        if (isStation) {
-            stationProcedures.filter(p => p.categoryCode === code).forEach(p => keys.add(p.display));
-        } else {
-            procedures.filter(p => p.categoryCode === code).forEach(p => keys.add(p.display));
-        }
+        stationProcedures.filter(p => p.categoryCode === code).forEach(p => keys.add(p.display));
         let keysArray = Array.from(keys);
         return keysArray.sort();
     }
@@ -97,8 +93,7 @@ export async function initCharts(updateProgress, stationID = null) {
     }
 
 
-    // All functions need to take the arguments: ageGroups, timeSpan
-
+    // All functions need to take the arguments: patients, conditions, encounters, stationEncounters, procedures, observations, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID
     console.time("init processors");
     if (LOGINDIVIDUALPROCESSORTIMES) console.time("init gender processor")
     let genderDataProcessor = new GenderDataProcessor(patients, conditions, encounters, stationEncounters, procedures, observations, AGE_GROUPS, [STARTDATE, ENDDATE], GENDERS, 0, stationID);
@@ -232,7 +227,7 @@ export async function initCharts(updateProgress, stationID = null) {
     ];
 }
 
-
+// !!! If the constructor of this class gets changed the constructor of the subclasses overwriting it need to be changed as well (e.g. IndividualProceduresDataProcessor)
 export class DataProcessor {
     constructor(patients, conditions, encounters, stationEncounters, procedures, observations, ageGroups, timeSpan, genders, threshold, stationID) {
         this.patients = patients;
