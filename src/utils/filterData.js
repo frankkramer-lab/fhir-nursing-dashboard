@@ -71,8 +71,6 @@ export async function initCharts(updateProgress, stationID = null) {
         setProcedureKeys(getKeys("9632001", true));
     }
     setArtificialRespirationKeys(getObservationKeys("363787002:704321009=40617009", false));
-    console.log(getArtificialRespirationKeys());
-    console.log(getArtificialRespirationKeys()[0]);
     console.timeEnd("get procedure keys");
 
     function getKeys(code, isStation) {
@@ -94,7 +92,6 @@ export async function initCharts(updateProgress, stationID = null) {
             observations.filter(o => o.typeCode === code).forEach(o => keys.add(o.display.split("= ")[1].split(" (procedure)")[0]));
         }
         let keysArray = Array.from(keys);
-        console.log(keysArray);
         return keysArray.sort();
 
     }
