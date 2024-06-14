@@ -303,8 +303,8 @@ class GenderDataProcessor extends DataProcessor {
 
         return {
             labels: [
-                'Männlich',
-                'Weiblich',
+                'Male',
+                'Female',
             ],
             datasets: [{
                 data: [
@@ -335,7 +335,7 @@ class AgeDataProcessor extends DataProcessor {
             labels: this.ageGroups,
             datasets: [
                 {
-                    label: 'Gesamt',
+                    label: 'Total',
                     data: getDataset()
                     /* Bsp:
                     * 0: 3
@@ -346,11 +346,11 @@ class AgeDataProcessor extends DataProcessor {
                     */
                 },
                 {
-                    label: 'Männlich',
+                    label: 'Male',
                     data: getDataset(MALE)
                 },
                 {
-                    label: 'Weiblich',
+                    label: 'Female',
                     data: getDataset(FEMALE)
                 },
             ]
@@ -568,6 +568,8 @@ class LengthOfStayDataProcessor extends DataProcessor {
 class ProceduresDataProcessor extends DataProcessor {
     process() {
         let filteredProcedures = filterProcedures(this.procedures, this.patients, this.ageGroups, this.timeSpan, this.genders)
+
+        //Commented out: (longer calculation Duration) Show line chart:
         /*const getDataset = () => {
             // sort by Date
             let sortedProcedures = filteredProcedures.sort((a, b) => a.performedDateTime - b.performedDateTime);
