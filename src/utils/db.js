@@ -226,6 +226,8 @@ export function insertProceduresIntoDB(procedures) {
             const transaction = db.transaction(proceduresStore, 'readwrite');
             const objectStore = transaction.objectStore(proceduresStore);
 
+            console.log("entering procedures")
+
             procedures.forEach(procedure => {
                 objectStore.add({
                     id: procedure.id,

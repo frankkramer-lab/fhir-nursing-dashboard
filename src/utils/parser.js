@@ -86,17 +86,21 @@ export function parseProcedureData(procedures) {
         if (!element) {
             return null;
         }
-        let p = {};
-        p.id = element.id; // ID
-        p.patientID = element.subject?.reference.split("/")[1]; // Patient ID
-        p.code = element.code?.coding?.[0]?.code; // Code
-        p.display = element.code?.coding?.[0]?.display; // Klartext
-        p.category = element.category?.coding?.[0]?.display; // Kategorie
-        p.categoryCode = element.category?.coding?.[0]?.code; // Kategorie-Code
-        p.status = element.status; // Status der Ausführung
-        p.performedDateTime = moment(element.performedDateTime); // Datum und Zeit
+        let timeArray = element.extension[0].extension.find(e => e.url.includes("angabeStrukturiert")).extension;
+        timeArray.forEach(time => {
+            let p = {};
+            // p.id = element.id + " " + time.valueDateTime; // ID
+            p.id = crypto.randomUUID(); // ID
+            p.patientID = element.subject?.reference.split("/")[1]; // Patient ID
+            p.code = element.code?.coding?.[0]?.code; // Code
+            p.display = element.code?.coding?.[0]?.display; // Klartext
+            p.category = element.category?.coding?.[0]?.display; // Kategorie
+            p.categoryCode = element.category?.coding?.[0]?.code; // Kategorie-Code
+            p.status = element.status; // Status der Ausführung
+            p.performedDateTime = moment(time.valueDateTime); // Datum und Zeit
 
-        tableData.push(p);
+            tableData.push(p);
+        });
     });
 
     console.log(tableData);

@@ -194,8 +194,9 @@ async function getEncounters(updateProgress, query = '') {
 
 async function getProcedures(updateProgress, query = '') {
     // check local DB
-    let dataCount = await fetchDataAmmount('Procedure', query);
-    const local = await localDBFilled('procedures', dataCount);
+    // let dataCount = await fetchDataAmmount('Procedure', query);
+    // Hardcoded for now - change to dynamic later -> fetched data ammount and local do not match
+    const local = await localDBFilled('procedures', 834295);
     if (local) return;
 
     // request data from server
