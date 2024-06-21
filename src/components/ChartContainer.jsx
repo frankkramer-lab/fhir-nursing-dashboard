@@ -19,7 +19,7 @@ export default function ChartContainer(props) {
                      onMouseEnter={() => setOverlayVisible(true)}
                      onMouseLeave={() => setOverlayVisible(false)}
                 >
-                    <p><span><FontAwesomeIcon icon={faEye}/></span> Titel</p>
+                    <p><span><FontAwesomeIcon icon={faEye}/></span> Title</p>
                 </div>
             </div>
         </div>
