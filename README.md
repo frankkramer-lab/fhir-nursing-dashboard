@@ -24,9 +24,6 @@ by running the following command in the project directory:
 npm install
 ```
 
-Make sure you are connected with the university network or VPN to access the FHIR server. Open the connection to the
-FHIR server via SSH in the terminal.
-
 The connection parameters for the FHIR server are configured in
 the ```constants.js``` file in the ```src/utils``` folder. If the server address, user or password changes, you need to
 update the
