@@ -1,7 +1,7 @@
-# FHIR Dashboard
+# FHIR Nursing Dashboard
 
 ![Screenshot_Anwendung.PNG](readme_img/Screenshot_Anwendung.PNG)
-Masterarbeit: Florian Weber
+
 ## Project Description
 
 This project is a web application that allows users to view and interact with FHIR resources. The application is built
