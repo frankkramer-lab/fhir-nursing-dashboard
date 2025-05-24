@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>6</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>54</x>
+      <y>366</y>
+      <w>174</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>ISiKOrganisation (Organization)
+--
+id</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1068</x>
+      <y>438</y>
+      <w>252</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>Patient
+(ISiPPflegeempfaenger)
+--
+id
+managingOrganization</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1062</x>
+      <y>648</y>
+      <w>258</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>ISiKDiagnose
+(Condition)
+--
+subject</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1164</x>
+      <y>498</y>
+      <w>324</w>
+      <h>162</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=
+m2=
+r1=id
+r2=subject
+Indicates the patient or group who the condition record is associated with.
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;250.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>744</y>
+      <w>252</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>ISiKStandort (Location)
+
+--
+id
+managingOrganization</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>108</x>
+      <y>402</y>
+      <w>252</w>
+      <h>162</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=
+m2=
+r1=id
+r2=partOf
+The organization of which this organization forms a part.
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;250.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>6</x>
+      <y>552</y>
+      <w>252</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>ISiKOrganisationFachabteilung (Organization)
+--
+id
+partOf</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>42</x>
+      <y>594</y>
+      <w>336</w>
+      <h>162</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=
+m2=
+r1=id
+r2=managingOrganization
+The organization responsible for the provisioning and upkeep of the location.
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;250.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>570</x>
+      <y>456</y>
+      <w>252</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>MII_PR_Fall_KontaktGesundheitseinrichtung
+(Encounter, Einrichtungkontakt)
+--
+subject
+serviceProvider</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>816</x>
+      <y>468</y>
+      <w>264</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=
+m2=
+r1=subject
+r2=id
+Patientenidentifikator
+</panel_attributes>
+    <additional_attributes>10.0;20.0;420.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>570</x>
+      <y>636</y>
+      <w>252</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>ISiPPflegeepisode
+(Encounter, Abteilungskontakt)
+--
+subject
+serviceProvider
+location: 0..*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>816</x>
+      <y>480</y>
+      <w>264</w>
+      <h>192</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=
+m2=
+r1=subject
+r2=id
+The patient or group present at the encounter.</panel_attributes>
+    <additional_attributes>10.0;300.0;420.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>222</x>
+      <y>378</y>
+      <w>360</w>
+      <h>138</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=
+m2=
+r1=id
+r2=serviceProvider
+Leistungserbringer
+</panel_attributes>
+    <additional_attributes>10.0;20.0;580.0;210.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>252</x>
+      <y>564</y>
+      <w>330</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=
+m2=
+r1=id
+r2=serviceProvider
+The organization (facility) responsible for this encounter
+</panel_attributes>
+    <additional_attributes>10.0;20.0;530.0;180.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>246</x>
+      <y>672</y>
+      <w>336</w>
+      <h>114</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=
+m2=
+r1=id
+r2=location:Station (.location)
+location
+</panel_attributes>
+    <additional_attributes>10.0;170.0;540.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1068</x>
+      <y>336</y>
+      <w>192</w>
+      <h>114</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=
+m2=
+r1=id
+r2=subject
+Who and/or what the observation is about.</panel_attributes>
+    <additional_attributes>10.0;170.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1068</x>
+      <y>300</y>
+      <w>252</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>KBV_PR_MIO_ULB_Observation_Respiratory_Support
+(Observation)
+--
+subject</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1578</x>
+      <y>450</y>
+      <w>252</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>KBV_PR_MIO_ULB_Procedure_Nursing_Measures
+(Procedure)
+--
+subject</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1314</x>
+      <y>456</y>
+      <w>276</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=
+m2=
+r1=id
+r2=subject
+Who the procedure was performed on.
+</panel_attributes>
+    <additional_attributes>10.0;20.0;440.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>222</x>
+      <y>366</y>
+      <w>858</w>
+      <h>114</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=
+m2=
+r1=id
+r2=managingOrganization
+Organization that is the custodian of the patient record
+</panel_attributes>
+    <additional_attributes>10.0;20.0;1410.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>690</x>
+      <y>516</y>
+      <w>198</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=
+m2=
+r1=partOf
+r2=id
+Another Encounter this encounter is part of.</panel_attributes>
+    <additional_attributes>10.0;200.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>816</x>
+      <y>666</y>
+      <w>258</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=
+m2=
+r1=id, *
+r2=diagnosis (.condition)
+</panel_attributes>
+    <additional_attributes>410.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1344</x>
+      <y>252</y>
+      <w>252</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>KBV_PR_MIO_ULB_Condition_Care_Problem
+(Condition)
+--
+subject</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1302</x>
+      <y>294</y>
+      <w>156</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=
+m2=
+r1=id
+r2=subject
+Who has the condition?
+</panel_attributes>
+    <additional_attributes>10.0;240.0;150.0;10.0</additional_attributes>
+  </element>
+</diagram>

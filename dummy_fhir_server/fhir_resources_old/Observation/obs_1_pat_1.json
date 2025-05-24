@@ -1,0 +1,48 @@
+{
+  "resourceType": "Bundle",
+  "id": "",
+  "total": 1,
+  "entry": [
+	{
+	  "fullUrl": "",
+	  "resource": {
+		"resourceType": "Observation",
+		"id": "obs_1",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2024-06-17T07:54:19.125464Z",
+		  "profile": [
+			"https://fhir.care-regio.de/StructureDefinition/CareRegioIG/StructureDefinition/cr-observation-beatmung"
+		  ]
+		},
+		"status": "final",
+		"code": {
+		  "coding": [
+			{
+			  "system": "http://snomed.info/sct",
+			  "code": "363787002:704321009=40617009",
+			  "display": "Observable entity (observable entity) : Characterizes (attribute) = Artificial respiration (procedure)"
+			}
+		  ]
+		},
+		"subject": {
+		  "reference": "Patient/pat_1"
+		},
+		"effectiveDateTime": "2021-02-01T11:21:00+01:00",
+		"valueCodeableConcept": {
+		  "coding": [
+			{
+			  "system": "http://snomed.info/sct",
+			  "code": "363787002:704321009=112798008",
+			  "display": "Observable entity (observable entity) : Characterizes (attribute) = Insertion of endotracheal tube (procedure)"
+			}
+		  ]
+		}
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	}
+  ]
+}

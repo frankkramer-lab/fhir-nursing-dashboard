@@ -1,0 +1,7 @@
+default:
+  before_script:
+    - docker info
+
+build_image:
+  script:
+    - docker buildx build -f ./Dockerfile -t dashboard .

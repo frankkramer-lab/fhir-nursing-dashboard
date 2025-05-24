@@ -1,0 +1,478 @@
+{
+  "resourceType": "Bundle",
+  "id": "312e00de-0a71-4add-b794-72be45d94b04",
+  "type": "searchset",
+  "total": 10,
+  "link": [
+	{
+	  "relation": "self",
+	  "url": "http://localhost:8080/fhir-server/api/v4/Patient?_count=10&_profile=https://gematik.de/fhir/isip/v1/Basismodul/StructureDefinition/ISiPPflegeempfaenger&_page=1&_firstId=7&_lastId=26"
+	},
+	{
+	  "relation": "next",
+	  "url": "http://localhost:8080/fhir-server/api/v4/Patient?_count=10&_profile=https://gematik.de/fhir/isip/v1/Basismodul/StructureDefinition/ISiPPflegeempfaenger&_page=2&_firstId=28"
+	}
+  ],
+  "entry": [
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Patient/194bbb83781-95aac7aa-67c0-481c-b960-515ff7616893",
+	  "resource": {
+		"resourceType": "Patient",
+		"id": "pat_01_org_1",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-01-31T09:36:39.809296Z",
+		  "profile": [
+			"https://gematik.de/fhir/isip/v1/Basismodul/StructureDefinition/ISiPPflegeempfaenger"
+		  ]
+		},
+		"identifier": [
+		  {
+			"type": {
+			  "coding": [
+				{
+				  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+				  "code": "MR"
+				}
+			  ]
+			},
+			"system": "www.fhir.care-regio.de/identifier",
+			"value": "N5cDhjVP2DY"
+		  }
+		],
+		"name": [
+		  {
+			"use": "anonymous",
+			"family": "Nachname",
+			"given": [
+			  "Vorname"
+			]
+		  }
+		],
+		"gender": "female",
+		"birthDate": "1979-01-01",
+		"managingOrganization": {
+		  "reference": "Organization/org_1"
+		}
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Patient/194bbb83781-5632e33a-06d4-4c34-9507-fc1a68f512a9",
+	  "resource": {
+		"resourceType": "Patient",
+		"id": "pat_02_org_1",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-01-31T09:36:39.809416Z",
+		  "profile": [
+			"https://gematik.de/fhir/isip/v1/Basismodul/StructureDefinition/ISiPPflegeempfaenger"
+		  ]
+		},
+		"identifier": [
+		  {
+			"type": {
+			  "coding": [
+				{
+				  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+				  "code": "MR"
+				}
+			  ]
+			},
+			"system": "www.fhir.care-regio.de/identifier",
+			"value": "v81ZDG9RFgQ"
+		  }
+		],
+		"name": [
+		  {
+			"use": "anonymous",
+			"family": "Nachname",
+			"given": [
+			  "Vorname"
+			]
+		  }
+		],
+		"gender": "female",
+		"birthDate": "1939-01-01",
+		"managingOrganization": {
+		  "reference": "Organization/org_1"
+		}
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Patient/194bbb83781-df8a8ecc-88d3-442b-99fc-4a53ccd82da1",
+	  "resource": {
+		"resourceType": "Patient",
+		"id": "pat_03_org_1",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-01-31T09:36:39.809447Z",
+		  "profile": [
+			"https://gematik.de/fhir/isip/v1/Basismodul/StructureDefinition/ISiPPflegeempfaenger"
+		  ]
+		},
+		"identifier": [
+		  {
+			"type": {
+			  "coding": [
+				{
+				  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+				  "code": "MR"
+				}
+			  ]
+			},
+			"system": "www.fhir.care-regio.de/identifier",
+			"value": "fNNlpqRtXh0"
+		  }
+		],
+		"name": [
+		  {
+			"use": "anonymous",
+			"family": "Nachname",
+			"given": [
+			  "Vorname"
+			]
+		  }
+		],
+		"gender": "male",
+		"birthDate": "1949-01-01",
+		"managingOrganization": {
+		  "reference": "Organization/org_1"
+		}
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Patient/194bbb83781-08e4c8e7-a48c-4d1f-97d6-fc9e329fa414",
+	  "resource": {
+		"resourceType": "Patient",
+		"id": "pat_04_org_1",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-01-31T09:36:39.809651Z",
+		  "profile": [
+			"https://gematik.de/fhir/isip/v1/Basismodul/StructureDefinition/ISiPPflegeempfaenger"
+		  ]
+		},
+		"identifier": [
+		  {
+			"type": {
+			  "coding": [
+				{
+				  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+				  "code": "MR"
+				}
+			  ]
+			},
+			"system": "www.fhir.care-regio.de/identifier",
+			"value": "-i38tm7dt5I"
+		  }
+		],
+		"name": [
+		  {
+			"use": "anonymous",
+			"family": "Nachname",
+			"given": [
+			  "Vorname"
+			]
+		  }
+		],
+		"gender": "male",
+		"birthDate": "1959-01-01",
+		"managingOrganization": {
+		  "reference": "Organization/org_1"
+		}
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Patient/194bbb83781-4c1c35d3-5c21-40ee-956a-a8af33d1ef15",
+	  "resource": {
+		"resourceType": "Patient",
+		"id": "pat_05_org_1",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-01-31T09:36:39.80979Z",
+		  "profile": [
+			"https://gematik.de/fhir/isip/v1/Basismodul/StructureDefinition/ISiPPflegeempfaenger"
+		  ]
+		},
+		"identifier": [
+		  {
+			"type": {
+			  "coding": [
+				{
+				  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+				  "code": "MR"
+				}
+			  ]
+			},
+			"system": "www.fhir.care-regio.de/identifier",
+			"value": "DgzQMOlxB34"
+		  }
+		],
+		"name": [
+		  {
+			"use": "anonymous",
+			"family": "Nachname",
+			"given": [
+			  "Vorname"
+			]
+		  }
+		],
+		"gender": "male",
+		"birthDate": "1959-01-01",
+		"managingOrganization": {
+		  "reference": "Organization/org_1"
+		}
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Patient/194bbb83781-53f1897d-4a88-4249-b77d-7cbf84489584",
+	  "resource": {
+		"resourceType": "Patient",
+		"id": "pat_06_org_1",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-01-31T09:36:39.809894Z",
+		  "profile": [
+			"https://gematik.de/fhir/isip/v1/Basismodul/StructureDefinition/ISiPPflegeempfaenger"
+		  ]
+		},
+		"identifier": [
+		  {
+			"type": {
+			  "coding": [
+				{
+				  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+				  "code": "MR"
+				}
+			  ]
+			},
+			"system": "www.fhir.care-regio.de/identifier",
+			"value": "SHqjSAsdZjY"
+		  }
+		],
+		"name": [
+		  {
+			"use": "anonymous",
+			"family": "Nachname",
+			"given": [
+			  "Vorname"
+			]
+		  }
+		],
+		"gender": "male",
+		"birthDate": "1969-01-01",
+		"managingOrganization": {
+		  "reference": "Organization/org_1"
+		}
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Patient/194bbb83781-d674b83f-2b1f-4f0d-bfad-7719dc6872a2",
+	  "resource": {
+		"resourceType": "Patient",
+		"id": "pat_07_org_1",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-01-31T09:36:39.809942Z",
+		  "profile": [
+			"https://gematik.de/fhir/isip/v1/Basismodul/StructureDefinition/ISiPPflegeempfaenger"
+		  ]
+		},
+		"identifier": [
+		  {
+			"type": {
+			  "coding": [
+				{
+				  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+				  "code": "MR"
+				}
+			  ]
+			},
+			"system": "www.fhir.care-regio.de/identifier",
+			"value": "ODjLoiKGj_A"
+		  }
+		],
+		"name": [
+		  {
+			"use": "anonymous",
+			"family": "Nachname",
+			"given": [
+			  "Vorname"
+			]
+		  }
+		],
+		"gender": "female",
+		"birthDate": "1959-01-01",
+		"managingOrganization": {
+		  "reference": "Organization/org_1"
+		}
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Patient/194bbb83781-f844d6fd-3392-4c2e-824a-a1cc87d0afa9",
+	  "resource": {
+		"resourceType": "Patient",
+		"id": "pat_08_org_1",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-01-31T09:36:39.810002Z",
+		  "profile": [
+			"https://gematik.de/fhir/isip/v1/Basismodul/StructureDefinition/ISiPPflegeempfaenger"
+		  ]
+		},
+		"identifier": [
+		  {
+			"type": {
+			  "coding": [
+				{
+				  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+				  "code": "MR"
+				}
+			  ]
+			},
+			"system": "www.fhir.care-regio.de/identifier",
+			"value": "FuzHqdksAJQ"
+		  }
+		],
+		"name": [
+		  {
+			"use": "anonymous",
+			"family": "Nachname",
+			"given": [
+			  "Vorname"
+			]
+		  }
+		],
+		"gender": "female",
+		"birthDate": "1949-01-01",
+		"managingOrganization": {
+		  "reference": "Organization/org_1"
+		}
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Patient/194bbb83782-fa63fd37-ff21-4825-beaf-6122879df186",
+	  "resource": {
+		"resourceType": "Patient",
+		"id": "pat_09_org_1",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-01-31T09:36:39.810051Z",
+		  "profile": [
+			"https://gematik.de/fhir/isip/v1/Basismodul/StructureDefinition/ISiPPflegeempfaenger"
+		  ]
+		},
+		"identifier": [
+		  {
+			"type": {
+			  "coding": [
+				{
+				  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+				  "code": "MR"
+				}
+			  ]
+			},
+			"system": "www.fhir.care-regio.de/identifier",
+			"value": "3Pte2ptJbwk"
+		  }
+		],
+		"name": [
+		  {
+			"use": "anonymous",
+			"family": "Nachname",
+			"given": [
+			  "Vorname"
+			]
+		  }
+		],
+		"gender": "male",
+		"birthDate": "1959-01-01",
+		"managingOrganization": {
+		  "reference": "Organization/org_1"
+		}
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Patient/194bbb83782-671e49e8-4b5b-4f56-8023-98181c4bdfe7",
+	  "resource": {
+		"resourceType": "Patient",
+		"id": "pat_10_org_1",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-01-31T09:36:39.810095Z",
+		  "profile": [
+			"https://gematik.de/fhir/isip/v1/Basismodul/StructureDefinition/ISiPPflegeempfaenger"
+		  ]
+		},
+		"identifier": [
+		  {
+			"type": {
+			  "coding": [
+				{
+				  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+				  "code": "MR"
+				}
+			  ]
+			},
+			"system": "www.fhir.care-regio.de/identifier",
+			"value": "cugw6DgZQa0"
+		  }
+		],
+		"name": [
+		  {
+			"use": "anonymous",
+			"family": "Nachname",
+			"given": [
+			  "Vorname"
+			]
+		  }
+		],
+		"gender": "male",
+		"birthDate": "1959-01-01",
+		"managingOrganization": {
+		  "reference": "Organization/org_1"
+		}
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	}
+  ]
+}

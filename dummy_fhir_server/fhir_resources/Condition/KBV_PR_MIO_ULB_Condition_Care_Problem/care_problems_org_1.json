@@ -1,0 +1,454 @@
+{
+  "resourceType": "Bundle",
+  "id": "db8d5430-9f36-4bd1-a01a-c8f8eeb6bf26",
+  "type": "searchset",
+  "total": 10,
+  "link": [
+	{
+	  "relation": "self",
+	  "url": "http://localhost:8080/fhir-server/api/v4/Condition?_count=20&_profile=https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_ULB_Condition_Care_Problem&_page=1&_firstId=1677761&_lastId=1677779"
+	}
+  ],
+  "entry": [
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Condition/196a615bf4d-f0f72b70-73d4-454f-bf75-f5acf634e9fc",
+	  "resource": {
+		"resourceType": "Condition",
+		"id": "196a615bf4d-f0f72b70-73d4-454f-bf75-f5acf634e9fc",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-05-06T14:52:45.261902Z",
+		  "profile": [
+			"https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_ULB_Condition_Care_Problem|1.0.0"
+		  ]
+		},
+		"category": [
+		  {
+			"coding": [
+			  {
+				"system": "http://snomed.info/sct",
+				"version": "http://snomed.info/sct/900000000000207008/version/20220331",
+				"code": "439401001:704326004=86644006",
+				"display": "Diagnosis (observable entity) : Precondition (attribute) = Nursing diagnosis (finding)"
+			  }
+			]
+		  }
+		],
+		"code": {
+		  "coding": [
+			{
+			  "system": "http://snomed.info/sct",
+			  "version": "http://snomed.info/sct/900000000000207008/version/20220331",
+			  "code": "289123006",
+			  "display": "Deep breathing (finding)"
+			}
+		  ]
+		},
+		"subject": {
+		  "reference": "Patient/pat_01_org_1"
+		},
+		"onsetDateTime": "2021-03-04T14:33:00+01:00"
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Condition/196a617891a-8ab2dce7-d9c7-4b73-8bc6-f19f635781e2",
+	  "resource": {
+		"resourceType": "Condition",
+		"id": "196a617891a-8ab2dce7-d9c7-4b73-8bc6-f19f635781e2",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-05-06T14:54:42.458152Z",
+		  "profile": [
+			"https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_ULB_Condition_Care_Problem|1.0.0"
+		  ]
+		},
+		"category": [
+		  {
+			"coding": [
+			  {
+				"system": "http://snomed.info/sct",
+				"version": "http://snomed.info/sct/900000000000207008/version/20220331",
+				"code": "439401001:704326004=86644006",
+				"display": "Diagnosis (observable entity) : Precondition (attribute) = Nursing diagnosis (finding)"
+			  }
+			]
+		  }
+		],
+		"code": {
+		  "coding": [
+			{
+			  "system": "http://snomed.info/sct",
+			  "version": "http://snomed.info/sct/900000000000207008/version/20220331",
+			  "code": "129859006",
+			  "display": "Impaired bed mobility (finding)"
+			}
+		  ]
+		},
+		"subject": {
+		  "reference": "Patient/pat_02_org_1"
+		},
+		"onsetDateTime": "2021-01-30T10:12:00+01:00"
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Condition/196a618b922-984ba7b9-e44b-47cf-aabb-41a4b21900db",
+	  "resource": {
+		"resourceType": "Condition",
+		"id": "196a618b922-984ba7b9-e44b-47cf-aabb-41a4b21900db",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-05-06T14:56:00.290392Z",
+		  "profile": [
+			"https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_ULB_Condition_Care_Problem|1.0.0"
+		  ]
+		},
+		"category": [
+		  {
+			"coding": [
+			  {
+				"system": "http://snomed.info/sct",
+				"version": "http://snomed.info/sct/900000000000207008/version/20220331",
+				"code": "439401001:704326004=86644006",
+				"display": "Diagnosis (observable entity) : Precondition (attribute) = Nursing diagnosis (finding)"
+			  }
+			]
+		  }
+		],
+		"code": {
+		  "coding": [
+			{
+			  "system": "http://snomed.info/sct",
+			  "version": "http://snomed.info/sct/900000000000207008/version/20220331",
+			  "code": "129893005",
+			  "display": "Respiratory alteration (finding)"
+			}
+		  ]
+		},
+		"subject": {
+		  "reference": "Patient/pat_03_org_1"
+		},
+		"onsetDateTime": "2021-02-01T08:37:00+01:00"
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Condition/196a61a2a4d-e61d4a37-1eb4-4719-8f35-3fe57af8de3b",
+	  "resource": {
+		"resourceType": "Condition",
+		"id": "196a61a2a4d-e61d4a37-1eb4-4719-8f35-3fe57af8de3b",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-05-06T14:57:34.79717Z",
+		  "profile": [
+			"https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_ULB_Condition_Care_Problem|1.0.0"
+		  ]
+		},
+		"category": [
+		  {
+			"coding": [
+			  {
+				"system": "http://snomed.info/sct",
+				"version": "http://snomed.info/sct/900000000000207008/version/20220331",
+				"code": "439401001:704326004=86644006",
+				"display": "Diagnosis (observable entity) : Precondition (attribute) = Nursing diagnosis (finding)"
+			  }
+			]
+		  }
+		],
+		"code": {
+		  "coding": [
+			{
+			  "system": "http://snomed.info/sct",
+			  "version": "http://snomed.info/sct/900000000000207008/version/20220331",
+			  "code": "161898004",
+			  "display": "Falls (finding))"
+			}
+		  ]
+		},
+		"subject": {
+		  "reference": "Patient/pat_04_org_1"
+		},
+		"onsetDateTime": "2021-02-01T09:12:00+01:00"
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Condition/196a61efc8b-f3ef8534-d9b3-4988-9eba-130f589c34b6",
+	  "resource": {
+		"resourceType": "Condition",
+		"id": "196a61efc8b-f3ef8534-d9b3-4988-9eba-130f589c34b6",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-05-06T15:02:50.763248Z",
+		  "profile": [
+			"https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_ULB_Condition_Care_Problem|1.0.0"
+		  ]
+		},
+		"category": [
+		  {
+			"coding": [
+			  {
+				"system": "http://snomed.info/sct",
+				"version": "http://snomed.info/sct/900000000000207008/version/20220331",
+				"code": "439401001:704326004=86644006",
+				"display": "Diagnosis (observable entity) : Precondition (attribute) = Nursing diagnosis (finding)"
+			  }
+			]
+		  }
+		],
+		"code": {
+		  "coding": [
+			{
+			  "system": "http://snomed.info/sct",
+			  "version": "http://snomed.info/sct/900000000000207008/version/20220331",
+			  "code": "161898004",
+			  "display": "Falls (finding))"
+			}
+		  ]
+		},
+		"subject": {
+		  "reference": "Patient/pat_05_org_1"
+		},
+		"onsetDateTime": "2021-02-03T09:12:00+01:00"
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Condition/196a61f88ac-c1a572a4-f874-44d7-9258-70b841df72a9",
+	  "resource": {
+		"resourceType": "Condition",
+		"id": "196a61f88ac-c1a572a4-f874-44d7-9258-70b841df72a9",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-05-06T15:03:26.636341Z",
+		  "profile": [
+			"https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_ULB_Condition_Care_Problem|1.0.0"
+		  ]
+		},
+		"category": [
+		  {
+			"coding": [
+			  {
+				"system": "http://snomed.info/sct",
+				"version": "http://snomed.info/sct/900000000000207008/version/20220331",
+				"code": "439401001:704326004=86644006",
+				"display": "Diagnosis (observable entity) : Precondition (attribute) = Nursing diagnosis (finding)"
+			  }
+			]
+		  }
+		],
+		"code": {
+		  "coding": [
+			{
+			  "system": "http://snomed.info/sct",
+			  "version": "http://snomed.info/sct/900000000000207008/version/20220331",
+			  "code": "18963009",
+			  "display": "Mood swings (finding)"
+			}
+		  ]
+		},
+		"subject": {
+		  "reference": "Patient/pat_06_org_1"
+		},
+		"onsetDateTime": "2021-01-28T18:12:00+01:00"
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Condition/196a61fe469-56786151-a9e3-4c49-bfeb-991ac3f51b0e",
+	  "resource": {
+		"resourceType": "Condition",
+		"id": "196a61fe469-56786151-a9e3-4c49-bfeb-991ac3f51b0e",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-05-06T15:03:50.121576Z",
+		  "profile": [
+			"https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_ULB_Condition_Care_Problem|1.0.0"
+		  ]
+		},
+		"category": [
+		  {
+			"coding": [
+			  {
+				"system": "http://snomed.info/sct",
+				"version": "http://snomed.info/sct/900000000000207008/version/20220331",
+				"code": "439401001:704326004=86644006",
+				"display": "Diagnosis (observable entity) : Precondition (attribute) = Nursing diagnosis (finding)"
+			  }
+			]
+		  }
+		],
+		"code": {
+		  "coding": [
+			{
+			  "system": "http://snomed.info/sct",
+			  "version": "http://snomed.info/sct/900000000000207008/version/20220331",
+			  "code": "277843001",
+			  "display": "Problem behavior (finding)"
+			}
+		  ]
+		},
+		"subject": {
+		  "reference": "Patient/pat_07_org_1"
+		},
+		"onsetDateTime": "2021-01-26T16:12:00+01:00"
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Condition/196a62023c1-7dbda4a5-c4dd-4934-b082-e9648c5faaba",
+	  "resource": {
+		"resourceType": "Condition",
+		"id": "196a62023c1-7dbda4a5-c4dd-4934-b082-e9648c5faaba",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-05-06T15:04:06.337564Z",
+		  "profile": [
+			"https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_ULB_Condition_Care_Problem|1.0.0"
+		  ]
+		},
+		"category": [
+		  {
+			"coding": [
+			  {
+				"system": "http://snomed.info/sct",
+				"version": "http://snomed.info/sct/900000000000207008/version/20220331",
+				"code": "439401001:704326004=86644006",
+				"display": "Diagnosis (observable entity) : Precondition (attribute) = Nursing diagnosis (finding)"
+			  }
+			]
+		  }
+		],
+		"code": {
+		  "coding": [
+			{
+			  "system": "http://snomed.info/sct",
+			  "version": "http://snomed.info/sct/900000000000207008/version/20220331",
+			  "code": "277843001",
+			  "display": "Problem behavior (finding)"
+			}
+		  ]
+		},
+		"subject": {
+		  "reference": "Patient/pat_08_org_1"
+		},
+		"onsetDateTime": "2021-01-21T16:12:00+01:00"
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Condition/196a62077c5-d07fc3d9-34a6-4d85-8302-526d97ceb9b1",
+	  "resource": {
+		"resourceType": "Condition",
+		"id": "196a62077c5-d07fc3d9-34a6-4d85-8302-526d97ceb9b1",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-05-06T15:04:27.845077Z",
+		  "profile": [
+			"https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_ULB_Condition_Care_Problem|1.0.0"
+		  ]
+		},
+		"category": [
+		  {
+			"coding": [
+			  {
+				"system": "http://snomed.info/sct",
+				"version": "http://snomed.info/sct/900000000000207008/version/20220331",
+				"code": "439401001:704326004=86644006",
+				"display": "Diagnosis (observable entity) : Precondition (attribute) = Nursing diagnosis (finding)"
+			  }
+			]
+		  }
+		],
+		"code": {
+		  "coding": [
+			{
+			  "system": "http://snomed.info/sct",
+			  "version": "http://snomed.info/sct/900000000000207008/version/20220331",
+			  "code": "307077003",
+			  "display": "Feeling hopeless (finding)"
+			}
+		  ]
+		},
+		"subject": {
+		  "reference": "Patient/pat_09_org_1"
+		},
+		"onsetDateTime": "2021-01-15T16:12:00+01:00"
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Condition/196a620dce4-9017f84f-6d2c-4337-82ad-ca61611b58a7",
+	  "resource": {
+		"resourceType": "Condition",
+		"id": "196a620dce4-9017f84f-6d2c-4337-82ad-ca61611b58a7",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-05-06T15:04:53.732283Z",
+		  "profile": [
+			"https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_ULB_Condition_Care_Problem|1.0.0"
+		  ]
+		},
+		"category": [
+		  {
+			"coding": [
+			  {
+				"system": "http://snomed.info/sct",
+				"version": "http://snomed.info/sct/900000000000207008/version/20220331",
+				"code": "439401001:704326004=86644006",
+				"display": "Diagnosis (observable entity) : Precondition (attribute) = Nursing diagnosis (finding)"
+			  }
+			]
+		  }
+		],
+		"code": {
+		  "coding": [
+			{
+			  "system": "http://snomed.info/sct",
+			  "version": "http://snomed.info/sct/900000000000207008/version/20220331",
+			  "code": "404640003",
+			  "display": "Dizziness (finding)"
+			}
+		  ]
+		},
+		"subject": {
+		  "reference": "Patient/pat_10_org_1"
+		},
+		"onsetDateTime": "2021-01-18T15:12:00+01:00"
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	}
+  ]
+}

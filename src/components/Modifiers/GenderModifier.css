@@ -1,0 +1,29 @@
+
+#gender-checkboxes{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#gender-checkboxes li {
+    margin-top: 2px;
+}
+
+#gender-checkboxes label {
+    margin-left: 20px;
+    font-size: 1rem;
+}
+#gender-checkboxes ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    float: left;
+}
+
+#gender-checkboxes input[type="checkbox"] {
+    accent-color: var(--purple);
+}

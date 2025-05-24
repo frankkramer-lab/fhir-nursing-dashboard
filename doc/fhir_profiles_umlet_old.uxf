@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>6</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>198</x>
+      <y>366</y>
+      <w>246</w>
+      <h>78</h>
+    </coordinates>
+    <panel_attributes>ISiPPflegeepisode
+(Encounter)
+
+--
+serviceProvider
+subject
+type: ["einrichtungskontakt", "versorgungsstellenkontakt"]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>150</x>
+      <y>300</y>
+      <w>264</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>saved in:
+- store 'stationEncounters' (type=versorgungsstellenkontakt)
+- store 'encounters' (type=einrichtungskontakt)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>234</x>
+      <y>336</y>
+      <w>48</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;10.0;60.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>162</x>
+      <y>558</y>
+      <w>252</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>KBV_PR_MIO_ULB_Organization
+(Organization)
+
+--
+id</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>72</x>
+      <y>528</y>
+      <w>144</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>Not yet saved by application.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>144</x>
+      <y>540</y>
+      <w>42</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;20.0;50.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>252</x>
+      <y>438</y>
+      <w>228</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..*
+m2=0..1
+r1=serviceProvider
+r2=id
+organization (facility) responsible for this encounter
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;200.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>870</x>
+      <y>558</y>
+      <w>252</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>Patient
+(ISiPPflegeempfaenger)
+--
+id
+managingOrganization</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>408</x>
+      <y>570</y>
+      <w>474</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=
+m2=
+r1=id
+r2=managingOrganization
+Organization that is the custodian of the patient record</panel_attributes>
+    <additional_attributes>10.0;20.0;770.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>876</x>
+      <y>444</y>
+      <w>78</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>saved in:
+store 'patients'</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>876</x>
+      <y>480</y>
+      <w>48</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>60.0;10.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>870</x>
+      <y>714</y>
+      <w>252</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>Condition
+--
+subject</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>966</x>
+      <y>618</y>
+      <w>48</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=
+m2=
+r1=id
+r2=subject
+?
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;160.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1176</x>
+      <y>672</y>
+      <w>78</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>saved in:
+store 'conditions'</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1116</x>
+      <y>708</y>
+      <w>102</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>150.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>522</x>
+      <y>822</y>
+      <w>252</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>Procedure
+--
+subject</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>948</x>
+      <y>378</y>
+      <w>252</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>KBV_PR_MIO_ULB_Observation_Respiratory_Support
+(Observation)
+--
+subject</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>636</x>
+      <y>618</y>
+      <w>246</w>
+      <h>216</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=
+m2=
+r1=id
+r2=subject
+?
+</panel_attributes>
+    <additional_attributes>390.0;10.0;10.0;340.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>594</x>
+      <y>906</y>
+      <w>84</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>saved in:
+store 'procedures'</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>624</x>
+      <y>858</y>
+      <w>30</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>30.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>996</x>
+      <y>414</y>
+      <w>48</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=
+m2=
+r1=id
+r2=subject
+?
+</panel_attributes>
+    <additional_attributes>10.0;240.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1068</x>
+      <y>300</y>
+      <w>90</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>saved in:
+store 'observations'</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1080</x>
+      <y>330</y>
+      <w>36</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>40.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>438</x>
+      <y>396</y>
+      <w>444</w>
+      <h>186</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=
+m2=
+r1=id
+r2=subject
+?
+</panel_attributes>
+    <additional_attributes>720.0;290.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>162</x>
+      <y>714</y>
+      <w>252</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>Location
+
+--
+id
+managingOrganization</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>0</x>
+      <y>678</y>
+      <w>162</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>Not yet saved by application.
+Saves info about wards ("Stationen").</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>108</x>
+      <y>696</y>
+      <w>66</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;10.0;90.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>282</x>
+      <y>606</y>
+      <w>108</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=
+m2=
+r1=id
+r2=managingOrganization
+?
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;180.0</additional_attributes>
+  </element>
+</diagram>

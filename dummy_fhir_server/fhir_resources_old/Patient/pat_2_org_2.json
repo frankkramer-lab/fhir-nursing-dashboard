@@ -1,0 +1,50 @@
+{
+  "resourceType": "Bundle",
+  "id": "",
+  "total": 1,
+  "entry": [
+	{
+	  "fullUrl": "",
+	  "resource": {
+		"resourceType": "Patient",
+		"id": "pat_2",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2024-03-27T16:22:24.010455Z",
+		  "profile": [
+			"https://fhir.care-regio.de/StructureDefinition/CareRegioIG/StructureDefinition/pflegeempfaenger"
+		  ]
+		},
+		"extension": [
+		  {
+			"extension": [
+			  {
+				"url": "Altersgruppe",
+				"valueCode": "80-89"
+			  },
+			  {
+				"url": "FeststelldatumAltersgruppe",
+				"valueDate": "2023-05-14"
+			  }
+			],
+			"url": "https://fhir.care-regio.de/StructureDefinition/CareRegioIG/StructureDefinition/altergruppe-empfaenger"
+		  }
+		],
+		"identifier": [
+		  {
+			"system": "www.fhir.care-regio.de/identifier",
+			"value": "v81ZDG9RFgQ"
+		  }
+		],
+		"gender": "female",
+		"managingOrganization": {
+		  "reference": "Organization/org_2"
+		}
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	}
+  ]
+}

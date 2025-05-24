@@ -1,0 +1,339 @@
+{
+  "resourceType": "Bundle",
+  "id": "75addd4d-190b-4bc5-834e-30803d621b54",
+  "type": "searchset",
+  "total": 10,
+  "entry": [
+    {
+      "fullUrl": "http://localhost:8080/fhir-server/api/v4/Condition/1958b2af6a3-636f084c-afd0-40e4-bd90-07f87ed3922c",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "1958b2af6a3-636f084c-afd0-40e4-bd90-07f87ed3922c",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2025-03-12T16:23:23.555394Z",
+          "profile": [
+            "https://gematik.de/fhir/isik/StructureDefinition/ISiKDiagnose"
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
+              "code": "E87.3",
+              "display": "Alkalose"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/pat_01_org_2"
+        },
+        "recordedDate": "2021-11-06T16:59:00+01:00"
+      },
+      "search": {
+        "mode": "match",
+        "score": 1
+      }
+    },
+    {
+      "fullUrl": "http://localhost:8080/fhir-server/api/v4/Condition/1958b2af6a3-b7774fcb-dc1b-4495-8b78-bcbdcd321369",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "1958b2af6a3-b7774fcb-dc1b-4495-8b78-bcbdcd321369",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2025-03-12T16:23:23.555442Z",
+          "profile": [
+            "https://gematik.de/fhir/isik/StructureDefinition/ISiKDiagnose"
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
+              "code": "U51.20",
+              "display": "Schwere kognitive Funktionseinschränkung: Erweiterter Barthel-Index: 0-15 Punkte"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/pat_02_org_2"
+        },
+        "recordedDate": "2021-11-06T16:59:00+01:00"
+      },
+      "search": {
+        "mode": "match",
+        "score": 1
+      }
+    },
+    {
+      "fullUrl": "http://localhost:8080/fhir-server/api/v4/Condition/1958b2af6a3-6eaa639c-524a-4cb7-a3af-1bc0cef0595f",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "1958b2af6a3-6eaa639c-524a-4cb7-a3af-1bc0cef0595f",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2025-03-12T16:23:23.555457Z",
+          "profile": [
+            "https://gematik.de/fhir/isik/StructureDefinition/ISiKDiagnose"
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
+              "code": "I10.01",
+              "display": "Benigne essentielle Hypertonie: Mit Angabe einer hypertensiven Krise"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/pat_03_org_2"
+        },
+        "recordedDate": "2021-11-06T16:59:00+01:00"
+      },
+      "search": {
+        "mode": "match",
+        "score": 1
+      }
+    },
+    {
+      "fullUrl": "http://localhost:8080/fhir-server/api/v4/Condition/1958b2af6a3-52f6b84e-04a7-4f1e-866a-f6df0c1131d7",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "1958b2af6a3-52f6b84e-04a7-4f1e-866a-f6df0c1131d7",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2025-03-12T16:23:23.55547Z",
+          "profile": [
+            "https://gematik.de/fhir/isik/StructureDefinition/ISiKDiagnose"
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "extension": [
+                {
+                  "url": "http://fhir.de/StructureDefinition/seitenlokalisation",
+                  "valueCoding": {
+                    "system": "https://fhir.kbv.de/CodeSystem/KBV_CS_SFHIR_ICD_SEITENLOKALISATION",
+                    "code": "L",
+                    "display": "links"
+                  }
+                }
+              ],
+              "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
+              "code": "C78.0",
+              "display": "Sekundäre bösartige Neubildung der Lunge"
+            }
+          ],
+          "text": "Haupt-RMnKMhgTd00"
+        },
+        "subject": {
+          "reference": "Patient/pat_04_org_2"
+        },
+        "recordedDate": "2021-11-02T13:59:00+01:00"
+      },
+      "search": {
+        "mode": "match",
+        "score": 1
+      }
+    },
+    {
+      "fullUrl": "http://localhost:8080/fhir-server/api/v4/Condition/1958b2af6a3-d49c32a4-d8e4-4615-a3d7-1362ef310e25",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "1958b2af6a3-d49c32a4-d8e4-4615-a3d7-1362ef310e25",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2025-03-12T16:23:23.555488Z",
+          "profile": [
+            "https://gematik.de/fhir/isik/StructureDefinition/ISiKDiagnose"
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
+              "code": "I10.00",
+              "display": "Benigne essentielle Hypertonie: Ohne Angabe einer hypertensiven Krise"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/pat_05_org_2"
+        },
+        "recordedDate": "2021-11-02T13:59:00+01:00"
+      },
+      "search": {
+        "mode": "match",
+        "score": 1
+      }
+    },
+    {
+      "fullUrl": "http://localhost:8080/fhir-server/api/v4/Condition/1958b2af6a3-5472f5c1-f394-4533-ad06-140f631b4735",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "1958b2af6a3-5472f5c1-f394-4533-ad06-140f631b4735",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2025-03-12T16:23:23.555499Z",
+          "profile": [
+            "https://gematik.de/fhir/isik/StructureDefinition/ISiKDiagnose"
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
+              "code": "Z92.4",
+              "display": "Größerer operativer Eingriff in der Eigenanamnese, anderenorts nicht klassifiziert"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/pat_06_org_2"
+        },
+        "recordedDate": "2021-11-02T13:59:00+01:00"
+      },
+      "search": {
+        "mode": "match",
+        "score": 1
+      }
+    },
+    {
+      "fullUrl": "http://localhost:8080/fhir-server/api/v4/Condition/1958b2af6a3-bb91eb48-d8e5-435c-aed7-33072ae6fe5d",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "1958b2af6a3-bb91eb48-d8e5-435c-aed7-33072ae6fe5d",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2025-03-12T16:23:23.555508Z",
+          "profile": [
+            "https://gematik.de/fhir/isik/StructureDefinition/ISiKDiagnose"
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
+              "code": "Z92.6",
+              "display": "Zytostatische Chemotherapie wegen bösartiger Neubildung in der Eigenanamnese"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/pat_07_org_2"
+        },
+        "recordedDate": "2021-11-02T13:59:00+01:00"
+      },
+      "search": {
+        "mode": "match",
+        "score": 1
+      }
+    },
+    {
+      "fullUrl": "http://localhost:8080/fhir-server/api/v4/Condition/1958b2af6a3-90751d67-a0d5-4129-a76b-30535eedd6f1",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "1958b2af6a3-90751d67-a0d5-4129-a76b-30535eedd6f1",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2025-03-12T16:23:23.555518Z",
+          "profile": [
+            "https://gematik.de/fhir/isik/StructureDefinition/ISiKDiagnose"
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
+              "code": "Z92.3",
+              "display": "Bestrahlung in der Eigenanamnese"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/pat_08_org_2"
+        },
+        "recordedDate": "2021-11-02T13:59:00+01:00"
+      },
+      "search": {
+        "mode": "match",
+        "score": 1
+      }
+    },
+    {
+      "fullUrl": "http://localhost:8080/fhir-server/api/v4/Condition/1958b2af6a3-5144fe75-9a06-446e-bd66-b160cac6a449",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "1958b2af6a3-5144fe75-9a06-446e-bd66-b160cac6a449",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2025-03-12T16:23:23.555527Z",
+          "profile": [
+            "https://gematik.de/fhir/isik/StructureDefinition/ISiKDiagnose"
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "extension": [
+                {
+                  "url": "http://fhir.de/StructureDefinition/seitenlokalisation",
+                  "valueCoding": {
+                    "system": "https://fhir.kbv.de/CodeSystem/KBV_CS_SFHIR_ICD_SEITENLOKALISATION",
+                    "code": "L",
+                    "display": "links"
+                  }
+                }
+              ],
+              "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
+              "code": "J93.8",
+              "display": "Sonstiger Pneumothorax"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/pat_09_org_2"
+        },
+        "recordedDate": "2021-11-02T13:59:00+01:00"
+      },
+      "search": {
+        "mode": "match",
+        "score": 1
+      }
+    },
+    {
+      "fullUrl": "http://localhost:8080/fhir-server/api/v4/Condition/1958b2af6a3-50ac67af-c76f-43a0-865d-989612e9409c",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "1958b2af6a3-50ac67af-c76f-43a0-865d-989612e9409c",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2025-03-12T16:23:23.555537Z",
+          "profile": [
+            "https://gematik.de/fhir/isik/StructureDefinition/ISiKDiagnose"
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
+              "code": "C20",
+              "display": "Bösartige Neubildung des Rektums"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/pat_10_org_2"
+        },
+        "recordedDate": "2021-11-02T13:59:00+01:00"
+      },
+      "search": {
+        "mode": "match",
+        "score": 1
+      }
+    }
+  ]
+}

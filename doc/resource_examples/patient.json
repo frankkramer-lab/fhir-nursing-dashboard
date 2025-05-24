@@ -1,0 +1,43 @@
+{
+  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Patient/18e80b84609-c13a989d-cd48-4b5f-a853-3a39cf2f68ce",
+  "resource": {
+    "resourceType": "Patient",
+    "id": "18e80b84609-c13a989d-cd48-4b5f-a853-3a39cf2f68ce",
+    "meta": {
+      "versionId": "1",
+      "lastUpdated": "2024-03-27T16:22:24.009777Z",
+      "profile": [
+        "https://fhir.care-regio.de/StructureDefinition/CareRegioIG/StructureDefinition/pflegeempfaenger"
+      ]
+    },
+    "extension": [
+      {
+        "extension": [
+          {
+            "url": "Altersgruppe",
+            "valueCode": "40-49"
+          },
+          {
+            "url": "FeststelldatumAltersgruppe",
+            "valueDate": "2023-05-14"
+          }
+        ],
+        "url": "https://fhir.care-regio.de/StructureDefinition/CareRegioIG/StructureDefinition/altergruppe-empfaenger"
+      }
+    ],
+    "identifier": [
+      {
+        "system": "www.fhir.care-regio.de/identifier",
+        "value": "N5cDhjVP2DY"
+      }
+    ],
+    "gender": "female",
+    "managingOrganization": {
+      "reference": "Organization/18e80a43c52-4a8da8b6-8a40-4631-ade6-182c6bdc041f"
+    }
+  },
+  "search": {
+    "mode": "match",
+    "score": 1
+  }
+}

@@ -1,0 +1,30 @@
+
+.pie {
+    width: 95%;
+    height: 95%;
+}
+
+
+.bar {
+    height: 90%;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+}
+
+.number-display{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.number-display h2{
+    width: 90%;
+}
+
+.number-display h1:hover {
+    color: #042b52;
+    cursor: pointer;
+}
+

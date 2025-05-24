@@ -1,0 +1,364 @@
+{
+  "resourceType": "Bundle",
+  "id": "41aebfa6-12df-452c-9cd5-585df7671a15",
+  "type": "searchset",
+  "total": 10,
+  "link": [
+	{
+	  "relation": "self",
+	  "url": "http://localhost:8080/fhir-server/api/v4/Procedure?_count=10&_profile=https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_ULB_Procedure_Nursing_Measures&_page=1&_firstId=1677741&_lastId=1677759"
+	}
+  ],
+  "entry": [
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Procedure/195943a5eed-fdcd654b-957c-40b3-b658-d6b74dfe8ace",
+	  "resource": {
+		"resourceType": "Procedure",
+		"id": "195943a5eed-fdcd654b-957c-40b3-b658-d6b74dfe8ace",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-03-14T10:36:48.237256Z",
+		  "profile": [
+			"https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_ULB_Procedure_Nursing_Measures|1.0.0"
+		  ]
+		},
+		"status": "completed",
+		"code": {
+		  "coding": [
+			{
+			  "system": "http://snomed.info/sct",
+			  "version": "http://snomed.info/sct/900000000000207008/version/20220331",
+			  "code": "275829005",
+			  "display": "Reverse isolation (procedure)"
+			}
+		  ]
+		},
+		"subject": {
+		  "reference": "Patient/pat_01_org_2"
+		},
+		"performedPeriod": {
+		  "start": "2022-10-25T13:47:00+01:00"
+		}
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Procedure/195943b4e19-e8ffbf37-25b3-4dc1-9804-5d19ff15d16f",
+	  "resource": {
+		"resourceType": "Procedure",
+		"id": "195943b4e19-e8ffbf37-25b3-4dc1-9804-5d19ff15d16f",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-03-14T10:37:49.465604Z",
+		  "profile": [
+			"https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_ULB_Procedure_Nursing_Measures|1.0.0"
+		  ]
+		},
+		"status": "completed",
+		"code": {
+		  "coding": [
+			{
+			  "system": "http://snomed.info/sct",
+			  "version": "http://snomed.info/sct/900000000000207008/version/20220331",
+			  "code": "386296001",
+			  "display": "Fall prevention (procedure)"
+			}
+		  ]
+		},
+		"subject": {
+		  "reference": "Patient/pat_02_org_2"
+		},
+		"performedPeriod": {
+		  "start": "2022-10-25T13:47:00+01:00"
+		}
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Procedure/195943c37e5-d9c07849-f061-4535-bd20-9f465da7a4a4",
+	  "resource": {
+		"resourceType": "Procedure",
+		"id": "195943c37e5-d9c07849-f061-4535-bd20-9f465da7a4a4",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-03-14T10:38:49.317542Z",
+		  "profile": [
+			"https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_ULB_Procedure_Nursing_Measures|1.0.0"
+		  ]
+		},
+		"status": "completed",
+		"code": {
+		  "coding": [
+			{
+			  "system": "http://snomed.info/sct",
+			  "version": "http://snomed.info/sct/900000000000207008/version/20220331",
+			  "code": "386402007",
+			  "display": "Prosthesis care (regime/therapy)"
+			}
+		  ]
+		},
+		"subject": {
+		  "reference": "Patient/pat_03_org_2"
+		},
+		"performedPeriod": {
+		  "start": "2022-10-25T13:47:00+01:00"
+		}
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Procedure/195943c4ff3-91048124-ed69-49b7-8543-ec188d7d312b",
+	  "resource": {
+		"resourceType": "Procedure",
+		"id": "195943c4ff3-91048124-ed69-49b7-8543-ec188d7d312b",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-03-14T10:38:55.475844Z",
+		  "profile": [
+			"https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_ULB_Procedure_Nursing_Measures|1.0.0"
+		  ]
+		},
+		"status": "completed",
+		"code": {
+		  "coding": [
+			{
+			  "system": "http://snomed.info/sct",
+			  "version": "http://snomed.info/sct/900000000000207008/version/20220331",
+			  "code": "386402007",
+			  "display": "Prosthesis care (regime/therapy)"
+			}
+		  ]
+		},
+		"subject": {
+		  "reference": "Patient/pat_04_org_2"
+		},
+		"performedPeriod": {
+		  "start": "2022-10-25T13:47:00+01:00"
+		}
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Procedure/195943c5d28-09bf9f17-ec2d-4197-a312-239225136666",
+	  "resource": {
+		"resourceType": "Procedure",
+		"id": "195943c5d28-09bf9f17-ec2d-4197-a312-239225136666",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-03-14T10:38:58.856829Z",
+		  "profile": [
+			"https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_ULB_Procedure_Nursing_Measures|1.0.0"
+		  ]
+		},
+		"status": "completed",
+		"code": {
+		  "coding": [
+			{
+			  "system": "http://snomed.info/sct",
+			  "version": "http://snomed.info/sct/900000000000207008/version/20220331",
+			  "code": "386402007",
+			  "display": "Prosthesis care (regime/therapy)"
+			}
+		  ]
+		},
+		"subject": {
+		  "reference": "Patient/pat_05_org_2"
+		},
+		"performedPeriod": {
+		  "start": "2022-10-25T13:47:00+01:00"
+		}
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Procedure/195943c72a6-b6dd5b98-4e16-40e3-ba3b-47704988a669",
+	  "resource": {
+		"resourceType": "Procedure",
+		"id": "195943c72a6-b6dd5b98-4e16-40e3-ba3b-47704988a669",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-03-14T10:39:04.358812Z",
+		  "profile": [
+			"https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_ULB_Procedure_Nursing_Measures|1.0.0"
+		  ]
+		},
+		"status": "completed",
+		"code": {
+		  "coding": [
+			{
+			  "system": "http://snomed.info/sct",
+			  "version": "http://snomed.info/sct/900000000000207008/version/20220331",
+			  "code": "386402007",
+			  "display": "Prosthesis care (regime/therapy)"
+			}
+		  ]
+		},
+		"subject": {
+		  "reference": "Patient/pat_06_org_2"
+		},
+		"performedPeriod": {
+		  "start": "2022-10-25T13:47:00+01:00"
+		}
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Procedure/195943e3c0a-7ef02a95-1ddc-47c0-bb3c-f82f19a6cbc3",
+	  "resource": {
+		"resourceType": "Procedure",
+		"id": "195943e3c0a-7ef02a95-1ddc-47c0-bb3c-f82f19a6cbc3",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-03-14T10:41:01.450875Z",
+		  "profile": [
+			"https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_ULB_Procedure_Nursing_Measures|1.0.0"
+		  ]
+		},
+		"status": "completed",
+		"code": {
+		  "coding": [
+			{
+			  "system": "http://snomed.info/sct",
+			  "version": "http://snomed.info/sct/900000000000207008/version/20220331",
+			  "code": "410171007",
+			  "display": "Nutrition care education (procedure)"
+			}
+		  ]
+		},
+		"subject": {
+		  "reference": "Patient/pat_07_org_2"
+		},
+		"performedPeriod": {
+		  "start": "2022-10-25T13:47:00+01:00"
+		}
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Procedure/195943e61e4-8e90cac6-9d61-44d8-85b8-d8c76ec012ae",
+	  "resource": {
+		"resourceType": "Procedure",
+		"id": "195943e61e4-8e90cac6-9d61-44d8-85b8-d8c76ec012ae",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-03-14T10:41:11.140968Z",
+		  "profile": [
+			"https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_ULB_Procedure_Nursing_Measures|1.0.0"
+		  ]
+		},
+		"status": "completed",
+		"code": {
+		  "coding": [
+			{
+			  "system": "http://snomed.info/sct",
+			  "version": "http://snomed.info/sct/900000000000207008/version/20220331",
+			  "code": "410171007",
+			  "display": "Nutrition care education (procedure)"
+			}
+		  ]
+		},
+		"subject": {
+		  "reference": "Patient/pat_08_org_2"
+		},
+		"performedPeriod": {
+		  "start": "2022-10-25T13:47:00+01:00"
+		}
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Procedure/195943e9706-4cecbcf9-2514-491b-b773-29cd730593d7",
+	  "resource": {
+		"resourceType": "Procedure",
+		"id": "195943e9706-4cecbcf9-2514-491b-b773-29cd730593d7",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-03-14T10:41:24.742279Z",
+		  "profile": [
+			"https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_ULB_Procedure_Nursing_Measures|1.0.0"
+		  ]
+		},
+		"status": "completed",
+		"code": {
+		  "coding": [
+			{
+			  "system": "http://snomed.info/sct",
+			  "version": "http://snomed.info/sct/900000000000207008/version/20220331",
+			  "code": "410168004",
+			  "display": "Radiation therapy care education (procedure)"
+			}
+		  ]
+		},
+		"subject": {
+		  "reference": "Patient/pat_09_org_2"
+		},
+		"performedPeriod": {
+		  "start": "2022-10-25T13:47:00+01:00"
+		}
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	},
+	{
+	  "fullUrl": "http://localhost:8080/fhir-server/api/v4/Procedure/195943f223a-cf8b8049-c3b9-4a69-91e8-9867648c5560",
+	  "resource": {
+		"resourceType": "Procedure",
+		"id": "195943f223a-cf8b8049-c3b9-4a69-91e8-9867648c5560",
+		"meta": {
+		  "versionId": "1",
+		  "lastUpdated": "2025-03-14T10:42:00.378997Z",
+		  "profile": [
+			"https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_ULB_Procedure_Nursing_Measures|1.0.0"
+		  ]
+		},
+		"status": "completed",
+		"code": {
+		  "coding": [
+			{
+			  "system": "http://snomed.info/sct",
+			  "version": "http://snomed.info/sct/900000000000207008/version/20220331",
+			  "code": "410244002",
+			  "display": "Skin care assessment (procedure)"
+			}
+		  ]
+		},
+		"subject": {
+		  "reference": "Patient/pat_10_org_2"
+		},
+		"performedPeriod": {
+		  "start": "2022-10-25T13:47:00+01:00"
+		}
+	  },
+	  "search": {
+		"mode": "match",
+		"score": 1
+	  }
+	}
+  ]
+}

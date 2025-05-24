@@ -1,0 +1,74 @@
+:root{
+    /* Base Colors */
+    /*--blue: #6F6BF8;*/
+    --orange: #DEAA00;
+    /*--purple: #1E1957;*/
+    --purple: #026789;
+    --white: #FFFFFF;
+    /*--main-background: #F8F9FB;*/
+    --main-background: #f5fbff;
+    /*--light-blue: #F2F2FD;*/
+    --light-blue: #dfeff3;
+
+    --settings-background: white;
+
+    /* Shadow Colors */
+    /*--blue-shadow: 111, 107, 248;*/
+    --blue-shadow: 222, 170, 0;
+    /*--light-blue-shadow: 239, 239, 251;*/
+    --light-blue-shadow: 223, 239, 243;
+    /*--purple-shadow: 30, 25, 87;*/
+    --purple-shadow: 2, 103, 137;
+}
+
+.body{
+    margin: 0;
+    padding: 0;
+}
+
+.App {
+    padding: 2rem 2rem;
+    height: calc(100vh - 4rem);
+    color: var(--purple);
+    background: var(--main-background);
+    display: grid;
+    overflow: hidden;
+    grid-template-columns: 10rem auto 20rem;
+    justify-items: center;
+    grid-template-rows: 100vh;
+}
+
+
+/* SCROLLBAR */
+
+/* Breite des Scrollbalkens */
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+/* Hintergrundfarbe des Scrollbalkens */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Farbe des Scrollbalken-Griffes */
+::-webkit-scrollbar-thumb {
+    background: var(--orange);
+    border-radius: 5px;
+}
+
+/* Bei Hovern über den Scrollbalken */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--purple);
+}
+
+/* Breite des Scrollbalkens in Firefox */
+/* auto ist die Standardbreite, thin und none sind mögliche Werte */
+* {
+    scrollbar-width: thin;
+}
+
+/* Farbe des Scrollbalkens in Firefox */
+* {
+    scrollbar-color: var(--purple) var(--white); /* Scrollbalkenfarbe und Hintergrundfarbe */
+}

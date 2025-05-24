@@ -1,0 +1,45 @@
+.charts {
+    width: min(1000px, 100%);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-gap: 2rem;
+    margin-left: 2rem;
+    margin-bottom: 4rem;
+}
+
+.scroll-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-right: 20px;
+    margin-bottom: 70px;
+    margin-top: 20px;
+    align-items: center;
+    overflow: auto;
+}
+
+
+.stats-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    background: var(--main-background);
+    color: var(--purple);
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    gap: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+}
+
+

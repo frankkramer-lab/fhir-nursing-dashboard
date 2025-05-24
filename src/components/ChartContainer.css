@@ -1,0 +1,48 @@
+.box {
+    position: relative;
+    background: var(--white);
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(var(--light-blue-shadow), 1);
+    padding: 20px;
+    width: auto;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.active{
+    border: var(--orange) solid 2px;
+}
+
+.titleHover{
+    position: absolute;
+    right: 20px;
+    bottom: 0;
+    font-size: 0.8rem;
+}
+
+.titleHover:hover{
+    cursor: default;
+    color: var(--white);
+}
+
+.titleOverlay{
+    display: flex;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    top: 0;
+    color: var(--white);
+    background: rgba(var(--blue-shadow), 0.7);
+    border-radius: 13px;
+    font-size: 35px;
+    font-weight: 500;
+    transition: all 300ms ease;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+

@@ -1,0 +1,1828 @@
+{
+    "resourceType": "Bundle",
+    "id": "e6891719-735e-47de-877f-c8f1d6c9a0e8",
+    "type": "searchset",
+    "total": 10,
+    "link": [
+        {
+            "relation": "self",
+            "url": "http://localhost:8080/fhir-server/api/v4/Encounter?_count=10&_profile=https://gematik.de/fhir/isip/v1/Basismodul/StructureDefinition/ISiPPflegeepisode&_page=1&_firstId=1615108&_lastId=1615144"
+        }
+    ],
+    "entry": [
+        {
+            "fullUrl": "http://localhost:8080/fhir-server/api/v4/Encounter/1958f12dbac-7f6c9fad-4ddc-4939-9103-327c9c8f5fdc",
+            "resource": {
+                "resourceType": "Encounter",
+                "id": "1958f12dbac-7f6c9fad-4ddc-4939-9103-327c9c8f5fdc",
+                "meta": {
+                    "versionId": "1",
+                    "lastUpdated": "2025-03-13T10:35:32.652279Z",
+                    "profile": [
+                        "https://gematik.de/fhir/isip/v1/Basismodul/StructureDefinition/ISiPPflegeepisode"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "type": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                                    "code": "VN"
+                                }
+                            ]
+                        },
+                        "system": "UKA:Fallnummern",
+                        "value": "Z-vZ6mk7878"
+                    }
+                ],
+                "status": "finished",
+                "class": {
+                    "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+                    "code": "IMP",
+                    "display": "inpatient encounter"
+                },
+                "type": [
+                    {
+                        "coding": [
+                            {
+                                "system": "http://fhir.de/CodeSystem/Kontaktebene",
+                                "code": "abteilungskontakt",
+                                "display": "Abteilungskontakt"
+                            },
+                            {
+                                "system": "https://gematik.de/fhir/isip/v1/Basismodul/CodeSystem/EncounterPflegeArten",
+                                "code": "intensivpflege",
+                                "display": "Intensivpflege"
+                            }
+                        ]
+                    }
+                ],
+                "subject": {
+                    "reference": "Patient/pat_01_org_1"
+                },
+                "period": {
+                    "start": "2022-10-24T13:15:00+01:00",
+                    "end": "2022-10-25T10:52:00+01:00"
+                },
+                "diagnosis": [
+                    {
+                        "condition": {
+                            "reference": "Condition/1958b2ede48-c5cbdf99-4239-4c18-ae63-94e0d6a7f0c0"
+                        },
+                        "use": {
+                            "coding": [
+                                {
+                                    "system": "http://fhir.de/CodeSystem/KontaktDiagnoseProzedur",
+                                    "code": "referral-diagnosis",
+                                    "display": "Einweisungs-/Überweisungsdiagnose"
+                                },
+                                {
+                                    "system": "http://fhir.de/CodeSystem/KontaktDiagnoseProzedur",
+                                    "code": "department-main-diagnosis",
+                                    "display": "Abteilung Hauptdiagnose"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "location": [
+                    {
+                        "location": {
+                            "reference": "Location/station_03_org_1",
+                            "identifier": {
+                                "system": "UKA:Station",
+                                "value": "IZ21"
+                            },
+                            "display": "IZ21"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "wd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-24T13:15:00+01:00",
+                            "end": "2022-10-25T10:52:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b26780-8508ca9e-e5a3-4388-9928-a0eb0d6721b2",
+                            "identifier": {
+                                "system": "UKA:Raum",
+                                "value": "IZ21_2/10/23"
+                            },
+                            "display": "IZ21_2/10/23"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "ro"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-24T13:15:00+01:00",
+                            "end": "2022-10-25T10:48:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b2677f-ed8eb8f8-c8e3-449c-a4f2-24b16ae4250a",
+                            "identifier": {
+                                "system": "UKA:Raum",
+                                "value": "IZ21_10.ICU_TRANSFER"
+                            },
+                            "display": "IZ21_10.ICU_TRANSFER"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "ro"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-25T10:48:00+01:00",
+                            "end": "2022-10-25T10:52:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b26780-dc875d7d-6730-497c-848b-735ee7a427db",
+                            "identifier": {
+                                "system": "UKA:Bett",
+                                "value": "IZ21_2/10/23_F.10.02.3623"
+                            },
+                            "display": "IZ21_2/10/23_F.10.02.3623"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "bd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-24T13:15:00+01:00",
+                            "end": "2022-10-25T10:48:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b2677f-8d427856-69aa-498c-ae23-6571c9bdff5c",
+                            "identifier": {
+                                "system": "UKA:Bett",
+                                "value": "IZ21_10.ICU_TRANSFER_Z2.ICU_TRANSFER"
+                            },
+                            "display": "IZ21_10.ICU_TRANSFER_Z2.ICU_TRANSFER"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "bd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-25T10:48:00+01:00",
+                            "end": "2022-10-25T10:52:00+01:00"
+                        }
+                    }
+                ],
+                "serviceProvider": {
+                    "reference": "Organization/fa_05_org_1",
+                    "identifier": {
+                        "system": "https://www.uk-augsburg.de/einrichtungen/ueberblick",
+                        "value": "AIN"
+                    }
+                },
+                "partOf": {
+                    "reference": "org_enc_01_org_1"
+                }
+            },
+            "search": {
+                "mode": "match",
+                "score": 1
+            }
+        },
+        {
+            "fullUrl": "http://localhost:8080/fhir-server/api/v4/Encounter/1958f12dbbb-00ec951a-09e7-4484-85c5-df85a96c3026",
+            "resource": {
+                "resourceType": "Encounter",
+                "id": "1958f12dbbb-00ec951a-09e7-4484-85c5-df85a96c3026",
+                "meta": {
+                    "versionId": "1",
+                    "lastUpdated": "2025-03-13T10:35:32.667945Z",
+                    "profile": [
+                        "https://gematik.de/fhir/isip/v1/Basismodul/StructureDefinition/ISiPPflegeepisode"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "type": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                                    "code": "VN"
+                                }
+                            ]
+                        },
+                        "system": "UKA:Fallnummern",
+                        "value": "MBEbMtZWHdc"
+                    }
+                ],
+                "status": "finished",
+                "class": {
+                    "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+                    "code": "IMP",
+                    "display": "inpatient encounter"
+                },
+                "type": [
+                    {
+                        "coding": [
+                            {
+                                "system": "http://fhir.de/CodeSystem/Kontaktebene",
+                                "code": "abteilungskontakt",
+                                "display": "Abteilungskontakt"
+                            },
+                            {
+                                "system": "https://gematik.de/fhir/isip/v1/Basismodul/CodeSystem/EncounterPflegeArten",
+                                "code": "akutPflege",
+                                "display": "Akutpflege"
+                            }
+                        ]
+                    }
+                ],
+                "subject": {
+                    "reference": "Patient/pat_02_org_1"
+                },
+                "period": {
+                    "start": "2022-10-23T09:47:00+01:00",
+                    "end": "2022-10-26T14:45:00+01:00"
+                },
+                "diagnosis": [
+                    {
+                        "condition": {
+                            "reference": "Condition/1958b2ede48-95f89014-6e57-4f60-82f0-c5c4c48fae33"
+                        },
+                        "use": {
+                            "coding": [
+                                {
+                                    "system": "http://fhir.de/CodeSystem/KontaktDiagnoseProzedur",
+                                    "code": "referral-diagnosis",
+                                    "display": "Einweisungs-/Überweisungsdiagnose"
+                                },
+                                {
+                                    "system": "http://fhir.de/CodeSystem/KontaktDiagnoseProzedur",
+                                    "code": "department-main-diagnosis",
+                                    "display": "Abteilung Hauptdiagnose"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "location": [
+                    {
+                        "location": {
+                            "reference": "Location/station_01_org_1",
+                            "identifier": {
+                                "system": "UKA:Station",
+                                "value": "85"
+                            },
+                            "display": "85"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "wd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-23T09:47:00+01:00",
+                            "end": "2022-10-26T14:45:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b26773-e8688a2a-38e5-4e71-a9b2-02439626ed96",
+                            "identifier": {
+                                "system": "UKA:Raum",
+                                "value": "85_08.N085"
+                            },
+                            "display": "85_08.N085"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "ro"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-23T09:47:00+01:00",
+                            "end": "2022-10-23T10:15:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b26774-98ca34d5-08e4-4c5d-9314-c4bb80e8e06b",
+                            "identifier": {
+                                "system": "UKA:Raum",
+                                "value": "85_8205"
+                            },
+                            "display": "85_8205"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "ro"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-23T10:15:00+01:00",
+                            "end": "2022-10-26T14:45:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b26773-90371ed0-71bd-4e5e-883c-f8c7f9d233bd",
+                            "identifier": {
+                                "system": "UKA:Bett",
+                                "value": "85_08.N085_X1"
+                            },
+                            "display": "85_08.N085_X1"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "bd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-23T09:47:00+01:00",
+                            "end": "2022-10-23T10:15:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b26774-e1795276-562e-4c23-b900-41269f237fd8",
+                            "identifier": {
+                                "system": "UKA:Bett",
+                                "value": "85_8205_T"
+                            },
+                            "display": "85_8205_T"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "bd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-23T10:15:00+01:00",
+                            "end": "2022-10-26T14:45:00+01:00"
+                        }
+                    }
+                ],
+                "serviceProvider": {
+                    "reference": "Organization/fa_01_org_1",
+                    "identifier": {
+                        "system": "https://www.uk-augsburg.de/einrichtungen/ueberblick",
+                        "value": "1MD"
+                    }
+                },
+                "partOf": {
+                    "reference": "Encounter/org_enc_02_org_1"
+                }
+            },
+            "search": {
+                "mode": "match",
+                "score": 1
+            }
+        },
+        {
+            "fullUrl": "http://localhost:8080/fhir-server/api/v4/Encounter/1958f12dbc3-cefa27d7-cc87-42e2-9b8e-404ad7b5b267",
+            "resource": {
+                "resourceType": "Encounter",
+                "id": "1958f12dbc3-cefa27d7-cc87-42e2-9b8e-404ad7b5b267",
+                "meta": {
+                    "versionId": "1",
+                    "lastUpdated": "2025-03-13T10:35:32.675701Z",
+                    "profile": [
+                        "https://gematik.de/fhir/isip/v1/Basismodul/StructureDefinition/ISiPPflegeepisode"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "type": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                                    "code": "VN"
+                                }
+                            ]
+                        },
+                        "system": "UKA:Fallnummern",
+                        "value": "2_HphBbMWH8"
+                    }
+                ],
+                "status": "finished",
+                "class": {
+                    "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+                    "code": "IMP",
+                    "display": "inpatient encounter"
+                },
+                "type": [
+                    {
+                        "coding": [
+                            {
+                                "system": "http://fhir.de/CodeSystem/Kontaktebene",
+                                "code": "abteilungskontakt",
+                                "display": "Abteilungskontakt"
+                            },
+                            {
+                                "system": "https://gematik.de/fhir/isip/v1/Basismodul/CodeSystem/EncounterPflegeArten",
+                                "code": "akutPflege",
+                                "display": "Akutpflege"
+                            }
+                        ]
+                    }
+                ],
+                "subject": {
+                    "reference": "Patient/pat_03_org_1"
+                },
+                "period": {
+                    "start": "2022-10-23T13:13:00+01:00",
+                    "end": "2022-10-27T12:46:00+01:00"
+                },
+                "diagnosis": [
+                    {
+                        "condition": {
+                            "reference": "Condition/1958b2ede47-0284d652-3207-4ecc-be62-eba66308985a"
+                        },
+                        "use": {
+                            "coding": [
+                                {
+                                    "system": "http://fhir.de/CodeSystem/KontaktDiagnoseProzedur",
+                                    "code": "referral-diagnosis",
+                                    "display": "Einweisungs-/Überweisungsdiagnose"
+                                },
+                                {
+                                    "system": "http://fhir.de/CodeSystem/KontaktDiagnoseProzedur",
+                                    "code": "department-main-diagnosis",
+                                    "display": "Abteilung Hauptdiagnose"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "location": [
+                    {
+                        "location": {
+                            "reference": "Location/station_02_org_1",
+                            "identifier": {
+                                "system": "UKA:Station",
+                                "value": "88"
+                            },
+                            "display": "88"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "wd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-23T13:13:00+01:00",
+                            "end": "2022-10-27T12:46:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b2677a-174f090d-1ba8-4db5-9385-793202d73e58",
+                            "identifier": {
+                                "system": "UKA:Raum",
+                                "value": "88_8251"
+                            },
+                            "display": "88_8251"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "ro"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-23T13:13:00+01:00",
+                            "end": "2022-10-25T18:06:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b26779-076568ac-28f6-49eb-88b3-435c05890f51",
+                            "identifier": {
+                                "system": "UKA:Raum",
+                                "value": "88_8241"
+                            },
+                            "display": "88_8241"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "ro"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-25T18:06:00+01:00",
+                            "end": "2022-10-27T12:46:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b2677a-6d3642ef-50ef-4886-8cd9-85370e1e2326",
+                            "identifier": {
+                                "system": "UKA:Bett",
+                                "value": "88_8251_T"
+                            },
+                            "display": "88_8251_T"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "bd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-23T13:13:00+01:00",
+                            "end": "2022-10-25T15:21:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b2677e-4c1d4f0c-bd3a-42da-9870-ad3df1d71cf0",
+                            "identifier": {
+                                "system": "UKA:Bett",
+                                "value": "88_8251_X1"
+                            },
+                            "display": "88_8251_X1"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "bd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-25T15:21:00+01:00",
+                            "end": "2022-10-25T17:07:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b2677a-6d3642ef-50ef-4886-8cd9-85370e1e2326",
+                            "identifier": {
+                                "system": "UKA:Bett",
+                                "value": "88_8251_T"
+                            },
+                            "display": "88_8251_T"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "bd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-25T17:07:00+01:00",
+                            "end": "2022-10-25T18:06:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b26779-1817fd84-cb9d-4928-816a-ac348d0f8e92",
+                            "identifier": {
+                                "system": "UKA:Bett",
+                                "value": "88_8241_F"
+                            },
+                            "display": "88_8241_F"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "bd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-25T18:06:00+01:00",
+                            "end": "2022-10-27T12:46:00+01:00"
+                        }
+                    }
+                ],
+                "serviceProvider": {
+                    "reference": "Organization/fa_01_org_1",
+                    "identifier": {
+                        "system": "https://www.uk-augsburg.de/einrichtungen/ueberblick",
+                        "value": "1MD"
+                    }
+                },
+                "partOf": {
+                    "reference": "Encounter/org_enc_03_org_1"
+                }
+            },
+            "search": {
+                "mode": "match",
+                "score": 1
+            }
+        },
+        {
+            "fullUrl": "http://localhost:8080/fhir-server/api/v4/Encounter/1958f12dbcb-58778229-7bf0-41a5-9dc7-92e2053a9d19",
+            "resource": {
+                "resourceType": "Encounter",
+                "id": "1958f12dbcb-58778229-7bf0-41a5-9dc7-92e2053a9d19",
+                "meta": {
+                    "versionId": "1",
+                    "lastUpdated": "2025-03-13T10:35:32.683052Z",
+                    "profile": [
+                        "https://gematik.de/fhir/isip/v1/Basismodul/StructureDefinition/ISiPPflegeepisode"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "type": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                                    "code": "VN"
+                                }
+                            ]
+                        },
+                        "system": "UKA:Fallnummern",
+                        "value": "0hPUHANKkV4"
+                    }
+                ],
+                "status": "finished",
+                "class": {
+                    "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+                    "code": "IMP",
+                    "display": "inpatient encounter"
+                },
+                "type": [
+                    {
+                        "coding": [
+                            {
+                                "system": "http://fhir.de/CodeSystem/Kontaktebene",
+                                "code": "abteilungskontakt",
+                                "display": "Abteilungskontakt"
+                            },
+                            {
+                                "system": "https://gematik.de/fhir/isip/v1/Basismodul/CodeSystem/EncounterPflegeArten",
+                                "code": "akutPflege",
+                                "display": "Akutpflege"
+                            }
+                        ]
+                    }
+                ],
+                "subject": {
+                    "reference": "Patient/pat_04_org_1"
+                },
+                "period": {
+                    "start": "2022-10-24T13:24:00+01:00",
+                    "end": "2022-10-26T12:57:00+01:00"
+                },
+                "diagnosis": [
+                    {
+                        "condition": {
+                            "reference": "Condition/1958b2ede47-ab9adca7-2205-4f30-985b-bc18aec9b22c"
+                        },
+                        "use": {
+                            "coding": [
+                                {
+                                    "system": "http://fhir.de/CodeSystem/KontaktDiagnoseProzedur",
+                                    "code": "referral-diagnosis",
+                                    "display": "Einweisungs-/Überweisungsdiagnose"
+                                },
+                                {
+                                    "system": "http://fhir.de/CodeSystem/KontaktDiagnoseProzedur",
+                                    "code": "department-main-diagnosis",
+                                    "display": "Abteilung Hauptdiagnose"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "location": [
+                    {
+                        "location": {
+                            "reference": "Location/station_02_org_1",
+                            "identifier": {
+                                "system": "UKA:Station",
+                                "value": "88"
+                            },
+                            "display": "88"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "wd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-24T13:24:00+01:00",
+                            "end": "2022-10-26T12:57:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b2677b-eee09edc-e408-46b7-91c4-02ef6754ce1b",
+                            "identifier": {
+                                "system": "UKA:Raum",
+                                "value": "88_8240"
+                            },
+                            "display": "88_8240"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "ro"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-24T13:24:00+01:00",
+                            "end": "2022-10-26T12:57:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b2677b-9c1c879a-abe4-4e8f-aa35-5ce90c6ec067",
+                            "identifier": {
+                                "system": "UKA:Bett",
+                                "value": "88_8240_T"
+                            },
+                            "display": "88_8240_T"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "bd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-24T13:24:00+01:00",
+                            "end": "2022-10-26T12:57:00+01:00"
+                        }
+                    }
+                ],
+                "serviceProvider": {
+                    "reference": "Organization/fa_01_org_1",
+                    "identifier": {
+                        "system": "https://www.uk-augsburg.de/einrichtungen/ueberblick",
+                        "value": "1MD"
+                    }
+                },
+                "partOf": {
+                    "reference": "Encounter/org_enc_04_org_1"
+                }
+            },
+            "search": {
+                "mode": "match",
+                "score": 1
+            }
+        },
+        {
+            "fullUrl": "http://localhost:8080/fhir-server/api/v4/Encounter/1958f12dbd2-5ad18b10-994e-47fb-b0b9-a0bdba915105",
+            "resource": {
+                "resourceType": "Encounter",
+                "id": "1958f12dbd2-5ad18b10-994e-47fb-b0b9-a0bdba915105",
+                "meta": {
+                    "versionId": "1",
+                    "lastUpdated": "2025-03-13T10:35:32.690068Z",
+                    "profile": [
+                        "https://gematik.de/fhir/isip/v1/Basismodul/StructureDefinition/ISiPPflegeepisode"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "type": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                                    "code": "VN"
+                                }
+                            ]
+                        },
+                        "system": "UKA:Fallnummern",
+                        "value": "GFS8U5SkK7k"
+                    }
+                ],
+                "status": "finished",
+                "class": {
+                    "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+                    "code": "IMP",
+                    "display": "inpatient encounter"
+                },
+                "type": [
+                    {
+                        "coding": [
+                            {
+                                "system": "http://fhir.de/CodeSystem/Kontaktebene",
+                                "code": "abteilungskontakt",
+                                "display": "Abteilungskontakt"
+                            },
+                            {
+                                "system": "https://gematik.de/fhir/isip/v1/Basismodul/CodeSystem/EncounterPflegeArten",
+                                "code": "akutPflege",
+                                "display": "Akutpflege"
+                            }
+                        ]
+                    }
+                ],
+                "subject": {
+                    "reference": "Patient/pat_05_org_1"
+                },
+                "period": {
+                    "start": "2022-10-24T00:35:00+01:00",
+                    "end": "2022-11-03T11:08:00+01:00"
+                },
+                "diagnosis": [
+                    {
+                        "condition": {
+                            "reference": "Condition/1958b2ede47-135d9d26-5a16-41c4-bcc7-7a14efba3c35"
+                        },
+                        "use": {
+                            "coding": [
+                                {
+                                    "system": "http://fhir.de/CodeSystem/KontaktDiagnoseProzedur",
+                                    "code": "referral-diagnosis",
+                                    "display": "Einweisungs-/Überweisungsdiagnose"
+                                },
+                                {
+                                    "system": "http://fhir.de/CodeSystem/KontaktDiagnoseProzedur",
+                                    "code": "department-main-diagnosis",
+                                    "display": "Abteilung Hauptdiagnose"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "location": [
+                    {
+                        "location": {
+                            "reference": "Location/station_01_org_1",
+                            "identifier": {
+                                "system": "UKA:Station",
+                                "value": "85"
+                            },
+                            "display": "85"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "wd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-24T00:35:00+01:00",
+                            "end": "2022-11-03T11:08:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b26774-505a38b8-5313-4725-9b3b-837da33601fe",
+                            "identifier": {
+                                "system": "UKA:Raum",
+                                "value": "85_8203"
+                            },
+                            "display": "85_8203"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "ro"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-24T00:35:00+01:00",
+                            "end": "2022-11-03T11:08:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b26774-040d442e-9b75-4a76-815a-5ff6cbd957af",
+                            "identifier": {
+                                "system": "UKA:Bett",
+                                "value": "85_8203_F"
+                            },
+                            "display": "85_8203_F"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "bd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-24T00:35:00+01:00",
+                            "end": "2022-11-03T11:08:00+01:00"
+                        }
+                    }
+                ],
+                "serviceProvider": {
+                    "reference": "Organization/fa_01_org_1",
+                    "identifier": {
+                        "system": "https://www.uk-augsburg.de/einrichtungen/ueberblick",
+                        "value": "1MD"
+                    }
+                },
+                "partOf": {
+                    "reference": "Encounter/org_enc_05_org_1"
+                }
+            },
+            "search": {
+                "mode": "match",
+                "score": 1
+            }
+        },
+        {
+            "fullUrl": "http://localhost:8080/fhir-server/api/v4/Encounter/1958f12dbd8-df2c10dc-0c4d-47e6-9759-42492c2b585c",
+            "resource": {
+                "resourceType": "Encounter",
+                "id": "1958f12dbd8-df2c10dc-0c4d-47e6-9759-42492c2b585c",
+                "meta": {
+                    "versionId": "1",
+                    "lastUpdated": "2025-03-13T10:35:32.696916Z",
+                    "profile": [
+                        "https://gematik.de/fhir/isip/v1/Basismodul/StructureDefinition/ISiPPflegeepisode"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "type": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                                    "code": "VN"
+                                }
+                            ]
+                        },
+                        "system": "UKA:Fallnummern",
+                        "value": "QQCtvKC7dmw"
+                    }
+                ],
+                "status": "finished",
+                "class": {
+                    "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+                    "code": "IMP",
+                    "display": "inpatient encounter"
+                },
+                "type": [
+                    {
+                        "coding": [
+                            {
+                                "system": "http://fhir.de/CodeSystem/Kontaktebene",
+                                "code": "abteilungskontakt",
+                                "display": "Abteilungskontakt"
+                            },
+                            {
+                                "system": "https://gematik.de/fhir/isip/v1/Basismodul/CodeSystem/EncounterPflegeArten",
+                                "code": "akutPflege",
+                                "display": "Akutpflege"
+                            }
+                        ]
+                    }
+                ],
+                "subject": {
+                    "reference": "Patient/pat_06_org_1"
+                },
+                "period": {
+                    "start": "2022-10-26T22:29:00+01:00",
+                    "end": "2022-10-27T13:07:00+01:00"
+                },
+                "diagnosis": [
+                    {
+                        "condition": {
+                            "reference": "Condition/1958b2ede47-52eaef70-72ad-47e9-8034-09a88c0cb5f7"
+                        },
+                        "use": {
+                            "coding": [
+                                {
+                                    "system": "http://fhir.de/CodeSystem/KontaktDiagnoseProzedur",
+                                    "code": "referral-diagnosis",
+                                    "display": "Einweisungs-/Überweisungsdiagnose"
+                                },
+                                {
+                                    "system": "http://fhir.de/CodeSystem/KontaktDiagnoseProzedur",
+                                    "code": "department-main-diagnosis",
+                                    "display": "Abteilung Hauptdiagnose"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "location": [
+                    {
+                        "location": {
+                            "reference": "Location/station_01_org_1",
+                            "identifier": {
+                                "system": "UKA:Station",
+                                "value": "85"
+                            },
+                            "display": "85"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "wd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-26T22:29:00+01:00",
+                            "end": "2022-10-27T13:07:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b26774-98ca34d5-08e4-4c5d-9314-c4bb80e8e06b",
+                            "identifier": {
+                                "system": "UKA:Raum",
+                                "value": "85_8205"
+                            },
+                            "display": "85_8205"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "ro"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-26T22:29:00+01:00",
+                            "end": "2022-10-27T13:07:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b26774-e1795276-562e-4c23-b900-41269f237fd8",
+                            "identifier": {
+                                "system": "UKA:Bett",
+                                "value": "85_8205_T"
+                            },
+                            "display": "85_8205_T"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "bd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-26T22:29:00+01:00",
+                            "end": "2022-10-27T13:07:00+01:00"
+                        }
+                    }
+                ],
+                "serviceProvider": {
+                    "reference": "Organization/fa_01_org_1",
+                    "identifier": {
+                        "system": "https://www.uk-augsburg.de/einrichtungen/ueberblick",
+                        "value": "1MD"
+                    }
+                },
+                "partOf": {
+                    "reference": "Encounter/org_enc_06_org_1"
+                }
+            },
+            "search": {
+                "mode": "match",
+                "score": 1
+            }
+        },
+        {
+            "fullUrl": "http://localhost:8080/fhir-server/api/v4/Encounter/1958f12dbe0-1ab104a0-20e1-4709-a53e-e03155700555",
+            "resource": {
+                "resourceType": "Encounter",
+                "id": "1958f12dbe0-1ab104a0-20e1-4709-a53e-e03155700555",
+                "meta": {
+                    "versionId": "1",
+                    "lastUpdated": "2025-03-13T10:35:32.704442Z",
+                    "profile": [
+                        "https://gematik.de/fhir/isip/v1/Basismodul/StructureDefinition/ISiPPflegeepisode"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "type": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                                    "code": "VN"
+                                }
+                            ]
+                        },
+                        "system": "UKA:Fallnummern",
+                        "value": "nebGUm1UANE"
+                    }
+                ],
+                "status": "finished",
+                "class": {
+                    "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+                    "code": "IMP",
+                    "display": "inpatient encounter"
+                },
+                "type": [
+                    {
+                        "coding": [
+                            {
+                                "system": "http://fhir.de/CodeSystem/Kontaktebene",
+                                "code": "abteilungskontakt",
+                                "display": "Abteilungskontakt"
+                            },
+                            {
+                                "system": "https://gematik.de/fhir/isip/v1/Basismodul/CodeSystem/EncounterPflegeArten",
+                                "code": "intensivpflege",
+                                "display": "Intensivpflege"
+                            }
+                        ]
+                    }
+                ],
+                "subject": {
+                    "reference": "Patient/pat_07_org_1"
+                },
+                "period": {
+                    "start": "2022-11-04T01:28:00+01:00",
+                    "end": "2022-11-09T14:35:00+01:00"
+                },
+                "diagnosis": [
+                    {
+                        "condition": {
+                            "reference": "Condition/1958b2ede47-b0f075b0-53e7-4bd9-aece-44ec3ab5b6a7"
+                        },
+                        "use": {
+                            "coding": [
+                                {
+                                    "system": "http://fhir.de/CodeSystem/KontaktDiagnoseProzedur",
+                                    "code": "referral-diagnosis",
+                                    "display": "Einweisungs-/Überweisungsdiagnose"
+                                },
+                                {
+                                    "system": "http://fhir.de/CodeSystem/KontaktDiagnoseProzedur",
+                                    "code": "department-main-diagnosis",
+                                    "display": "Abteilung Hauptdiagnose"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "location": [
+                    {
+                        "location": {
+                            "reference": "Location/station_04_org_1",
+                            "identifier": {
+                                "system": "UKA:Station",
+                                "value": "IZ22"
+                            },
+                            "display": "IZ22"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "wd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-11-04T01:28:00+01:00",
+                            "end": "2022-11-09T14:35:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b26782-2537daba-f430-42ab-abbb-20c7cdd8fc2b",
+                            "identifier": {
+                                "system": "UKA:Raum",
+                                "value": "IZ22_2/10/10"
+                            },
+                            "display": "IZ22_2/10/10"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "ro"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-11-04T01:28:00+01:00",
+                            "end": "2022-11-09T14:35:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b26782-5571c0e5-3291-426b-bf53-00c33168fc63",
+                            "identifier": {
+                                "system": "UKA:Bett",
+                                "value": "IZ22_2/10/10_F.10.02.3610"
+                            },
+                            "display": "IZ22_2/10/10_F.10.02.3610"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "bd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-11-04T01:28:00+01:00",
+                            "end": "2022-11-09T14:35:00+01:00"
+                        }
+                    }
+                ],
+                "serviceProvider": {
+                    "reference": "Organization/fa_17_org_1",
+                    "identifier": {
+                        "system": "https://www.uk-augsburg.de/einrichtungen/ueberblick",
+                        "value": "2MD-IPF"
+                    }
+                },
+                "partOf": {
+                    "reference": "Encounter/org_enc_07_org_1"
+                }
+            },
+            "search": {
+                "mode": "match",
+                "score": 1
+            }
+        },
+        {
+            "fullUrl": "http://localhost:8080/fhir-server/api/v4/Encounter/1958f12dbe7-1f8500f4-4d0e-4346-a064-031916e486bf",
+            "resource": {
+                "resourceType": "Encounter",
+                "id": "1958f12dbe7-1f8500f4-4d0e-4346-a064-031916e486bf",
+                "meta": {
+                    "versionId": "1",
+                    "lastUpdated": "2025-03-13T10:35:32.711513Z",
+                    "profile": [
+                        "https://gematik.de/fhir/isip/v1/Basismodul/StructureDefinition/ISiPPflegeepisode"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "type": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                                    "code": "VN"
+                                }
+                            ]
+                        },
+                        "system": "UKA:Fallnummern",
+                        "value": "x4dEJe9Wwxc"
+                    }
+                ],
+                "status": "finished",
+                "class": {
+                    "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+                    "code": "IMP",
+                    "display": "inpatient encounter"
+                },
+                "type": [
+                    {
+                        "coding": [
+                            {
+                                "system": "http://fhir.de/CodeSystem/Kontaktebene",
+                                "code": "abteilungskontakt",
+                                "display": "Abteilungskontakt"
+                            },
+                            {
+                                "system": "https://gematik.de/fhir/isip/v1/Basismodul/CodeSystem/EncounterPflegeArten",
+                                "code": "akutPflege",
+                                "display": "Akutpflege"
+                            }
+                        ]
+                    }
+                ],
+                "subject": {
+                    "reference": "Patient/pat_08_org_1"
+                },
+                "period": {
+                    "start": "2022-10-25T12:47:00+01:00",
+                    "end": "2022-11-05T13:29:00+01:00"
+                },
+                "diagnosis": [
+                    {
+                        "condition": {
+                            "reference": "Condition/1958b2ede47-402cbd41-b96a-469e-830c-6a4b8bd376a0"
+                        },
+                        "use": {
+                            "coding": [
+                                {
+                                    "system": "http://fhir.de/CodeSystem/KontaktDiagnoseProzedur",
+                                    "code": "referral-diagnosis",
+                                    "display": "Einweisungs-/Überweisungsdiagnose"
+                                },
+                                {
+                                    "system": "http://fhir.de/CodeSystem/KontaktDiagnoseProzedur",
+                                    "code": "department-main-diagnosis",
+                                    "display": "Abteilung Hauptdiagnose"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "location": [
+                    {
+                        "location": {
+                            "reference": "Location/station_02_org_1",
+                            "identifier": {
+                                "system": "UKA:Station",
+                                "value": "88"
+                            },
+                            "display": "88"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "wd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-25T12:47:00+01:00",
+                            "end": "2022-11-05T13:29:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b2677b-7b65d963-cf95-46e3-9014-95424ee39832",
+                            "identifier": {
+                                "system": "UKA:Raum",
+                                "value": "88_8234"
+                            },
+                            "display": "88_8234"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "ro"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-25T12:47:00+01:00",
+                            "end": "2022-11-05T13:29:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b2677b-f9d220ae-6dbd-4ef5-a220-eff867d7ae32",
+                            "identifier": {
+                                "system": "UKA:Bett",
+                                "value": "88_8234_T"
+                            },
+                            "display": "88_8234_T"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "bd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-25T12:47:00+01:00",
+                            "end": "2022-11-05T13:29:00+01:00"
+                        }
+                    }
+                ],
+                "serviceProvider": {
+                    "reference": "Organization/fa_01_org_1",
+                    "identifier": {
+                        "system": "https://www.uk-augsburg.de/einrichtungen/ueberblick",
+                        "value": "1MD"
+                    }
+                },
+                "partOf": {
+                    "reference": "Encounter/org_enc_08_org_1"
+                }
+            },
+            "search": {
+                "mode": "match",
+                "score": 1
+            }
+        },
+        {
+            "fullUrl": "http://localhost:8080/fhir-server/api/v4/Encounter/1958f12dbee-7df7ae73-8777-4ef1-9132-5129e5683002",
+            "resource": {
+                "resourceType": "Encounter",
+                "id": "1958f12dbee-7df7ae73-8777-4ef1-9132-5129e5683002",
+                "meta": {
+                    "versionId": "1",
+                    "lastUpdated": "2025-03-13T10:35:32.718139Z",
+                    "profile": [
+                        "https://gematik.de/fhir/isip/v1/Basismodul/StructureDefinition/ISiPPflegeepisode"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "type": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                                    "code": "VN"
+                                }
+                            ]
+                        },
+                        "system": "UKA:Fallnummern",
+                        "value": "aSg-mUNYCPI"
+                    }
+                ],
+                "status": "finished",
+                "class": {
+                    "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+                    "code": "IMP",
+                    "display": "inpatient encounter"
+                },
+                "type": [
+                    {
+                        "coding": [
+                            {
+                                "system": "http://fhir.de/CodeSystem/Kontaktebene",
+                                "code": "abteilungskontakt",
+                                "display": "Abteilungskontakt"
+                            },
+                            {
+                                "system": "https://gematik.de/fhir/isip/v1/Basismodul/CodeSystem/EncounterPflegeArten",
+                                "code": "akutPflege",
+                                "display": "Akutpflege"
+                            }
+                        ]
+                    }
+                ],
+                "subject": {
+                    "reference": "Patient/pat_09_org_1"
+                },
+                "period": {
+                    "start": "2022-10-24T12:06:00+01:00",
+                    "end": "2022-10-26T16:56:00+01:00"
+                },
+                "diagnosis": [
+                    {
+                        "condition": {
+                            "reference": "Condition/1958b2ede47-86abc5c7-436f-41d7-8346-c2f2cb125282"
+                        },
+                        "use": {
+                            "coding": [
+                                {
+                                    "system": "http://fhir.de/CodeSystem/KontaktDiagnoseProzedur",
+                                    "code": "referral-diagnosis",
+                                    "display": "Einweisungs-/Überweisungsdiagnose"
+                                },
+                                {
+                                    "system": "http://fhir.de/CodeSystem/KontaktDiagnoseProzedur",
+                                    "code": "department-main-diagnosis",
+                                    "display": "Abteilung Hauptdiagnose"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "location": [
+                    {
+                        "location": {
+                            "reference": "Location/station_01_org_1",
+                            "identifier": {
+                                "system": "UKA:Station",
+                                "value": "85"
+                            },
+                            "display": "85"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "wd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-24T12:06:00+01:00",
+                            "end": "2022-10-26T16:56:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b26777-79894478-31e3-40ac-a5e1-ba210275bad9",
+                            "identifier": {
+                                "system": "UKA:Raum",
+                                "value": "85_8216"
+                            },
+                            "display": "85_8216"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "ro"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-24T12:06:00+01:00",
+                            "end": "2022-10-26T16:56:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b26777-22fd3163-4e90-4e25-9e35-1ada21deaae5",
+                            "identifier": {
+                                "system": "UKA:Bett",
+                                "value": "85_8216_T"
+                            },
+                            "display": "85_8216_T"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "bd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-24T12:06:00+01:00",
+                            "end": "2022-10-26T16:56:00+01:00"
+                        }
+                    }
+                ],
+                "serviceProvider": {
+                    "reference": "Organization/fa_01_org_1",
+                    "identifier": {
+                        "system": "https://www.uk-augsburg.de/einrichtungen/ueberblick",
+                        "value": "1MD"
+                    }
+                },
+                "partOf": {
+                    "reference": "Encounter/org_enc_09_org_1"
+                }
+            },
+            "search": {
+                "mode": "match",
+                "score": 1
+            }
+        },
+        {
+            "fullUrl": "http://localhost:8080/fhir-server/api/v4/Encounter/1958f12dbf4-03023b5d-946e-4bc9-be47-6a0a53bd559b",
+            "resource": {
+                "resourceType": "Encounter",
+                "id": "1958f12dbf4-03023b5d-946e-4bc9-be47-6a0a53bd559b",
+                "meta": {
+                    "versionId": "1",
+                    "lastUpdated": "2025-03-13T10:35:32.724537Z",
+                    "profile": [
+                        "https://gematik.de/fhir/isip/v1/Basismodul/StructureDefinition/ISiPPflegeepisode"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "type": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                                    "code": "VN"
+                                }
+                            ]
+                        },
+                        "system": "UKA:Fallnummern",
+                        "value": "x-5jsYk-jcY"
+                    }
+                ],
+                "status": "finished",
+                "class": {
+                    "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+                    "code": "IMP",
+                    "display": "inpatient encounter"
+                },
+                "type": [
+                    {
+                        "coding": [
+                            {
+                                "system": "http://fhir.de/CodeSystem/Kontaktebene",
+                                "code": "abteilungskontakt",
+                                "display": "Abteilungskontakt"
+                            },
+                            {
+                                "system": "https://gematik.de/fhir/isip/v1/Basismodul/CodeSystem/EncounterPflegeArten",
+                                "code": "akutPflege",
+                                "display": "Akutpflege"
+                            }
+                        ]
+                    }
+                ],
+                "subject": {
+                    "reference": "Patient/pat_10_org_1"
+                },
+                "period": {
+                    "start": "2022-10-25T13:38:00+01:00",
+                    "end": "2022-10-31T14:31:00+01:00"
+                },
+                "diagnosis": [
+                    {
+                        "condition": {
+                            "reference": "Condition/1958b2ede47-624c80a5-4933-4d76-8645-74034c75569a"
+                        },
+                        "use": {
+                            "coding": [
+                                {
+                                    "system": "http://fhir.de/CodeSystem/KontaktDiagnoseProzedur",
+                                    "code": "referral-diagnosis",
+                                    "display": "Einweisungs-/Überweisungsdiagnose"
+                                },
+                                {
+                                    "system": "http://fhir.de/CodeSystem/KontaktDiagnoseProzedur",
+                                    "code": "department-main-diagnosis",
+                                    "display": "Abteilung Hauptdiagnose"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "location": [
+                    {
+                        "location": {
+                            "reference": "Location/station_02_org_1",
+                            "identifier": {
+                                "system": "UKA:Station",
+                                "value": "88"
+                            },
+                            "display": "88"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "wd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-25T13:38:00+01:00",
+                            "end": "2022-10-31T14:31:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b2677b-f7499273-1f6d-4f35-8e39-dbdb318fe3f1",
+                            "identifier": {
+                                "system": "UKA:Raum",
+                                "value": "88_8238"
+                            },
+                            "display": "88_8238"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "ro"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-25T13:38:00+01:00",
+                            "end": "2022-10-31T14:31:00+01:00"
+                        }
+                    },
+                    {
+                        "location": {
+                            "reference": "Location/19589b2677c-8aa5bfc4-950b-4bd3-9461-642deae2e9d9",
+                            "identifier": {
+                                "system": "UKA:Bett",
+                                "value": "88_8238_F"
+                            },
+                            "display": "88_8238_F"
+                        },
+                        "status": "completed",
+                        "physicalType": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                                    "code": "bd"
+                                }
+                            ]
+                        },
+                        "period": {
+                            "start": "2022-10-25T13:38:00+01:00",
+                            "end": "2022-10-31T14:31:00+01:00"
+                        }
+                    }
+                ],
+                "serviceProvider": {
+                    "reference": "Organization/fa_01_org_1",
+                    "identifier": {
+                        "system": "https://www.uk-augsburg.de/einrichtungen/ueberblick",
+                        "value": "1MD"
+                    }
+                },
+                "partOf": {
+                    "reference": "Encounter/org_enc_10_org_1"
+                }
+            },
+            "search": {
+                "mode": "match",
+                "score": 1
+            }
+        }
+    ]
+}

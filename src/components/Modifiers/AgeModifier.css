@@ -1,0 +1,41 @@
+
+#age-checkboxes{
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#age-checkboxes li {
+    margin-top: 2px;
+}
+
+#age-checkboxes label {
+    margin-left: 20px;
+    font-size: 1rem;
+}
+#age-checkboxes ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    float: left;
+}
+
+#age-checkboxes input[type="checkbox"] {
+    accent-color: var(--purple);
+}
+
+.collapse-button {
+    position: absolute;
+    right: 25px;
+    top: 29px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--purple);
+    font-size: 1.2rem;
+}
