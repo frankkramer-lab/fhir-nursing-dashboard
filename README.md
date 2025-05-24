@@ -7,7 +7,7 @@
 This project is a web application that allows users to view and interact with FHIR resources. The application is built
 using React.
 The application is designed to be used by healthcare professionals to view and interact with patient data.
-The dashboard features FHIR-profiles specified within the official ISiP/ISiK and PIO ULB specifications shown as in the graphic below.
+The dashboard features FHIR-profiles specified within the official [ISiP](https://simplifier.net/ISIP/~introduction)/[ISiK](https://simplifier.net/isik-basis-v4/~introduction) and [PIO ULB](https://simplifier.net/ulb/~introduction) specifications shown as in the graphic below.
 
 ![Supported Profiles](doc/supported_profiles.png)
 
