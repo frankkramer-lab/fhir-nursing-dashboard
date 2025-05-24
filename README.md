@@ -1,12 +1,15 @@
-# FHIR Dashboard
+# FHIR Nursing Dashboard
 
 ![Screenshot_Anwendung.PNG](readme_img/Screenshot_Anwendung.PNG)
-Masterarbeit: Florian Weber
+
 ## Project Description
 
 This project is a web application that allows users to view and interact with FHIR resources. The application is built
 using React.
 The application is designed to be used by healthcare professionals to view and interact with patient data.
+The dashboard features FHIR-profiles specified within the official ISiP/ISiK and PIO ULB specifications shown as in the graphic below.
+
+![Supported Profiles](doc/supported_profiles.png)
 
 ## Setup
 
@@ -23,9 +26,6 @@ by running the following command in the project directory:
 ```bash
 npm install
 ```
-
-Make sure you are connected with the university network or VPN to access the FHIR server. Open the connection to the
-FHIR server via SSH in the terminal.
 
 The connection parameters for the FHIR server are configured in
 the ```constants.js``` file in the ```src/utils``` folder. If the server address, user or password changes, you need to
